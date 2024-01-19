@@ -27,7 +27,7 @@ public class AutoPicker {
         AutoBuilder.configureHolonomic(
             driveSubsystem::getPose, // Pose2d supplier
             driveSubsystem::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
-            driveSubsystem::getChassisSpeeds, 
+            driveSubsystem::getChassisSpeeds, // current robot-relative speeds for the drivetrain
             driveSubsystem::swerveDrive, // Module states consumer used to output to the drive subsystem
             new HolonomicPathFollowerConfig(
                 new PIDConstants(Constants.Trajectory.kDrive_P, Constants.Trajectory.kDrive_I, Constants.Trajectory.kDrive_D), // PID constants to correct for translation error (used to create the X and Y PID controllers)
