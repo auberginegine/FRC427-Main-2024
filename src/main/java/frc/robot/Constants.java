@@ -129,4 +129,38 @@ public final class Constants {
 
     public static final double kMaxCentripetalAcceleration = 0.8; 
   }
+
+  public class ArmConstants {
+    public static final int kLimitSwitchId = 0;
+    public static final int kArmMotorRightId = 0;
+    public static final int kArmMotorLeftId = 0;
+
+    public static final double kArmInitialAngle = 0;
+
+    public static final double kS = 0;
+    public static final double kG = 0;
+    public static final double kV = 0;
+    public static final double kA = 0;
+
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+
+    public static final boolean kRightMotorInverted = false;
+    public static final boolean kLeftMotorInverted = false; 
+
+    public static final int kArmMotorLimit = 0;
+
+    public static final double kPositionConversionFactor = 0;
+    public static final double kVelocityConversionFactor = 0;
+    public static final double kErrorThreshold = 0;
+    public static final double kTolerance = 0;
+    
+    public static final double kGroundPosition = 0;
+    public static final double kTravelPosition = 0;
+    public static final double kAmpPosition = 0;
+    public static final double kSpeakerPosition = 0;
+    public static final double kSoftLimitForward = 100;
+    public static final double kSoftLimitReverse = 0;
+  }
 }
