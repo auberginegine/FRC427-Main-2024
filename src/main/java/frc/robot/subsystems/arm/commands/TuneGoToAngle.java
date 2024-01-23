@@ -21,8 +21,10 @@ public class TuneGoToAngle extends Command {
     }
 
     public void execute() {
-    
-        m_arm.goToAngle(m_angle);
+        m_arm.setPID(IOUtils.get("arm p"), IOUtils.get("arm i"), IOUtils.get("arm d"));
+        m_arm.goToAngle(IOUtils.get("ArmAngle"));
+
+        IOUtils.set("Current angle of Arm", m_arm.getAngle());
     }
 
     public boolean isFinished() {

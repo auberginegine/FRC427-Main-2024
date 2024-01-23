@@ -137,6 +137,9 @@ public final class Constants {
 
     public static final double kArmInitialAngle = 0;
 
+    // calculate using reca.lc
+    // CoM distance: 21.77 in
+    // Arm mass: 20.755 lbs
     public static final double kS = 0;
     public static final double kG = 0;
     public static final double kV = 0;
@@ -149,11 +152,10 @@ public final class Constants {
     public static final boolean kRightMotorInverted = false;
     public static final boolean kLeftMotorInverted = false; 
 
-    public static final int kArmMotorLimit = 0;
+    public static final int kArmMotorLimit = 40;
 
     public static final double kPositionConversionFactor = 0;
     public static final double kVelocityConversionFactor = 0;
-    public static final double kErrorThreshold = 0;
     public static final double kTolerance = 0;
     
     public static final double kGroundPosition = 0;
