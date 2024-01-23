@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.9576577541780673,
+      "y": 6.935104675896556
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Score Amp Twice (1)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "a"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Score Amp Twice (2)"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Score Speaker Once"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "A"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Intake Note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Score Amp Once"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "B"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
