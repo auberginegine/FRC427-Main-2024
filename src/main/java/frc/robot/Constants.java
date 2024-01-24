@@ -28,10 +28,10 @@ public final class Constants {
 
   public static class DrivetrainConstants {
     // Swerve IDs
-    public static SwerveModuleConfig frontLeft = new SwerveModuleConfig(3, 4, 15, 0, false, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig frontRight = new SwerveModuleConfig(5, 6, 16, 0, false, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig backLeft = new SwerveModuleConfig(7, 8, 13, 0, false, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig backRight = new SwerveModuleConfig(1, 2, 14, 0, false, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig frontLeft = new SwerveModuleConfig(3, 4, 15, 0, false, false, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig frontRight = new SwerveModuleConfig(5, 6, 16, 0, false, false, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig backLeft = new SwerveModuleConfig(7, 8, 13, 0, false, false, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig backRight = new SwerveModuleConfig(1, 2, 14, 0, false, false, SensorDirectionValue.CounterClockwise_Positive); 
 
 
     // Gearing & Conversions
@@ -164,7 +164,7 @@ public final class Constants {
     public static final double kTravelPosition = 0;
     public static final double kAmpPosition = 0;
     public static final double kSpeakerPosition = 0;
-    
+
     public static final double kTravelSpeed = 0;
   }
 }
