@@ -6,6 +6,8 @@ package frc.robot;
 
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
+import frc.robot.subsystems.hang.Hang;
+import frc.robot.subsystems.hang.commands.SetHangSpeed;
 import frc.robot.util.DriverController;
 import frc.robot.util.DriverController.Mode;
 
@@ -26,6 +28,7 @@ public class RobotContainer {
 
   // drivetrain of the robot
   private final Drivetrain drivetrain = new Drivetrain();
+  private final Hang hang = new Hang();
   
  //  public Command tunegotoangle2 = new TuneGoToAngle(arm);
 
@@ -64,6 +67,11 @@ public class RobotContainer {
     driverController.rightTrigger()
       .onTrue(new InstantCommand(() -> driverController.setSlowMode(Mode.SLOW)))
       .onFalse(new InstantCommand(() -> driverController.setSlowMode(Mode.NORMAL))); 
+
+    //Hang Up when DPAD UP
+    manipulatorController.povUp() .onTrue(new SetHangSpeed(hang, Constants.HangConstants.khangUpSpeed)) .onFalse(new SetHangSpeed((hang), 0)); 
+    //Hang Down when DPAD DOWNi
+    manipulatorController.povDown() .onTrue(new SetHangSpeed(hang, -Constants.HangConstants.khangUpSpeed)) .onFalse(new SetHangSpeed((hang), 0));
   }
   // send any data as needed to the dashboard
   public void doSendables() {

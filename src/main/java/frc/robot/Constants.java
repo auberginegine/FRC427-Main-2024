@@ -25,7 +25,19 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
     public static final int kManipulatorControllerPort = 1; 
   }
+  public static class HangConstants {
+    public static final int kHangRightMotorID = 0;
+    public static final int kHangLeftMotorID = 0;
+    public static final boolean kRightMotorInverted = true;
+    public static final boolean kLeftMotorInverted = true;
+    public static final int kHangMotorLimit = 0;
+    public static final double kPositionConversionFactor = 0;
+    public static final double kVelocityConversionFactor = 0;
+    public static final float kFowardHangSoftLimit = 0;
+    public static final float kReverseHangSoftLimit = 0;
+    public static final double khangUpSpeed = 0;
 
+  }
   public static class DrivetrainConstants {
     // Swerve IDs
     public static SwerveModuleConfig frontLeft = new SwerveModuleConfig(3, 4, 15, 0, false, SensorDirectionValue.CounterClockwise_Positive); 
