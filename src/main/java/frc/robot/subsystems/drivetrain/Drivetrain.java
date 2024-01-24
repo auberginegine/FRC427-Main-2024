@@ -62,6 +62,12 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("drive omega", odometry.getEstimatedPosition().getRotation().getDegrees());
     
     this.odometry.update(gyro.getRotation2d(), getPositions());
+
+    
+  }
+
+  public void addVisionMeasurement(double limelightX, double limelightY, double limelightZ) {
+    odometry.addVisionMeasurement(getPose(), limelightZ);
   }
 
   @Override
