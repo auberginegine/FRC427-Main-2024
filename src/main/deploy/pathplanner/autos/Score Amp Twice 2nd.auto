@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.2542914308886268,
+      "y": 5.431714923580223
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Sarting to Amp 2nd"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp to Note 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note to Amp"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

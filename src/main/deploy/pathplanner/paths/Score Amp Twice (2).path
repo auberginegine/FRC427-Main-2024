@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.9576577541780673,
-        "y": 7.75214365594608
+        "x": 1.9538304740769885,
+        "y": 7.787515524905737
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1076999054343446,
-        "y": 7.75214365594608
+        "x": 2.103872625333266,
+        "y": 7.787515524905737
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "sarting to amp"
     },
     {
       "anchor": {
@@ -28,7 +28,13 @@
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.15,
+      "rotationDegrees": -90.0,
+      "rotateFast": true
+    }
+  ],
   "constraintZones": [
     {
       "name": "New Constraints Zone",

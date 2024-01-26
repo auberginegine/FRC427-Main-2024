@@ -1,6 +1,12 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 0.6576257764044353,
+      "y": 4.495567086372268
+    },
+    "rotation": -60.0
+  },
   "command": {
     "type": "sequential",
     "data": {
@@ -8,31 +14,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Score Speaker Once"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "A"
+            "pathName": "Sarting to Amp 3rd"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Intake Note"
+            "pathName": "Amp to Note 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Score Amp Once"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "B"
+            "pathName": "Note to Amp"
           }
         }
       ]

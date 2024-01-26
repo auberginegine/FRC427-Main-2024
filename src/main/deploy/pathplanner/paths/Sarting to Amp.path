@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.9411010227927024,
+        "x": 0.7154924572980652,
         "y": 6.583896877066937
       },
       "isLocked": false,
@@ -16,39 +16,50 @@
     },
     {
       "anchor": {
-        "x": 2.61,
-        "y": 7.1
+        "x": 1.9538304740769885,
+        "y": 7.787515524905737
       },
       "prevControl": {
-        "x": 2.575253075033407,
-        "y": 7.1
+        "x": 1.8037883228207114,
+        "y": 7.787515524905737
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Intake Note 1"
+      "linkedName": "sarting to amp"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
-      "rotationDegrees": 0,
-      "rotateFast": false
+      "waypointRelativePos": 0.1,
+      "rotationDegrees": -90.0,
+      "rotateFast": true
+    },
+    {
+      "waypointRelativePos": 0.05,
+      "rotationDegrees": 60.0,
+      "rotateFast": true
     }
   ],
-  "constraintZones": [
+  "constraintZones": [],
+  "eventMarkers": [
     {
-      "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0.9,
-      "maxWaypointRelativePos": 0.95,
-      "constraints": {
-        "maxVelocity": 0.1,
-        "maxAcceleration": 0.1,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Arm to Amp"
+              }
+            }
+          ]
+        }
       }
     }
   ],
-  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -56,8 +67,8 @@
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 0.0,
+    "velocity": 0.0,
+    "rotation": -90.0,
     "rotateFast": false
   },
   "reversed": false,

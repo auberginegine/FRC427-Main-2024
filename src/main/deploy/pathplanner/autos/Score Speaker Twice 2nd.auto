@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.2542914308886268,
+      "y": 5.431714923580223
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Score Speaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Intake Note 2nd"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note to Speaker 2nd"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

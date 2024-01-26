@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.715093550487853,
+        "y": 4.1046482092964185
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.4579100787274255,
+        "y": 4.0840735315555845
+      },
+      "isLocked": false,
+      "linkedName": "Intake Note 3"
+    },
+    {
+      "anchor": {
+        "x": 0.6884877930157377,
+        "y": 4.4852797475010595
+      },
+      "prevControl": {
+        "x": 0.6987751318861548,
+        "y": 4.5161417641123105
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Starting 3"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -60.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 0.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

@@ -1,6 +1,12 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 1.2542914308886268,
+      "y": 5.431714923580223
+    },
+    "rotation": 0
+  },
   "command": {
     "type": "sequential",
     "data": {
@@ -8,13 +14,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Pickup First Cube"
+            "pathName": "Sarting to Amp 2nd"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Pickup Second Cube"
+            "pathName": "Amp to Note 1"
           }
         }
       ]

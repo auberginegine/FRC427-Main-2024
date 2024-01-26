@@ -12,27 +12,27 @@
         "y": 7.090273345475601
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Intake Note 1"
     },
     {
       "anchor": {
-        "x": 2.940049861142376,
+        "x": 1.9576577541780673,
         "y": 7.75214365594608
       },
       "prevControl": {
-        "x": 2.920596552093578,
+        "x": 1.9382044451292693,
         "y": 7.742417001421681
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Amp 1"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 0.9499999999999997,
       "rotationDegrees": -90.0,
-      "rotateFast": false
+      "rotateFast": true
     }
   ],
   "constraintZones": [
