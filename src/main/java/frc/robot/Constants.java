@@ -129,4 +129,26 @@ public final class Constants {
 
     public static final double kMaxCentripetalAcceleration = 0.8; 
   }
+
+  public static class IntakeConstants {
+
+    public static int kIntakeMotorShootTopId = 1;
+    public static int kIntakeMotorShootBottomId = 2;
+    public static int kOuttakeMotorSuckId = 3;
+    
+
+    public static boolean kShootTopIntakeInverted = false;
+    public static int kShootTopMotorlimit = 40;
+
+    public static boolean kShootBottomIntakeInverted = false; 
+    public static int kShootBottomMotorlimit = 40;
+
+    public static final boolean kSuckOuttakeInverted = false;
+    public static final int kSuckOuttakeMotorLimit = 20;
+
+    public static final int kBeamBreakId = 4;
+
+
+
+  }
 }
