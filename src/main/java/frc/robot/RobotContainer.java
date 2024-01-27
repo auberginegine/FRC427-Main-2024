@@ -5,7 +5,11 @@
 package frc.robot;
 
 import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.arm.commands.GoToAmp;
 import frc.robot.subsystems.arm.commands.GoToAngle;
+import frc.robot.subsystems.arm.commands.GoToGround;
+import frc.robot.subsystems.arm.commands.GoToSpeaker;
+import frc.robot.subsystems.arm.commands.GoToTravel;
 import frc.robot.subsystems.arm.commands.SetVelocity;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
@@ -73,19 +77,19 @@ public class RobotContainer {
       .onFalse(new InstantCommand(() -> driverController.setSlowMode(Mode.NORMAL))); 
 
     // right stick y to manually move arm
-    new Trigger(() -> manipulatorController.getRightY() < -0.5) 
+    new Trigger(() -> manipulatorController.getLeftY() < -0.5) 
       .onTrue(new SetVelocity(arm, -Constants.ArmConstants.kTravelSpeed))
       .onFalse(new SetVelocity(arm, 0));
       
-    new Trigger(() -> manipulatorController.getRightY() > 0.5)
+    new Trigger(() -> manipulatorController.getLeftY() > 0.5)
       .onTrue(new SetVelocity(arm, Constants.ArmConstants.kTravelSpeed))
       .onFalse(new SetVelocity(arm, 0));  
 
     // buttons to move arm to go to setpoints
-    manipulatorController.a().onTrue(new GoToAngle(arm, Constants.ArmConstants.kGroundPosition));
-    manipulatorController.b().onTrue(new GoToAngle(arm, Constants.ArmConstants.kTravelPosition));
-    manipulatorController.x().onTrue(new GoToAngle(arm, Constants.ArmConstants.kSpeakerPosition));
-    manipulatorController.y().onTrue(new GoToAngle(arm, Constants.ArmConstants.kAmpPosition));
+    manipulatorController.a().onTrue(new GoToGround(arm));
+    manipulatorController.b().onTrue(new GoToTravel(arm));
+    manipulatorController.x().onTrue(new GoToSpeaker(arm));
+    manipulatorController.y().onTrue(new GoToAmp(arm));
   }
   
 
