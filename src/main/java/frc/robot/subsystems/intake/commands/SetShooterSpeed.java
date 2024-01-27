@@ -18,23 +18,23 @@ public class SetShooterSpeed extends Command{
         addRequirements(intake);
         
     }
-    // starts outtaking
+    // starts the shooting motors
     public void initialize() {
         // runs when the command is FIRST STARTED
        this.m_intake.outtakeRing(0);
         
     }
-    // keeps outtaking
+    // keeps shooting motors going
     public void execute() {
         // runs repeatedly until the command is finished 
     this.m_intake.outtakeRing(m_speed);
     }
-    //checks to stop outtaking
+    //checks to stop shooting (aww shoot!)
     public boolean isFinished() {
         // runs and tells whether or not the command should finish
         return true;
     }
-    // stops outtaking
+    // stops the Shooting motors
     public void end(boolean interrupted) {
         // runs when the command is ended
         
