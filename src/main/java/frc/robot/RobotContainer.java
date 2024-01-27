@@ -78,12 +78,15 @@ public class RobotContainer {
 
     // right stick y to manually move arm
     new Trigger(() -> manipulatorController.getLeftY() < -0.5) 
-      .onTrue(new SetVelocity(arm, -Constants.ArmConstants.kTravelSpeed))
-      .onFalse(new SetVelocity(arm, 0));
+      .onTrue(new SetVelocity(arm, -Constants.ArmConstants.kTravelSpeed));
       
+    new Trigger(() -> (manipulatorController.getLeftY() <= 0.5 && manipulatorController.getLeftY() >= -0.5))
+      .onTrue(new SetVelocity(arm, 0));
+
     new Trigger(() -> manipulatorController.getLeftY() > 0.5)
-      .onTrue(new SetVelocity(arm, Constants.ArmConstants.kTravelSpeed))
-      .onFalse(new SetVelocity(arm, 0));  
+      .onTrue(new SetVelocity(arm, Constants.ArmConstants.kTravelSpeed));
+      
+      
 
     // buttons to move arm to go to setpoints
     manipulatorController.a().onTrue(new GoToGround(arm));
