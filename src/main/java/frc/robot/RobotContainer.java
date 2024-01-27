@@ -4,6 +4,13 @@
 
 package frc.robot;
 
+import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.arm.commands.GoToAmp;
+import frc.robot.subsystems.arm.commands.GoToAngle;
+import frc.robot.subsystems.arm.commands.GoToGround;
+import frc.robot.subsystems.arm.commands.GoToSpeaker;
+import frc.robot.subsystems.arm.commands.GoToTravel;
+import frc.robot.subsystems.arm.commands.SetVelocity;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
 import frc.robot.util.DriverController;
@@ -26,6 +33,9 @@ public class RobotContainer {
 
   // drivetrain of the robot
   private final Drivetrain drivetrain = new Drivetrain();
+  
+  // arm of the robot
+  private final Arm arm = new Arm();
   
  //  public Command tunegotoangle2 = new TuneGoToAngle(arm);
 
@@ -55,6 +65,7 @@ public class RobotContainer {
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
+
   private void configureBindings() {
     driverController.a().onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
 
@@ -64,7 +75,27 @@ public class RobotContainer {
     driverController.rightTrigger()
       .onTrue(new InstantCommand(() -> driverController.setSlowMode(Mode.SLOW)))
       .onFalse(new InstantCommand(() -> driverController.setSlowMode(Mode.NORMAL))); 
+
+    // right stick y to manually move arm
+    new Trigger(() -> manipulatorController.getLeftY() < -0.5) 
+      .onTrue(new SetVelocity(arm, -Constants.ArmConstants.kTravelSpeed));
+      
+    new Trigger(() -> (manipulatorController.getLeftY() <= 0.5 && manipulatorController.getLeftY() >= -0.5))
+      .onTrue(new SetVelocity(arm, 0));
+
+    new Trigger(() -> manipulatorController.getLeftY() > 0.5)
+      .onTrue(new SetVelocity(arm, Constants.ArmConstants.kTravelSpeed));
+      
+      
+
+    // buttons to move arm to go to setpoints
+    manipulatorController.a().onTrue(new GoToGround(arm));
+    manipulatorController.b().onTrue(new GoToTravel(arm));
+    manipulatorController.x().onTrue(new GoToSpeaker(arm));
+    manipulatorController.y().onTrue(new GoToAmp(arm));
   }
+  
+
   // send any data as needed to the dashboard
   public void doSendables() {
     SmartDashboard.putData("Autonomous", autoPicker.getChooser());
