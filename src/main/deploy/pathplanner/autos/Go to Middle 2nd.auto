@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6576257764044353,
-      "y": 4.495567086372268
+      "x": 1.25,
+      "y": 5.4761064972366915
     },
-    "rotation": -60.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,19 +14,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Sarting to Amp 3rd"
+            "pathName": "Intake Note 2nd"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Amp to Note 1"
+            "pathName": "Note to Speaker 2nd"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Note to Amp"
+            "pathName": "Go to Middle 2nd"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle Note 2nd going back"
           }
         }
       ]

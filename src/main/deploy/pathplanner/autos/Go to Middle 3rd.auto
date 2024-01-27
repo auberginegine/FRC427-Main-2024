@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.6884877930157377,
+      "y": 4.4852797475010595
+    },
+    "rotation": -65.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Intake 3rd Note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note to Speaker 3rd"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Intake 3rd Note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Go to Middle 4th"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle Note 4th going back"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
