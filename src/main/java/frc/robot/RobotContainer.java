@@ -13,6 +13,8 @@ import frc.robot.subsystems.arm.commands.GoToTravel;
 import frc.robot.subsystems.arm.commands.SetVelocity;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
+import frc.robot.subsystems.hang.Hang;
+import frc.robot.subsystems.hang.commands.SetHangSpeed;
 import frc.robot.util.DriverController;
 import frc.robot.util.DriverController.Mode;
 
@@ -33,6 +35,7 @@ public class RobotContainer {
 
   // drivetrain of the robot
   private final Drivetrain drivetrain = new Drivetrain();
+  private final Hang hang = new Hang();
   
   // arm of the robot
   private final Arm arm = new Arm();
@@ -67,6 +70,9 @@ public class RobotContainer {
    */
 
   private void configureBindings() {
+
+    // --- Driver ---
+
     driverController.a().onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
 
     // driverController.b().onTrue(new TuneTurnToAngle(drivetrain)); 
@@ -75,6 +81,8 @@ public class RobotContainer {
     driverController.rightTrigger()
       .onTrue(new InstantCommand(() -> driverController.setSlowMode(Mode.SLOW)))
       .onFalse(new InstantCommand(() -> driverController.setSlowMode(Mode.NORMAL))); 
+
+    // --- Arm ---
 
     // right stick y to manually move arm
     new Trigger(() -> manipulatorController.getLeftY() < -0.5) 
@@ -86,13 +94,25 @@ public class RobotContainer {
     new Trigger(() -> manipulatorController.getLeftY() > 0.5)
       .onTrue(new SetVelocity(arm, Constants.ArmConstants.kTravelSpeed));
       
-      
-
     // buttons to move arm to go to setpoints
     manipulatorController.a().onTrue(new GoToGround(arm));
     manipulatorController.b().onTrue(new GoToTravel(arm));
     manipulatorController.x().onTrue(new GoToSpeaker(arm));
     manipulatorController.y().onTrue(new GoToAmp(arm));
+
+
+    // --- Hang ---
+
+    //Hang Up when DPAD UP
+    manipulatorController.povUp()
+      .onTrue(new SetHangSpeed(hang, Constants.HangConstants.kHangSpeed)); 
+    //Hang Down when DPAD DOWN
+    manipulatorController.povDown()
+      .onTrue(new SetHangSpeed(hang, -Constants.HangConstants.kHangSpeed)); 
+
+    // Stop hang when neither is pressed
+    manipulatorController.povDown().negate().and(manipulatorController.povUp().negate())
+    .onTrue(new SetHangSpeed((hang), 0)); 
   }
   
 
