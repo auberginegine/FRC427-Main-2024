@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.robot.subsystems.drivetrain.SwerveModuleConfig;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -128,5 +129,12 @@ public final class Constants {
     public static final double kMaxAccelerationMetersPerSecondSquared = 1; 
 
     public static final double kMaxCentripetalAcceleration = 0.8; 
+  }
+
+  public static class Vision {
+    public static final double kTranslationStdDevCoefficient = 0.35;
+    public static final double kRotationStdDevCoefficient = 1;
+    public static final AprilTagFieldLayout kAprilTagFieldLayout = null; // TODO: Fix this
+    public static final double limelightZHeight = 0; // TODO: Fix this
   }
 }

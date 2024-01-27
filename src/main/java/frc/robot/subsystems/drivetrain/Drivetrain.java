@@ -229,7 +229,7 @@ public class Drivetrain extends SubsystemBase {
     this.driveState = state; 
   }
 
-  private void addVisionPoseEstimate(Pose3d pose3d, double targetDistance, double timestamp, Matrix<N3, N1> stdDevs) {
+  public void addVisionPoseEstimate(Pose3d pose3d, double targetDistance, double timestamp, Matrix<N3, N1> stdDevs) {
     odometry.addVisionMeasurement(pose3d.toPose2d(), timestamp, stdDevs);
-}
+  }
 }
