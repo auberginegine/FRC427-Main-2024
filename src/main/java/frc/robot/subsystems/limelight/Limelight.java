@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -83,6 +82,13 @@ public class Limelight extends SubsystemBase{
         SmartDashboard.putNumber("LimelightTargetArea", limelightTargetArea);
         SmartDashboard.putNumber("LimelightTargetX", limelightTargetX);
         SmartDashboard.putNumber("LimelightTargetY", limelightTargetY);
+        SmartDashboard.putNumber("LimelightDistanceToTarget", getDistanceToAprilTag());
+        SmartDashboard.putNumber("LimelightNearestAprilTag", getClosestAprilTagID());
+        SmartDashboard.putNumber("LimelightNearestAprilTagPositionX", getAprilTagPos(getClosestAprilTagID()).getX());
+        SmartDashboard.putNumber("LimelightNearestAprilTagPositionY", getAprilTagPos(getClosestAprilTagID()).getY());
+        SmartDashboard.putNumber("LimelightNearestAprilTagPositionZ", getAprilTagPos(getClosestAprilTagID()).getZ());
+
+        addVisionFromDrivetrain();
     }
 
     // Calculates the stand deviation of the distance of the object
@@ -144,5 +150,3 @@ public class Limelight extends SubsystemBase{
         return isInLowerXLimit && isInUpperXLimit && isInLowerYLimit && isInUpperYLimit && isInLowerZLimit && isInUpperZLimit;
     }
 }
-
-// TODO: Feed these values into the drivetrain
