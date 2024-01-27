@@ -9,7 +9,13 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.subsystems.drivetrain.SwerveModuleConfig;
+import frc.robot.subsystems.leds.patterns.FadeLEDPattern;
+import frc.robot.subsystems.leds.patterns.LEDPattern;
+import frc.robot.subsystems.leds.patterns.MorseCodePattern;
+import frc.robot.subsystems.leds.patterns.RainbowPattern;
+import frc.robot.subsystems.leds.patterns.SolidLEDPattern;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -145,5 +151,35 @@ public final class Constants {
     public static final float kReverseHangSoftLimit = 0;
 
     public static final double kHangSpeed = 1;
+  }
+
+  public static final class LEDs {
+
+    public static final Color kDefaultColor = Color.fromHSV(215, 100, 67);
+
+    public static final int kLedPort = 0; 
+    public static final int kLedLength = 0; 
+
+    public static final int kLed1Start = 0; 
+    public static final int kLed1End = 0; 
+    public static final int kLed2Start = 0; 
+    public static final int kLed2End = 0;
+    
+
+
+    public static final class Patterns {
+
+      public static final LEDPattern kDefault = new SolidLEDPattern(LEDs.kDefaultColor);
+      public static final LEDPattern kIdle = new FadeLEDPattern(2.5, LEDs.kDefaultColor, Color.fromHSV(44, 86, 93));
+      public static final LEDPattern kCube = new SolidLEDPattern(Color.kPurple);
+      public static final LEDPattern kCone = new SolidLEDPattern(Color.kYellow);
+      public static final LEDPattern kDead = new MorseCodePattern(Color.kRed, Color.kBlue, "dead");
+      public static final LEDPattern kDeadAlternate = new FadeLEDPattern(1, Color.kRed, Color.kBlack);
+      public static final LEDPattern kBalanceFinished = new RainbowPattern(0.5);
+      public static final LEDPattern kAllianceRed = new SolidLEDPattern(Color.kRed);
+      public static final LEDPattern kAllianceBlue = new SolidLEDPattern(Color.kBlue);
+
+    }
+    
   }
 }
