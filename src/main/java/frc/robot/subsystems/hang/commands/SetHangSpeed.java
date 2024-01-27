@@ -15,12 +15,11 @@ public class SetHangSpeed extends Command{
 
 
     public void initialize() {
-
+        m_Hang.setSpeed(m_speed);
         // runs when the command is FIRST STARTED
     }
 
     public void execute() {
-        m_Hang.setSpeed(m_speed);
         // runs repeatedly until the command is finished
     }
 

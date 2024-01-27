@@ -69,9 +69,15 @@ public class RobotContainer {
       .onFalse(new InstantCommand(() -> driverController.setSlowMode(Mode.NORMAL))); 
 
     //Hang Up when DPAD UP
-    manipulatorController.povUp() .onTrue(new SetHangSpeed(hang, Constants.HangConstants.khangUpSpeed)) .onFalse(new SetHangSpeed((hang), 0)); 
+    manipulatorController.povUp()
+      .onTrue(new SetHangSpeed(hang, Constants.HangConstants.kHangSpeed)); 
     //Hang Down when DPAD DOWNi
-    manipulatorController.povDown() .onTrue(new SetHangSpeed(hang, -Constants.HangConstants.khangUpSpeed)) .onFalse(new SetHangSpeed((hang), 0));
+    manipulatorController.povDown()
+      .onTrue(new SetHangSpeed(hang, -Constants.HangConstants.kHangSpeed)); 
+
+    // Stop hang when neither is pressed
+    manipulatorController.povDown().negate().and(manipulatorController.povUp().negate())
+    .onTrue(new SetHangSpeed((hang), 0)); 
   }
   // send any data as needed to the dashboard
   public void doSendables() {
