@@ -1,14 +1,13 @@
 package frc.robot.subsystems.hang;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.revrobotics.CANSparkBase.SoftLimitDirection;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.IOUtils;
-
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkBase.SoftLimitDirection;
-import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class Hang extends SubsystemBase {
     //Initializing velocity variable
@@ -70,11 +69,14 @@ public class Hang extends SubsystemBase {
 
     public void doSendables() {
         // Add logging for hang (eg. encoder positions, velocity, etc. )
-        IOUtils.set("Hang Target Velocity", m_velocity);
-        IOUtils.set("Hang Current Velocity", m_HangEncoderRight.getVelocity());
-        IOUtils.set("Hang Current Position", m_HangEncoderRight.getPosition());
-        SmartDashboard.putBoolean("Hang RM Inverted", m_HangMotorRight.getInverted());
-        SmartDashboard.putBoolean("Hang LM Inverted", m_HangMotorLeft.getInverted());
+        IOUtils.set("Hang Target Velocity (m/s)", m_velocity);
+        IOUtils.set("Right Hang Current Velocity (m/s)", m_HangEncoderRight.getVelocity());
+        IOUtils.set("Left Hang Current Velocity (m/s)", m_HangEncoderLeft.getVelocity());
+        IOUtils.set("Right Hang Current Position", m_HangEncoderRight.getPosition());
+        IOUtils.set("Left Hang Current Position", m_HangEncoderLeft.getPosition());
+
+        // SmartDashboard.putBoolean("Hang RM Inverted", m_HangMotorRight.getInverted());
+        // SmartDashboard.putBoolean("Hang LM Inverted", m_HangMotorLeft.getInverted());
         // IOUtils.set("Hang Soft Limit ForwardRM", m_HangMotorRight.getSoftLimit(SoftLimitDirection.kForward));
         // IOUtils.set("Hang Soft Limit BackRM", m_HangMotorRight.getSoftLimit(SoftLimitDirection.kReverse));
         // IOUtils.set("Hang Soft Limit ForwardLM", m_HangMotorLeft.getSoftLimit(SoftLimitDirection.kForward));
