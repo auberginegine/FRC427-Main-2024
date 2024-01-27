@@ -7,6 +7,7 @@ import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.Arm.ArmControlType;
 import frc.robot.util.IOUtils;
 
+// tune pid and ff constants
 public class TunePIDGoToAngle extends Command {
     Arm m_arm;
 
@@ -30,8 +31,6 @@ public class TunePIDGoToAngle extends Command {
                                                     IOUtils.get("arm ka", Constants.ArmConstants.kA));
                                       
         m_arm.goToAngle(IOUtils.get("ArmAngle"));
-
-        IOUtils.set("Current angle of Arm", m_arm.getAngle());
     }
 
     public boolean isFinished() {
