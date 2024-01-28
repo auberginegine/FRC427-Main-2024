@@ -132,9 +132,9 @@ public final class Constants {
 
   public static class IntakeConstants {
 
-    public static int kIntakeMotorShootTopId = 1;
-    public static int kIntakeMotorShootBottomId = 2;
-    public static int kOuttakeMotorSuckId = 3;
+    public static int kIntakeMotorShootTopId = 0;
+    public static int kIntakeMotorShootBottomId = 0;
+    public static int kOuttakeMotorSuckId = 0;
     
 
     public static boolean kShootTopIntakeInverted = false;
@@ -146,8 +146,13 @@ public final class Constants {
     public static final boolean kSuckOuttakeInverted = false;
     public static final int kSuckOuttakeMotorLimit = 20;
 
-    public static final int kBeamBreakId = 4;
+    public static final double kShootVelocityConversionFactor = 0; 
+    public static final double kIntakeVelocityConversionFactor = 0; 
 
+    public static final int kBeamBreakId = 0;
+
+    public static final double kSuckerManualSpeed = 0; 
+    public static final double kShooterManualSpeed = 0; 
 
 
   }

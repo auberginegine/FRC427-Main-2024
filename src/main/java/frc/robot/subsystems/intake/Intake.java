@@ -41,18 +41,16 @@ public class Intake extends SubsystemBase {
         // sets limits for all the motors and has the bottom shoot motor, follow the top
         m_intakeMotorShootTop.setInverted(Constants.IntakeConstants.kShootTopIntakeInverted);
         m_intakeMotorShootTop.setSmartCurrentLimit(Constants.IntakeConstants.kShootTopMotorlimit);
-        m_intakeEncoderShootTop.setVelocityConversionFactor(0);
+        m_intakeEncoderShootTop.setVelocityConversionFactor(Constants.IntakeConstants.kShootVelocityConversionFactor); 
 
         m_intakeMotorShootBottom.setInverted(Constants.IntakeConstants.kShootBottomIntakeInverted);
         m_intakeMotorShootBottom.setSmartCurrentLimit(Constants.IntakeConstants.kShootBottomMotorlimit);
+        m_intakeEncoderShootTop.setVelocityConversionFactor(Constants.IntakeConstants.kShootVelocityConversionFactor); 
         m_intakeMotorShootBottom.follow(m_intakeMotorShootTop);
-        m_intakeEncoderShootBottom.setVelocityConversionFactor(0);
 
         m_outtakeMotorSuck.setInverted(Constants.IntakeConstants.kSuckOuttakeInverted);
         m_outtakeMotorSuck.setSmartCurrentLimit(Constants.IntakeConstants.kSuckOuttakeMotorLimit);
-        m_outtakeEncoderSuck.setVelocityConversionFactor(0);
-
-
+        m_outtakeEncoderSuck.setVelocityConversionFactor(Constants.IntakeConstants.kIntakeVelocityConversionFactor); 
     }
 
     public void periodic() {
@@ -61,26 +59,29 @@ public class Intake extends SubsystemBase {
        
     }
     //so intaking the ring is sucking it
-    public void intakeRing(double speed){
+    public void intakeRing(double speed) {
         m_outtakeMotorSuck.set(-speed);
     }
     //and outtaking the ring is shooting it
-    public void outtakeRing(double speed){
+    public void outtakeRing(double speed) {
         m_intakeMotorShootTop.set(speed);
     }
     //beambreak is a scanner that checks if a ring is inside the whole intake
-    public boolean beamBreakState(){ 
+    public boolean beamBreakHit() { 
         return m_BeamBreak.get(); 
     }
-    public void StopSuckMotor() {
+    public void stopSuck() {
         m_outtakeMotorSuck.set(0); 
-     }
-    public void stopMotor(){
+    }
+    
+    public void stopShoot() {
         m_intakeMotorShootTop.set(0);
     }
-     public void doSendables(){ 
-         SmartDashboard.putNumber("SpeedOfSuck m/s", m_outtakeEncoderSuck.getVelocity());
-         SmartDashboard.putNumber("SpeedOfShoot m/s", m_intakeEncoderShootTop.getVelocity());
-         SmartDashboard.putBoolean("BeanBreakHit t/f", m_BeamBreak.get());
+
+     public void doSendables() { 
+        SmartDashboard.putNumber("Suck Speed (m/s)", m_outtakeEncoderSuck.getVelocity());
+        SmartDashboard.putNumber("Shoot Top Speed (m/s)", m_intakeEncoderShootTop.getVelocity());
+        SmartDashboard.putNumber("Shoot Bottom Speed (m/s)", m_intakeEncoderShootTop.getVelocity());
+        SmartDashboard.putBoolean("Beam Break Hit (t/f)", beamBreakHit());
     }
 }

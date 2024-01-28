@@ -6,8 +6,9 @@ package frc.robot;
 
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
-import frc.robot.subsystems.intake.commands.SetIntakeSpeed;
+import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.SetShooterSpeed;
+import frc.robot.subsystems.intake.commands.SetSuckerIntakeSpeed;
 import frc.robot.util.DriverController;
 import frc.robot.util.DriverController.Mode;
 
@@ -28,6 +29,8 @@ public class RobotContainer {
 
   // drivetrain of the robot
   private final Drivetrain drivetrain = new Drivetrain();
+
+  private final Intake intake = new Intake(); 
   
  //  public Command tunegotoangle2 = new TuneGoToAngle(arm);
 
@@ -67,25 +70,26 @@ public class RobotContainer {
       .onTrue(new InstantCommand(() -> driverController.setSlowMode(Mode.SLOW)))
       .onFalse(new InstantCommand(() -> driverController.setSlowMode(Mode.NORMAL))); 
 
-//both Suck and Shoot have teh same controls RN (CHANGE ONCE DRIVERS TELL U WHAT CONTROLS THEY WANT)
-    new Trigger(() -> manipulatorController.getRightY() > 0.5) 
-      .onTrue(new SetSuckerSpeed(intake, -1));
+    //  both Suck and Shoot have teh same controls RN (CHANGE ONCE DRIVERS TELL U WHAT CONTROLS THEY WANT)
+    new Trigger(() -> manipulatorController.getRightY() > 0.5) // outtake sucker
+      .onTrue(new SetSuckerIntakeSpeed(intake, -Constants.IntakeConstants.kSuckerManualSpeed));
 
-    new Trigger(() -> manipulatorController.getRightY() < -0.5) 
-      .onTrue(new SetSuckerSpeed(intake, 1));
+    new Trigger(() -> manipulatorController.getRightY() < -0.5) // intake sucker
+      .onTrue(new SetSuckerIntakeSpeed(intake, Constants.IntakeConstants.kSuckerManualSpeed));
 
-    new trigger(() -> manipulatorController.getRightY() > 0.5) 
-      .onTrue(new SetShooterSpeed(intake, 1));
+    new Trigger(() -> manipulatorController.getRightY() > 0.5)  // shoot out
+      .onTrue(new SetShooterSpeed(intake, Constants.IntakeConstants.kShooterManualSpeed));
 
-    new trigger(() -> manipulatorController.getRightY() < -0.5) 
-      .onTrue(new SetShooterSpeed(intake, -1));
+    new Trigger(() -> manipulatorController.getRightY() < -0.5) // shoot in? (probably not needed)
+      .onTrue(new SetShooterSpeed(intake, -Constants.IntakeConstants.kShooterManualSpeed));
 
     new Trigger(() -> (manipulatorController.getRightY() <= 0.5 && manipulatorController.getRightY() >= -0.5)) 
-      .onTrue(new SetSuckereSpeed(intake, 0));
+      .onTrue(new SetSuckerIntakeSpeed(intake, 0))
       .onTrue(new SetShooterSpeed(intake, 0));
-      
 
-//both Suck and Shoot have teh same controls RN (CHANGE ONCE DRIVERS TELL U WHAT CONTROLS THEY WANT)
+
+    // TODO: add automated controls for intaking from ground, outtaking to amp, outtaking to shooter
+      
   }
   // send any data as needed to the dashboard
   public void doSendables() {

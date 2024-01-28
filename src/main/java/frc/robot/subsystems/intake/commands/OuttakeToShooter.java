@@ -1,6 +1,5 @@
 package frc.robot.subsystems.intake.commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.intake.Intake;
@@ -13,17 +12,17 @@ public class OuttakeToShooter extends SequentialCommandGroup {
      // uses other commands to start the shooter first (cause its slow) then makes the sucker move a ring to the shooter after waiting a sec
     public OuttakeToShooter(Intake intake, double shooterSpeed, double suckSpeed) {
         addCommands(
-            new SetShooterSpeed(intake, suckSpeed), 
+            new SetShooterSpeed(intake, shooterSpeed), 
             new WaitCommand(1), 
-            new SetSuckerSpeed(intake, suckSpeed),
+            new SetSuckerIntakeSpeed(intake, suckSpeed),
             new WaitCommand(1)
         );
 
         finallyDo(() -> {
-            intake.intakeRing(0);
-
+            intake.stopShoot();
+            intake.stopSuck();
         }); 
 
-    addRequirements(intake);
+        addRequirements(intake);
     }
 }

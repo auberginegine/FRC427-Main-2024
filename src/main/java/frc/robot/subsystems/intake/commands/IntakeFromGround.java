@@ -10,10 +10,10 @@ public class IntakeFromGround extends Command {
 
      // establishes intake, speed
     public IntakeFromGround(Intake intake, double speed) {
-    this.m_intake = intake;
-    this.m_speed = speed;
+        this.m_intake = intake;
+        this.m_speed = speed;
 
-    addRequirements(intake);
+        addRequirements(intake);
     }
 
     // starts intaking (using the sucker motor)
@@ -28,14 +28,14 @@ public class IntakeFromGround extends Command {
     }
 
     // checks to stops sucking
-    public boolean isFinished() {n
+    public boolean isFinished() {
         // runs and tells whether or not the command should finish
-        return m_intake.beamBreakState();
+        return m_intake.beamBreakHit();
     }
 
     // stops sucking
     public void end(boolean interrupted) {
         // runs when the command is ended
-    this.m_intake.intakeRing(0);
+        this.m_intake.intakeRing(0);
     }    
 }

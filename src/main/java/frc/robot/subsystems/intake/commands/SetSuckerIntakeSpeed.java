@@ -3,30 +3,25 @@ package frc.robot.subsystems.intake.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.intake.Intake;
 
-public class SetSuckerSpeed extends Command {
+public class SetSuckerIntakeSpeed extends Command {
      // declare how long to intake for and speed
     Intake m_intake;
     double m_speed;
 
      // establishes intake, speed,
-    public SetSuckerSpeed(Intake intake, double speed) {
-    this.m_intake = intake;
-    this.m_speed = speed;
+    public SetSuckerIntakeSpeed(Intake intake, double speed) {
+        this.m_intake = intake;
+        this.m_speed = speed;
 
-    addRequirements(intake);
+        addRequirements(intake);
     }
 
-    // starts sucking motor
-    public void initialize() {
-        // runs when the command is FIRST STARTED
-    this.m_intake.intakeRing(0);
-    }
+    public void initialize() {}
 
     // keeps sucking motor going
     public void execute() {
         // runs repeatedly until the command is finished
-    this.m_intake.intakeRing(m_speed);
-    
+        this.m_intake.intakeRing(m_speed);
     }
 
     // checks to stops sucking
