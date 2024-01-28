@@ -36,10 +36,10 @@ public final class Constants {
   }
   public static class DrivetrainConstants {
     // Swerve IDs
-    public static SwerveModuleConfig frontLeft = new SwerveModuleConfig(3, 4, 15, 0, false, false, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig frontRight = new SwerveModuleConfig(5, 6, 16, 0, false, false, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig backLeft = new SwerveModuleConfig(7, 8, 13, 0, false, false, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig backRight = new SwerveModuleConfig(1, 2, 14, 0, false, false, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig frontLeft = new SwerveModuleConfig(7, 8, 12, 0, false, false, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig frontRight = new SwerveModuleConfig(1, 2, 9, 0, true, true, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig backLeft = new SwerveModuleConfig(3, 4, 10, 0, true, true, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig backRight = new SwerveModuleConfig(5, 6, 11, 0, true, true, SensorDirectionValue.CounterClockwise_Positive); 
 
 
     // Gearing & Conversions
@@ -140,9 +140,9 @@ public final class Constants {
 
   public static class IntakeConstants {
 
-    public static int kIntakeMotorShootTopId = 0;
-    public static int kIntakeMotorShootBottomId = 0;
-    public static int kOuttakeMotorSuckId = 0;
+    public static int kIntakeMotorShootTopId = 15;
+    public static int kIntakeMotorShootBottomId = 16;
+    public static int kOuttakeMotorSuckId = 17;
     
 
     public static boolean kShootTopIntakeInverted = false;
@@ -164,9 +164,9 @@ public final class Constants {
   }
 
   public class ArmConstants {
-    public static final int kLimitSwitchId = 0;
-    public static final int kArmMotorRightId = 0;
-    public static final int kArmMotorLeftId = 0;
+    public static final int kLimitSwitchId = 1;
+    public static final int kArmMotorRightId = 14;
+    public static final int kArmMotorLeftId = 13;
 
     public static final double kP = 0;
     public static final double kI = 0;
@@ -202,8 +202,8 @@ public final class Constants {
   }
 
   public static class HangConstants {
-    public static final int kHangRightMotorID = 0;
-    public static final int kHangLeftMotorID = 0;
+    public static final int kHangRightMotorID = 19;
+    public static final int kHangLeftMotorID = 18;
 
     public static final boolean kRightMotorInverted = false;
     public static final boolean kLeftMotorInverted = false;
@@ -234,7 +234,7 @@ public final class Constants {
     public static final Color kDefaultColor = Color.fromHSV(215, 100, 67);
 
     public static final int kLedPort = 0; 
-    public static final int kLedLength = 0; 
+    public static final int kLedLength = 10; 
 
     public static final int kLed1Start = 0; 
     public static final int kLed1End = 0; 
