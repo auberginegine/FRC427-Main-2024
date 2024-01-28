@@ -3,45 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.9384383614372941,
-        "y": 6.971077125052112
+        "x": 0.6884877930157377,
+        "y": 4.4852797475010595
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1084093474600265,
-        "y": 7.010076157919538
+        "x": 0.7463544739093676,
+        "y": 4.4852797475010595
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Starting 3"
     },
     {
       "anchor": {
-        "x": 2.556898225435407,
-        "y": 6.971077125052112
+        "x": 1.9538304740769885,
+        "y": 7.787515524905737
       },
       "prevControl": {
-        "x": 2.2156566878454433,
-        "y": 6.980826883268969
-      },
-      "nextControl": {
-        "x": 3.9705349109489445,
-        "y": 6.930687505466008
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 5.2380817350708355,
-        "y": 6.2105959841373375
-      },
-      "prevControl": {
-        "x": 4.584847934541476,
-        "y": 6.366592115607035
+        "x": 2.8347143368317793,
+        "y": 4.890266083038432
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "sarting to amp"
     }
   ],
   "rotationTargets": [],
@@ -57,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": null
+                "name": "Arm to Amp"
               }
             }
           ]
@@ -72,12 +56,15 @@
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 0,
+    "velocity": 0.0,
+    "rotation": -90.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
-  "previewStartingState": null,
+  "previewStartingState": {
+    "rotation": -60.0,
+    "velocity": 0
+  },
   "useDefaultConstraints": false
 }

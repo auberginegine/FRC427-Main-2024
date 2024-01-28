@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.75,
+        "y": 5.58
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.795995459289497,
+        "y": 5.904079296310251
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.056270140976302,
+        "y": 5.797086096541862
+      },
+      "prevControl": {
+        "x": 7.375404324268366,
+        "y": 6.935104675896556
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Middle Note 2nd"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}

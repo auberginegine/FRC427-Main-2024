@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.6576257764044353,
+      "y": 6.583896877066937
+    },
+    "rotation": 65.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Intake Note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note to Speaker 1st"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Go to Middle 1st"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle Note 1st going back"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
