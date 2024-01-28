@@ -10,6 +10,9 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.robot.subsystems.drivetrain.SwerveModuleConfig;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
+import edu.wpi.first.apriltag.AprilTagFields;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -25,13 +28,12 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
     public static final int kManipulatorControllerPort = 1; 
   }
-
   public static class DrivetrainConstants {
     // Swerve IDs
-    public static SwerveModuleConfig frontLeft = new SwerveModuleConfig(3, 4, 15, 0, false, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig frontRight = new SwerveModuleConfig(5, 6, 16, 0, false, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig backLeft = new SwerveModuleConfig(7, 8, 13, 0, false, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig backRight = new SwerveModuleConfig(1, 2, 14, 0, false, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig frontLeft = new SwerveModuleConfig(3, 4, 15, 0, false, false, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig frontRight = new SwerveModuleConfig(5, 6, 16, 0, false, false, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig backLeft = new SwerveModuleConfig(7, 8, 13, 0, false, false, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig backRight = new SwerveModuleConfig(1, 2, 14, 0, false, false, SensorDirectionValue.CounterClockwise_Positive); 
 
 
     // Gearing & Conversions
@@ -153,7 +155,72 @@ public final class Constants {
 
     public static final double kSuckerManualSpeed = 0; 
     public static final double kShooterManualSpeed = 0; 
+  }
 
+  public class ArmConstants {
+    public static final int kLimitSwitchId = 0;
+    public static final int kArmMotorRightId = 0;
+    public static final int kArmMotorLeftId = 0;
 
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+
+    // calculate using reca.lc
+    // CoM distance: 21.77 in
+    // Arm mass: 20.755 lbs
+    public static final double kS = 0; 
+    public static final double kG = 0; // 0.79 V
+    public static final double kV = 0; // 1.95 V*s/rad
+    public static final double kA = 0; // 0.06 V*s^2/rad
+
+    public static final boolean kRightMotorInverted = false;
+    public static final boolean kLeftMotorInverted = false; 
+
+    public static final int kMotorCurrentLimit = 40;
+    
+    public static final float kSoftLimitForward = 100;
+    public static final float kSoftLimitReverse = 0;
+
+    public static final double kPositionConversionFactor = 360;
+    // velocity = position / 60
+    public static final double kVelocityConversionFactor = 360 / 60.0; 
+    public static final double kTolerance = 0;
+    
+    public static final double kGroundPosition = 0;
+    public static final double kTravelPosition = 0;
+    public static final double kAmpPosition = 0;
+    public static final double kSpeakerPosition = 0;
+
+    public static final double kTravelSpeed = 0;
+  }
+
+  public static class HangConstants {
+    public static final int kHangRightMotorID = 0;
+    public static final int kHangLeftMotorID = 0;
+
+    public static final boolean kRightMotorInverted = false;
+    public static final boolean kLeftMotorInverted = false;
+
+    public static final int kHangMotorLimit = 40;
+
+    public static final double kPositionConversionFactor = 0;
+    public static final double kVelocityConversionFactor = kPositionConversionFactor / 60;
+
+    public static final float kFowardHangSoftLimit = 0;
+    public static final float kReverseHangSoftLimit = 0;
+
+    public static final double kHangSpeed = 1;
+  }
+
+  public static class Vision {
+    public static final double kTranslationStdDevCoefficient = 0.35;
+    public static final double kRotationStdDevCoefficient = 1;
+    public static final AprilTagFieldLayout kAprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(); 
+    public static final double limelightZHeight = 0; // TODO: Fix this
+
+     static {
+        kAprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
+     }
   }
 }

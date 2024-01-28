@@ -4,11 +4,20 @@
 
 package frc.robot;
 
+import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.arm.commands.GoToAmp;
+import frc.robot.subsystems.arm.commands.GoToGround;
+import frc.robot.subsystems.arm.commands.GoToSpeaker;
+import frc.robot.subsystems.arm.commands.GoToTravel;
+import frc.robot.subsystems.arm.commands.SetVelocity;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.SetShooterSpeed;
 import frc.robot.subsystems.intake.commands.SetSuckerIntakeSpeed;
+import frc.robot.subsystems.limelight.Limelight;
+import frc.robot.subsystems.hang.Hang;
+import frc.robot.subsystems.hang.commands.SetHangSpeed;
 import frc.robot.util.DriverController;
 import frc.robot.util.DriverController.Mode;
 
@@ -18,19 +27,23 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
 public class RobotContainer {
   private final AutoPicker autoPicker; 
 
   // drivetrain of the robot
   private final Drivetrain drivetrain = new Drivetrain();
 
+  // intake of the bot
   private final Intake intake = new Intake(); 
+
+  // limelight subsystem of robot
+  private final Limelight limelight = new Limelight(drivetrain); 
+
+  // hang mechanism of robot
+  private final Hang hang = new Hang();
+  
+  // arm of the robot
+  private final Arm arm = new Arm();
   
  //  public Command tunegotoangle2 = new TuneGoToAngle(arm);
 
@@ -60,7 +73,11 @@ public class RobotContainer {
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
+
   private void configureBindings() {
+
+    // --- Driver ---
+
     driverController.a().onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
 
     // driverController.b().onTrue(new TuneTurnToAngle(drivetrain)); 
@@ -69,6 +86,8 @@ public class RobotContainer {
     driverController.rightTrigger()
       .onTrue(new InstantCommand(() -> driverController.setSlowMode(Mode.SLOW)))
       .onFalse(new InstantCommand(() -> driverController.setSlowMode(Mode.NORMAL))); 
+
+    // --- Intake --- 
 
     //  both Suck and Shoot have teh same controls RN (CHANGE ONCE DRIVERS TELL U WHAT CONTROLS THEY WANT)
     new Trigger(() -> manipulatorController.getRightY() > 0.5) // outtake sucker
@@ -90,7 +109,40 @@ public class RobotContainer {
 
     // TODO: add automated controls for intaking from ground, outtaking to amp, outtaking to shooter
       
+    // --- Arm ---
+
+    // right stick y to manually move arm
+    new Trigger(() -> manipulatorController.getLeftY() < -0.5) 
+      .onTrue(new SetVelocity(arm, -Constants.ArmConstants.kTravelSpeed));
+      
+    new Trigger(() -> (manipulatorController.getLeftY() <= 0.5 && manipulatorController.getLeftY() >= -0.5))
+      .onTrue(new SetVelocity(arm, 0));
+
+    new Trigger(() -> manipulatorController.getLeftY() > 0.5)
+      .onTrue(new SetVelocity(arm, Constants.ArmConstants.kTravelSpeed));
+      
+    // buttons to move arm to go to setpoints
+    manipulatorController.a().onTrue(new GoToGround(arm));
+    manipulatorController.b().onTrue(new GoToTravel(arm));
+    manipulatorController.x().onTrue(new GoToSpeaker(arm));
+    manipulatorController.y().onTrue(new GoToAmp(arm));
+
+
+    // --- Hang ---
+
+    //Hang Up when DPAD UP
+    manipulatorController.povUp()
+      .onTrue(new SetHangSpeed(hang, Constants.HangConstants.kHangSpeed)); 
+    //Hang Down when DPAD DOWN
+    manipulatorController.povDown()
+      .onTrue(new SetHangSpeed(hang, -Constants.HangConstants.kHangSpeed)); 
+
+    // Stop hang when neither is pressed
+    manipulatorController.povDown().negate().and(manipulatorController.povUp().negate())
+    .onTrue(new SetHangSpeed((hang), 0)); 
   }
+  
+
   // send any data as needed to the dashboard
   public void doSendables() {
     SmartDashboard.putData("Autonomous", autoPicker.getChooser());
