@@ -10,6 +10,9 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.robot.subsystems.drivetrain.SwerveModuleConfig;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
+import edu.wpi.first.apriltag.AprilTagFields;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -166,6 +169,7 @@ public final class Constants {
 
     public static final double kTravelSpeed = 0;
   }
+
   public static class HangConstants {
     public static final int kHangRightMotorID = 0;
     public static final int kHangLeftMotorID = 0;
@@ -182,5 +186,16 @@ public final class Constants {
     public static final float kReverseHangSoftLimit = 0;
 
     public static final double kHangSpeed = 1;
+  }
+
+  public static class Vision {
+    public static final double kTranslationStdDevCoefficient = 0.35;
+    public static final double kRotationStdDevCoefficient = 1;
+    public static final AprilTagFieldLayout kAprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(); 
+    public static final double limelightZHeight = 0; // TODO: Fix this
+
+     static {
+        kAprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
+     }
   }
 }
