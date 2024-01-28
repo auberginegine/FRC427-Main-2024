@@ -12,6 +12,9 @@ import frc.robot.subsystems.arm.commands.GoToTravel;
 import frc.robot.subsystems.arm.commands.SetVelocity;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.commands.SetShooterSpeed;
+import frc.robot.subsystems.intake.commands.SetSuckerIntakeSpeed;
 import frc.robot.subsystems.limelight.Limelight;
 import frc.robot.subsystems.hang.Hang;
 import frc.robot.subsystems.hang.commands.SetHangSpeed;
@@ -27,17 +30,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
 public class RobotContainer {
   private final AutoPicker autoPicker; 
 
   // drivetrain of the robot
   private final Drivetrain drivetrain = new Drivetrain();
+
+  // intake of the bot
+  private final Intake intake = new Intake(); 
 
   // limelight subsystem of robot
   private final Limelight limelight = new Limelight(drivetrain); 
@@ -100,6 +100,28 @@ public class RobotContainer {
       .onTrue(new InstantCommand(() -> driverController.setSlowMode(Mode.SLOW)))
       .onFalse(new InstantCommand(() -> driverController.setSlowMode(Mode.NORMAL))); 
 
+    // --- Intake --- 
+
+    //  both Suck and Shoot have teh same controls RN (CHANGE ONCE DRIVERS TELL U WHAT CONTROLS THEY WANT)
+    new Trigger(() -> manipulatorController.getRightY() > 0.5) // outtake sucker
+      .onTrue(new SetSuckerIntakeSpeed(intake, -Constants.IntakeConstants.kSuckerManualSpeed));
+
+    new Trigger(() -> manipulatorController.getRightY() < -0.5) // intake sucker
+      .onTrue(new SetSuckerIntakeSpeed(intake, Constants.IntakeConstants.kSuckerManualSpeed));
+
+    new Trigger(() -> manipulatorController.getRightY() > 0.5)  // shoot out
+      .onTrue(new SetShooterSpeed(intake, Constants.IntakeConstants.kShooterManualSpeed));
+
+    new Trigger(() -> manipulatorController.getRightY() < -0.5) // shoot in? (probably not needed)
+      .onTrue(new SetShooterSpeed(intake, -Constants.IntakeConstants.kShooterManualSpeed));
+
+    new Trigger(() -> (manipulatorController.getRightY() <= 0.5 && manipulatorController.getRightY() >= -0.5)) 
+      .onTrue(new SetSuckerIntakeSpeed(intake, 0))
+      .onTrue(new SetShooterSpeed(intake, 0));
+
+
+    // TODO: add automated controls for intaking from ground, outtaking to amp, outtaking to shooter
+      
     // --- Arm ---
 
     // right stick y to manually move arm
@@ -147,4 +169,5 @@ public class RobotContainer {
       // return null; 
     return autoPicker.getAuto();
   }
+  
 }

@@ -138,6 +138,31 @@ public final class Constants {
     public static final double kMaxCentripetalAcceleration = 0.8; 
   }
 
+  public static class IntakeConstants {
+
+    public static int kIntakeMotorShootTopId = 0;
+    public static int kIntakeMotorShootBottomId = 0;
+    public static int kOuttakeMotorSuckId = 0;
+    
+
+    public static boolean kShootTopIntakeInverted = false;
+    public static int kShootTopMotorlimit = 40;
+
+    public static boolean kShootBottomIntakeInverted = false; 
+    public static int kShootBottomMotorlimit = 40;
+
+    public static final boolean kSuckOuttakeInverted = false;
+    public static final int kSuckOuttakeMotorLimit = 20;
+
+    public static final double kShootVelocityConversionFactor = 0; 
+    public static final double kIntakeVelocityConversionFactor = 0; 
+
+    public static final int kBeamBreakId = 0;
+
+    public static final double kSuckerManualSpeed = 0; 
+    public static final double kShooterManualSpeed = 0; 
+  }
+
   public class ArmConstants {
     public static final int kLimitSwitchId = 0;
     public static final int kArmMotorRightId = 0;
