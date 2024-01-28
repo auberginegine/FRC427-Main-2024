@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.61,
-        "y": 7.1
+        "x": 2.5577104734808596,
+        "y": 6.992770607832326
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.61,
-        "y": 7.090273345475601
+        "x": 2.5577104734808596,
+        "y": 6.983043953307927
       },
       "isLocked": false,
-      "linkedName": "Intake Note 1"
+      "linkedName": "Note 1"
     },
     {
       "anchor": {
@@ -51,9 +51,9 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 90.0
   },
   "goalEndState": {
     "velocity": 0.0,
@@ -61,7 +61,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Amp Note",
   "previewStartingState": null,
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

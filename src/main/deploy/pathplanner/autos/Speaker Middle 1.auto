@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6576257764044353,
-      "y": 6.583896877066937
+      "x": 0.6634748038091614,
+      "y": 6.600687689894831
     },
-    "rotation": 65.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -14,19 +14,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Intake Note"
+            "pathName": "Speaker to Note 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Note to Speaker 1st"
+            "pathName": "Note to Speaker 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Go to Middle 1st"
+            "pathName": "Speaker Middle 1"
           }
         },
         {
@@ -38,6 +38,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Two Piece Middle Fling",
   "choreoAuto": false
 }

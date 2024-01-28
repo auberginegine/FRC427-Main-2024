@@ -14,25 +14,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Intake 3rd Note"
+            "pathName": "Speaker to Note 3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Note to Speaker 3rd"
+            "pathName": "Note to Speaker 3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Intake 3rd Note"
+            "pathName": "Speaker to Note 3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Go to Middle 4th"
+            "pathName": "Note 3 to Middle 4th"
           }
         },
         {
@@ -44,6 +44,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Two Piece Middle Fling",
   "choreoAuto": false
 }

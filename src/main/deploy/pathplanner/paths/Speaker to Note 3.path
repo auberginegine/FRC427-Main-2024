@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.9045219092944966,
-        "y": 4.4441303920193915
+        "x": 1.0212487186743262,
+        "y": 4.356431195030721
       },
       "isLocked": false,
-      "linkedName": "Starting 3"
+      "linkedName": "Speaker 3"
     },
     {
       "anchor": {
-        "x": 2.715093550487853,
-        "y": 4.1046482092964185
+        "x": 2.531946633080141,
+        "y": 4.122214464115091
       },
       "prevControl": {
-        "x": 2.437335400986592,
-        "y": 4.238383614611841
+        "x": 2.0443179654821093,
+        "y": 4.221756574754233
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Intake Note 3"
+      "linkedName": "Note 3"
     }
   ],
   "rotationTargets": [],
@@ -33,9 +33,9 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 90.0
   },
   "goalEndState": {
     "velocity": 0,
@@ -43,10 +43,10 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Speaker Note",
   "previewStartingState": {
     "rotation": -60.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

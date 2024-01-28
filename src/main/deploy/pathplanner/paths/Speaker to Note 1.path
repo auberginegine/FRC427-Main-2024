@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6576257764044353,
-        "y": 6.583896877066937
+        "x": 0.6634748038091614,
+        "y": 6.600687689894831
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.9411010227927024,
-        "y": 6.583896877066937
+        "x": 0.9451218902585813,
+        "y": 6.7856543362913975
       },
       "isLocked": false,
-      "linkedName": "Starting 1"
+      "linkedName": "Speaker 1"
     },
     {
       "anchor": {
-        "x": 2.61,
-        "y": 7.1
+        "x": 2.5577104734808596,
+        "y": 6.992770607832326
       },
       "prevControl": {
-        "x": 2.575253075033407,
-        "y": 7.1
+        "x": 2.5229635485142667,
+        "y": 6.992770607832326
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Intake Note 1"
+      "linkedName": "Note 1"
     }
   ],
   "rotationTargets": [
@@ -51,9 +51,9 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 90.0
   },
   "goalEndState": {
     "velocity": 0,
@@ -61,10 +61,10 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Speaker Note",
   "previewStartingState": {
     "rotation": 60.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

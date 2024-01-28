@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6576257764044353,
-      "y": 4.495567086372268
+      "x": 0.6634748038091614,
+      "y": 6.600687689894831
     },
-    "rotation": -60.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -14,18 +14,18 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Intake 3rd Note"
+            "pathName": "Speaker to Note 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Note to Speaker 3rd"
+            "pathName": "Note to Speaker 1"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "TwoPieceReturn",
   "choreoAuto": false
 }

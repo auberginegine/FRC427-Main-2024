@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Sarting to Amp"
+            "pathName": "Starting to Amp 1"
           }
         },
         {
@@ -26,6 +26,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Archive",
   "choreoAuto": false
 }

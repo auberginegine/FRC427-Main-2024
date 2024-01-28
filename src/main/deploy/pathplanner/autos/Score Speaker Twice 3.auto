@@ -2,36 +2,30 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2542914308886268,
-      "y": 5.431714923580223
+      "x": 0.6884877930157377,
+      "y": 4.4852797475010595
     },
-    "rotation": 0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Score Speaker"
+            "pathName": "Speaker to Note 3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Intake Note 2nd"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Note to Speaker 2nd"
+            "pathName": "Note to Speaker 3"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "TwoPieceReturn",
   "choreoAuto": false
 }

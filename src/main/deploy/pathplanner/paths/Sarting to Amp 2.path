@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.75,
-        "y": 5.58
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 2.472241850498738,
-        "y": 5.538850644518333
-      },
-      "isLocked": false,
-      "linkedName": "Intake Note 2"
-    },
-    {
-      "anchor": {
         "x": 1.25,
         "y": 5.4761064972366915
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.607928730895056,
+        "y": 5.4658191583662745
+      },
+      "isLocked": false,
+      "linkedName": "Speaker 2"
+    },
+    {
+      "anchor": {
+        "x": 1.9576577541780673,
+        "y": 7.75214365594608
+      },
       "prevControl": {
-        "x": 1.9392517043179442,
-        "y": 5.4040951251437725
+        "x": 2.1184278960036624,
+        "y": 5.750622428563154
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Starting 2"
+      "linkedName": "Amp 1"
     }
   ],
   "rotationTargets": [],
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -90.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Speaker Amp",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

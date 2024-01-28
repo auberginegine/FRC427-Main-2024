@@ -5,39 +5,33 @@
       "x": 1.25,
       "y": 5.4761064972366915
     },
-    "rotation": 0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Intake Note 2nd"
+            "name": "Score Speaker"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Note to Speaker 2nd"
+            "pathName": "Speaker to Note 2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Go to Middle 2nd"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Middle Note 2nd going back"
+            "pathName": "Note to Speaker 2"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "TwoPieceReturn",
   "choreoAuto": false
 }
