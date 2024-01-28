@@ -16,8 +16,11 @@ import frc.robot.subsystems.limelight.Limelight;
 import frc.robot.subsystems.hang.Hang;
 import frc.robot.subsystems.hang.commands.SetHangSpeed;
 import frc.robot.util.DriverController;
+import frc.robot.util.IOUtils;
 import frc.robot.util.DriverController.Mode;
-
+import frc.robot.subsystems.leds.Led;
+import frc.robot.subsystems.leds.patterns.LEDPattern;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -41,9 +44,15 @@ public class RobotContainer {
 
   // hang mechanism of robot
   private final Hang hang = new Hang();
-  
+
+  // hang of the robot
+  private final Led led = new Led();
+
   // arm of the robot
   private final Arm arm = new Arm();
+  
+  private SendableChooser<LEDPattern> patterns = new SendableChooser<>();
+  
   
  //  public Command tunegotoangle2 = new TuneGoToAngle(arm);
 
@@ -61,9 +70,13 @@ public class RobotContainer {
 
     // driverController.setChassisSpeedsSupplier(drivetrain::getChassisSpeeds); // comment in simulation
     // default command for drivetrain is to calculate speeds from controller and drive the robot
-    drivetrain.setDefaultCommand(new TeleOpCommand(drivetrain, driverController));
-  }
+    // drivetrain.setDefaultCommand(new TeleOpCommand(drivetrain, driverController));
 
+    patterns.addOption("Idle", Constants.LEDs.Patterns.kIdle);
+    patterns.addOption("Rainbow", Constants.LEDs.Patterns.kBalanceFinished);
+    patterns.addOption("Dead", Constants.LEDs.Patterns.kDead);
+  }
+  
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
    * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
@@ -115,7 +128,7 @@ public class RobotContainer {
     manipulatorController.povDown()
       .onTrue(new SetHangSpeed(hang, -Constants.HangConstants.kHangSpeed)); 
 
-    // Stop hang when neither is pressed
+    // // Stop hang when neither is pressed
     manipulatorController.povDown().negate().and(manipulatorController.povUp().negate())
     .onTrue(new SetHangSpeed((hang), 0)); 
   }
@@ -123,13 +136,15 @@ public class RobotContainer {
 
   // send any data as needed to the dashboard
   public void doSendables() {
-    SmartDashboard.putData("Autonomous", autoPicker.getChooser());
-    SmartDashboard.putBoolean("gyro connected", drivetrain.gyro.isConnected()); 
+    // SmartDashboard.putData("Autonomous", autoPicker.getChooser());
+    // SmartDashboard.putBoolean("gyro connected", drivetrain.gyro.isConnected()); 
+    SmartDashboard.putData(patterns);
+    led.setPattern(patterns.getSelected());
   }
 
   // givess the currently picked auto as the chosen auto for the match
   public Command getAutonomousCommand() {
-    //  return null; 
+      // return null; 
     return autoPicker.getAuto();
   }
 }
