@@ -15,6 +15,7 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -45,6 +46,9 @@ public class Drivetrain extends SubsystemBase {
       Constants.DrivetrainConstants.kTurn_D
   ); 
 
+  private Field2d m_odometryField = new Field2d(); 
+  private Field2d m_visionField = new Field2d(); 
+
   public Drivetrain() {
 
     this.rotationController.enableContinuousInput(-180, 180); 
@@ -67,11 +71,10 @@ public class Drivetrain extends SubsystemBase {
     
     this.odometry.update(gyro.getRotation2d(), getPositions());
 
-    
-  }
+    m_odometryField.setRobotPose(getPose());
 
-  public void addVisionMeasurement(double limelightX, double limelightY, double limelightZ) {
-    odometry.addVisionMeasurement(getPose(), limelightZ);
+    SmartDashboard.putData("Robot Odometry Field", m_odometryField);
+    SmartDashboard.putData("Robot Vision Field", m_visionField);
   }
 
   @Override
@@ -231,5 +234,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void addVisionPoseEstimate(Pose3d pose3d, double targetDistance, double timestamp, Matrix<N3, N1> stdDevs) {
     odometry.addVisionMeasurement(pose3d.toPose2d(), timestamp, stdDevs);
+
+    m_visionField.setRobotPose(pose3d.toPose2d());
   }
 }

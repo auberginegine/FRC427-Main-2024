@@ -3,16 +3,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.VecBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -20,9 +12,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import org.photonvision.targeting.PhotonTrackedTarget;
 import frc.robot.Constants;
-import edu.wpi.first.math.MathUtil;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -39,22 +29,19 @@ public class Limelight extends SubsystemBase{
     private double limelightTargetArea;
     private double limelightTargetX;
     private double limelightTargetY;
-    private AprilTagFieldLayout aprilTagFieldLayout;
     private Drivetrain drivetrain;
     private double[] botPoseValues;
 
     // Creates a new limelight object
     public Limelight(Drivetrain drivetrain) {
         limelightNT = NetworkTableInstance.getDefault().getTable("limelight");
-        this.aprilTagFieldLayout = Constants.Vision.kAprilTagFieldLayout;
         this.drivetrain = drivetrain;
     }
 
     // Updates the values for the robot position and camera position
     public void periodic() {
         // Gets the values scored in the table
-        NetworkTableEntry botPose = limelightNT.getEntry("botPose");
-        NetworkTableEntry camPose = limelightNT.getEntry("camPose");
+        NetworkTableEntry botPose = limelightNT.getEntry("botpose_wpiblue");
 
         // Reads values periodically
         botPoseValues = botPose.getDoubleArray(new double[6]); // Make sure these are the right indices
@@ -67,9 +54,9 @@ public class Limelight extends SubsystemBase{
         limelightPitch = botPoseValues[4];
         limelightYaw = botPoseValues[5];
         limelightTotalLatency = botPoseValues[6];
-        limelightTargetArea = limelightNT.getEntry("<tA>").getDouble(0);
-        limelightTargetX = limelightNT.getEntry("<tX>").getDouble(0);
-        limelightTargetY = limelightNT.getEntry("<tY>").getDouble(0);
+        limelightTargetArea = limelightNT.getEntry("tA").getDouble(0);
+        limelightTargetX = limelightNT.getEntry("tX").getDouble(0);
+        limelightTargetY = limelightNT.getEntry("tY").getDouble(0);
 
         // Posts to smart dashboard periodically
         SmartDashboard.putNumber("LimelightX", limelightX);
@@ -136,7 +123,7 @@ public class Limelight extends SubsystemBase{
     // Adds vision measurements to the drivetrain if they are within the field
     public void addVisionFromDrivetrain() {
         if (!isPoseValid()) return; 
-        drivetrain.addVisionPoseEstimate(getCurrentPose3d(), getDistanceToAprilTag(), Timer.getFPGATimestamp() - (botPoseValues[6]/1000.0), calculateVisionStdDevs());
+        drivetrain.addVisionPoseEstimate(getCurrentPose3d(), getDistanceToAprilTag(), Timer.getFPGATimestamp() - (limelightTotalLatency/1000.0), calculateVisionStdDevs());
     }
 
     // Sees if the robot's position as given by the limelight is within the field
