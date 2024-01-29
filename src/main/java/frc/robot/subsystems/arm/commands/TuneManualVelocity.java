@@ -5,6 +5,7 @@ import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.Arm.ArmControlType;
 import frc.robot.util.IOUtils;
 
+// tuning the best speed that the arm should use
 public class TuneManualVelocity extends Command {
     Arm m_arm;
 

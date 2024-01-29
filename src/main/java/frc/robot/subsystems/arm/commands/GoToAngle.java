@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.Arm.ArmControlType;
 
+// controlled by pid 
 public class GoToAngle extends Command {
     Arm m_arm;
     double m_angle;
@@ -20,7 +21,7 @@ public class GoToAngle extends Command {
     }
 
     public void execute() {
-        // makes arm go to angle
+        // makes arm go to angle set point
         m_arm.goToAngle(m_angle);
     }
 
