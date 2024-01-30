@@ -45,7 +45,7 @@ public class Led extends SubsystemBase{
         this.buffer = new AddressableLEDBuffer(length); 
 
         this.ledStrips = List.of(
-            new LEDStrip(buffer, port, length)
+            new LEDStrip(buffer, Constants.LEDs.kLed1Start, Constants.LEDs.kLed1End)
         ); 
         //Starts timer
         this.timer.start();

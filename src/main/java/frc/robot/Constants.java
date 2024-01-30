@@ -36,10 +36,10 @@ public final class Constants {
   }
   public static class DrivetrainConstants {
     // Swerve IDs
-    public static SwerveModuleConfig frontLeft = new SwerveModuleConfig(7, 8, 12, 0, false, false, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig frontRight = new SwerveModuleConfig(1, 2, 9, 0, true, true, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig backLeft = new SwerveModuleConfig(3, 4, 10, 0, true, true, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig backRight = new SwerveModuleConfig(5, 6, 11, 0, true, true, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig frontLeft = new SwerveModuleConfig("FrontLeft", 1, 2, 12, 0.44921875, true, true, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig frontRight = new SwerveModuleConfig("FrontRight", 7, 8, 9, -0.160889, false, false, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig backLeft = new SwerveModuleConfig("BackLeft", 3, 4, 10, 0.216797, true, true, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig backRight = new SwerveModuleConfig("BackRight", 5, 6, 11, 0.167236, true, true, SensorDirectionValue.CounterClockwise_Positive); 
 
 
     // Gearing & Conversions
@@ -231,19 +231,19 @@ public final class Constants {
   }
   public static final class LEDs {
 
-    public static final Color kDefaultColor = Color.fromHSV(215, 100, 67);
+    public static final Color kDefaultColor = Color.kDarkBlue;
 
-    public static final int kLedPort = 0; 
+    public static final int kLedPort = 6; 
     public static final int kLedLength = 10; 
 
     public static final int kLed1Start = 0; 
-    public static final int kLed1End = 0; 
+    public static final int kLed1End = 10; 
     public static final int kLed2Start = 0; 
     public static final int kLed2End = 0;
 
     public static final class Patterns {
       public static final LEDPattern kDefault = new SolidLEDPattern(LEDs.kDefaultColor);
-      public static final LEDPattern kIdle = new FadeLEDPattern(2.5, LEDs.kDefaultColor, Color.fromHSV(44, 86, 93));
+      public static final LEDPattern kIdle = new FadeLEDPattern(2.5, LEDs.kDefaultColor, Color.kYellow);
       public static final LEDPattern kCube = new SolidLEDPattern(Color.kPurple);
       public static final LEDPattern kCone = new SolidLEDPattern(Color.kYellow);
       public static final LEDPattern kDead = new MorseCodePattern(Color.kRed, Color.kBlue, "dead");
