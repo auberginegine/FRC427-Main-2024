@@ -43,6 +43,10 @@ public class Led extends SubsystemBase{
         this.m_Led.setLength(length);
         //Actually sets length from buffer to Leds
         this.buffer = new AddressableLEDBuffer(length); 
+
+        this.ledStrips = List.of(
+            new LEDStrip(buffer, Constants.LEDs.kLed1Start, Constants.LEDs.kLed1End)
+        ); 
         //Starts timer
         this.timer.start();
         //Starts Leds!

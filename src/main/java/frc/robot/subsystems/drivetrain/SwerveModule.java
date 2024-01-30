@@ -46,6 +46,8 @@ public class SwerveModule {
         Constants.DrivetrainConstants.kaVoltSecondsSquaredPerMeter
     ); 
 
+    private String name; 
+
     /**
      * 
      * @param config the config of the corresponding swerve module
@@ -56,6 +58,8 @@ public class SwerveModule {
         int kTurnEncoder = config.getEncoderId();
         double kOffset = config.getAbsoluteEncoderOffset(); 
 
+        this.name = config.getName(); 
+
         this.turnMotor = new CANSparkMax(kTurn, MotorType.kBrushless); 
         this.driveMotor = new CANSparkMax(kDrive, MotorType.kBrushless); 
 
@@ -65,7 +69,7 @@ public class SwerveModule {
         this.turnPIDController = new SwerveTurnPIDController(absoluteTurnEncoder, 0, 0, 0); 
         this.drivePIDController = this.driveMotor.getPIDController(); 
 
-        configureMotors(config.getDriveInverted());
+        configureMotors(config.getDriveInverted(), config.getRotateInverted());
         configureEncoders(config.getAbsoluteEncoderDirection(), kOffset);
         configurePIDControllers();
 
@@ -75,7 +79,7 @@ public class SwerveModule {
     }
 
     // Sets current limits, idle modes, etc. for each motor for maximum performance
-    private void configureMotors(boolean driveInverted) {
+    private void configureMotors(boolean driveInverted, boolean rotateInverted) {
         this.driveMotor.setSmartCurrentLimit(Constants.DrivetrainConstants.kDriveCurrentLimit); 
         this.driveMotor.setIdleMode(IdleMode.kBrake); 
         this.driveMotor.enableVoltageCompensation(12); 
@@ -89,6 +93,14 @@ public class SwerveModule {
         this.turnMotor.enableVoltageCompensation(12); 
         this.turnMotor.setClosedLoopRampRate(Constants.DrivetrainConstants.kTurnRampRate);
         this.turnMotor.setOpenLoopRampRate(Constants.DrivetrainConstants.kTurnRampRate);
+        this.turnMotor.setInverted(rotateInverted);
+    }
+
+    public void doSendables() {
+        SmartDashboard.putNumber(name + " Turn Vel (arb)", this.turnMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber(name + " Drive Vel (m/s)", this.driveEncoder.getVelocity());
+
+        SmartDashboard.putNumber(name + " Abs Turn Angle (degrees)", this.getAngle().getDegrees());
     }
 
     // sets the conversion factors for the drive encoder based on gear ratios

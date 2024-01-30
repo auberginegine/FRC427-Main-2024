@@ -11,6 +11,9 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.subsystems.drivetrain.SwerveModuleConfig;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
+import edu.wpi.first.apriltag.AprilTagFields;
 import frc.robot.subsystems.leds.patterns.FadeLEDPattern;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
 import frc.robot.subsystems.leds.patterns.MorseCodePattern;
@@ -33,10 +36,10 @@ public final class Constants {
   }
   public static class DrivetrainConstants {
     // Swerve IDs
-    public static SwerveModuleConfig frontLeft = new SwerveModuleConfig(3, 4, 15, 0, false, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig frontRight = new SwerveModuleConfig(5, 6, 16, 0, false, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig backLeft = new SwerveModuleConfig(7, 8, 13, 0, false, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig backRight = new SwerveModuleConfig(1, 2, 14, 0, false, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig frontLeft = new SwerveModuleConfig("FrontLeft", 1, 2, 12, 0.44921875, true, true, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig frontRight = new SwerveModuleConfig("FrontRight", 7, 8, 9, -0.160889, false, false, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig backLeft = new SwerveModuleConfig("BackLeft", 3, 4, 10, 0.216797, true, true, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig backRight = new SwerveModuleConfig("BackRight", 5, 6, 11, 0.167236, true, true, SensorDirectionValue.CounterClockwise_Positive); 
 
 
     // Gearing & Conversions
@@ -135,9 +138,72 @@ public final class Constants {
     public static final double kMaxCentripetalAcceleration = 0.8; 
   }
 
+  public static class IntakeConstants {
+
+    public static int kIntakeMotorShootTopId = 15;
+    public static int kIntakeMotorShootBottomId = 16;
+    public static int kOuttakeMotorSuckId = 17;
+    
+
+    public static boolean kShootTopIntakeInverted = false;
+    public static int kShootTopMotorlimit = 40;
+
+    public static boolean kShootBottomIntakeInverted = false; 
+    public static int kShootBottomMotorlimit = 40;
+
+    public static final boolean kSuckOuttakeInverted = false;
+    public static final int kSuckOuttakeMotorLimit = 20;
+
+    public static final double kShootVelocityConversionFactor = 0; 
+    public static final double kIntakeVelocityConversionFactor = 0; 
+
+    public static final int kBeamBreakId = 0;
+
+    public static final double kSuckerManualSpeed = 0; 
+    public static final double kShooterManualSpeed = 0; 
+  }
+
+  public class ArmConstants {
+    public static final int kLimitSwitchId = 1;
+    public static final int kArmMotorRightId = 14;
+    public static final int kArmMotorLeftId = 13;
+
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+
+    // calculate using reca.lc
+    // CoM distance: 21.77 in
+    // Arm mass: 20.755 lbs
+    public static final double kS = 0; 
+    public static final double kG = 0; // 0.79 V
+    public static final double kV = 0; // 1.95 V*s/rad
+    public static final double kA = 0; // 0.06 V*s^2/rad
+
+    public static final boolean kRightMotorInverted = false;
+    public static final boolean kLeftMotorInverted = false; 
+
+    public static final int kMotorCurrentLimit = 40;
+    
+    public static final float kSoftLimitForward = 100;
+    public static final float kSoftLimitReverse = 0;
+
+    public static final double kPositionConversionFactor = 360;
+    // velocity = position / 60
+    public static final double kVelocityConversionFactor = 360 / 60.0; 
+    public static final double kTolerance = 0;
+    
+    public static final double kGroundPosition = 0;
+    public static final double kTravelPosition = 0;
+    public static final double kAmpPosition = 0;
+    public static final double kSpeakerPosition = 0;
+
+    public static final double kTravelSpeed = 0;
+  }
+
   public static class HangConstants {
-    public static final int kHangRightMotorID = 0;
-    public static final int kHangLeftMotorID = 0;
+    public static final int kHangRightMotorID = 19;
+    public static final int kHangLeftMotorID = 18;
 
     public static final boolean kRightMotorInverted = false;
     public static final boolean kLeftMotorInverted = false;
@@ -153,24 +219,31 @@ public final class Constants {
     public static final double kHangSpeed = 1;
   }
 
+  public static class Vision {
+    public static final double kTranslationStdDevCoefficient = 0.35;
+    public static final double kRotationStdDevCoefficient = 1;
+    public static final AprilTagFieldLayout kAprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(); 
+    public static final double limelightZHeight = 0; // TODO: Fix this
+
+    static {
+      kAprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
+    }
+  }
   public static final class LEDs {
 
-    public static final Color kDefaultColor = Color.fromHSV(215, 100, 67);
+    public static final Color kDefaultColor = Color.kDarkBlue;
 
-    public static final int kLedPort = 0; 
-    public static final int kLedLength = 0; 
+    public static final int kLedPort = 6; 
+    public static final int kLedLength = 10; 
 
     public static final int kLed1Start = 0; 
-    public static final int kLed1End = 0; 
+    public static final int kLed1End = 10; 
     public static final int kLed2Start = 0; 
     public static final int kLed2End = 0;
-    
-
 
     public static final class Patterns {
-
       public static final LEDPattern kDefault = new SolidLEDPattern(LEDs.kDefaultColor);
-      public static final LEDPattern kIdle = new FadeLEDPattern(2.5, LEDs.kDefaultColor, Color.fromHSV(44, 86, 93));
+      public static final LEDPattern kIdle = new FadeLEDPattern(2.5, LEDs.kDefaultColor, Color.kYellow);
       public static final LEDPattern kCube = new SolidLEDPattern(Color.kPurple);
       public static final LEDPattern kCone = new SolidLEDPattern(Color.kYellow);
       public static final LEDPattern kDead = new MorseCodePattern(Color.kRed, Color.kBlue, "dead");
@@ -178,8 +251,7 @@ public final class Constants {
       public static final LEDPattern kBalanceFinished = new RainbowPattern(0.5);
       public static final LEDPattern kAllianceRed = new SolidLEDPattern(Color.kRed);
       public static final LEDPattern kAllianceBlue = new SolidLEDPattern(Color.kBlue);
-
     }
-    
+
   }
 }
