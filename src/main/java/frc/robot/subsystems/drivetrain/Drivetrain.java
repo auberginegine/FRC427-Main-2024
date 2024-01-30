@@ -6,11 +6,16 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.Matrix;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -41,6 +46,9 @@ public class Drivetrain extends SubsystemBase {
       Constants.DrivetrainConstants.kTurn_D
   ); 
 
+  private Field2d m_odometryField = new Field2d(); 
+  private Field2d m_visionField = new Field2d(); 
+
   public Drivetrain() {
 
     this.rotationController.enableContinuousInput(-180, 180); 
@@ -62,6 +70,11 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("drive omega", odometry.getEstimatedPosition().getRotation().getDegrees());
     
     this.odometry.update(gyro.getRotation2d(), getPositions());
+
+    m_odometryField.setRobotPose(getPose());
+
+    SmartDashboard.putData("Robot Odometry Field", m_odometryField);
+    SmartDashboard.putData("Robot Vision Field", m_visionField);
   }
 
   @Override
@@ -217,5 +230,11 @@ public class Drivetrain extends SubsystemBase {
    */ 
   public void setDriveState(DriveState state) {
     this.driveState = state; 
+  }
+
+  public void addVisionPoseEstimate(Pose3d pose3d, double targetDistance, double timestamp, Matrix<N3, N1> stdDevs) {
+    odometry.addVisionMeasurement(pose3d.toPose2d(), timestamp, stdDevs);
+
+    m_visionField.setRobotPose(pose3d.toPose2d());
   }
 }
