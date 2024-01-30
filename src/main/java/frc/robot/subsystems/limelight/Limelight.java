@@ -136,4 +136,8 @@ public class Limelight extends SubsystemBase{
         boolean isInUpperZLimit = limelightZ < Constants.Vision.limelightZHeight + 0.5;
         return isInLowerXLimit && isInUpperXLimit && isInLowerYLimit && isInUpperYLimit && isInLowerZLimit && isInUpperZLimit;
     }
+
+    public double getYaw() {
+        return this.limelightYaw;
+    }
 }
