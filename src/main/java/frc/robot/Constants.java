@@ -37,7 +37,7 @@ public final class Constants {
   public static class DrivetrainConstants {
     // Swerve IDs
     public static SwerveModuleConfig frontLeft = new SwerveModuleConfig("FrontLeft", 1, 2, 12, 0.44921875, true, true, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig frontRight = new SwerveModuleConfig("FrontRight", 7, 8, 9, -0.160889, false, false, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig frontRight = new SwerveModuleConfig("FrontRight", 7, 8, 9, -0.160889, true, true, SensorDirectionValue.CounterClockwise_Positive); 
     public static SwerveModuleConfig backLeft = new SwerveModuleConfig("BackLeft", 3, 4, 10, 0.216797, true, true, SensorDirectionValue.CounterClockwise_Positive); 
     public static SwerveModuleConfig backRight = new SwerveModuleConfig("BackRight", 5, 6, 11, 0.167236, true, true, SensorDirectionValue.CounterClockwise_Positive); 
 

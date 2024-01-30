@@ -109,7 +109,7 @@ public class SwerveModule {
         this.driveEncoder.setVelocityConversionFactor(Constants.DrivetrainConstants.kMetersPerSecondPerRPM); 
 
         final MagnetSensorConfigs config = new MagnetSensorConfigs(); 
-        config.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1; 
+        config.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf; 
         config.MagnetOffset = kAbsoluteOffset; 
         config.SensorDirection = direction; 
 

@@ -32,10 +32,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
   // private final AutoPicker autoPicker; 
-  private final SwerveDriveTunerCommand tunerCommand = new SwerveDriveTunerCommand(Constants.DrivetrainConstants.frontLeft);
+  // private final SwerveDriveTunerCommand tunerCommand = new SwerveDriveTunerCommand(Constants.DrivetrainConstants.frontLeft);
 
   // drivetrain of the robot
-  // private final Drivetrain drivetrain = new Drivetrain();
+  private final Drivetrain drivetrain = new Drivetrain();
 
   // intake of the bot
   // private final Intake intake = new Intake(); 
@@ -168,9 +168,9 @@ public class RobotContainer {
 
   // givess the currently picked auto as the chosen auto for the match
   public Command getAutonomousCommand() {
-      // return null; 
+      return null; 
     // return autoPicker.getAuto();
-    return tunerCommand;
+    // return tunerCommand;
 
   }
   
