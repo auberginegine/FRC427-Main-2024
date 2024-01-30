@@ -5,7 +5,6 @@ import frc.robot.Constants;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkBase.SoftLimitDirection;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -44,18 +43,6 @@ public class Arm extends SubsystemBase {
         m_armMotorRight.setSmartCurrentLimit(Constants.ArmConstants.kMotorCurrentLimit);
         m_armMotorLeft.setSmartCurrentLimit(Constants.ArmConstants.kMotorCurrentLimit);
 
-        // forward soft limit
-        m_armMotorRight.enableSoftLimit(SoftLimitDirection.kForward, true);
-        m_armMotorLeft.enableSoftLimit(SoftLimitDirection.kForward, true);
-        m_armMotorRight.setSoftLimit(SoftLimitDirection.kForward, Constants.ArmConstants.kSoftLimitForward);
-        m_armMotorLeft.setSoftLimit(SoftLimitDirection.kForward, Constants.ArmConstants.kSoftLimitForward);
-        
-        // reverse soft limit
-        m_armMotorRight.enableSoftLimit(SoftLimitDirection.kReverse, true);
-        m_armMotorLeft.enableSoftLimit(SoftLimitDirection.kReverse, true);        
-        m_armMotorRight.setSoftLimit(SoftLimitDirection.kReverse, Constants.ArmConstants.kSoftLimitReverse);
-        m_armMotorLeft.setSoftLimit(SoftLimitDirection.kReverse, Constants.ArmConstants.kSoftLimitReverse);
-
         // conversion factors
         m_armEncoderRight.setPositionConversionFactor(Constants.ArmConstants.kPositionConversionFactor);
         m_armEncoderRight.setVelocityConversionFactor(Constants.ArmConstants.kVelocityConversionFactor);
@@ -72,21 +59,35 @@ public class Arm extends SubsystemBase {
         
         double impendingVelocity = 0; 
 
-        // velocity controlled by PID and FF
+        // velocity controlled by PID and FF.
+        // pretending that this goofy ahh because jason plugged in the force eq; 
+        // but ig the second derivative of the force eq is basically position,
+        // luck for him the second derivative of sine is still sine
         if (m_ArmControlType == ArmControlType.PID) {
-           impendingVelocity = m_armPIDController.calculate(m_armEncoderRight.getPosition(), m_targetPosition) + m_armFeedforward.calculate(m_armEncoderRight.getPosition(), 0);
+           impendingVelocity =  m_armPIDController.calculate(m_armEncoderRight.getPosition(), m_targetPosition) 
+                              + m_armFeedforward.calculate(m_armEncoderRight.getPosition() - Constants.ArmConstants.kGasSpringFF * Math.sin(m_armEncoderRight.getPosition() - Constants.ArmConstants.kGasSpringOffset), 0);
         }
+        
         // velocity controlled manually
         else if (m_ArmControlType == ArmControlType.MANUAL) {
             impendingVelocity = m_manualVelocity;
         }
 
-        // if the limit switch is not on and the robot arm is moving forward,
-        // arm is allowed to move. 
+        // if the arm is not reaching beyond the limit switch,
+        // or if the arm is not reaching beyond 100 degs, 
+        // arm is allowed to move 
         // forward defined as away from the limit switch.
-        if (!m_limitSwitch.get() || impendingVelocity >= 0) {
+        // God knows if this works.
+        boolean passReverseSoftLimit = m_limitSwitch.get() && impendingVelocity < 0;
+        boolean passForwardSoftLimit = getAngle() > Constants.ArmConstants.kForwardSoftLimit && impendingVelocity > 0;
+
+        if (!passReverseSoftLimit && !passForwardSoftLimit) {
                 m_armMotorRight.set(impendingVelocity); 
         }
+
+        SmartDashboard.putNumber("Impending Velocity (m/s)", impendingVelocity);
+        SmartDashboard.putBoolean("Reverse soft limit", passReverseSoftLimit);
+        SmartDashboard.putBoolean("forward soft limit", passForwardSoftLimit);
 
     }
 
@@ -124,8 +125,8 @@ public class Arm extends SubsystemBase {
     public void doSendables() {
         SmartDashboard.putNumber("Arm Position (degrees)", getAngle()); 
         SmartDashboard.putNumber("Arm Velocity (degrees/sec)", m_armEncoderRight.getVelocity());
-        SmartDashboard.putBoolean("Is Arm At Set Point", m_limitSwitch.get());
-        SmartDashboard.putBoolean("Arm Limit Switch", isAtAngle());
+        SmartDashboard.putBoolean("Is Arm At Set Point", isAtAngle());
+        SmartDashboard.putBoolean("Arm Limit Switch", m_limitSwitch.get());
         SmartDashboard.putString("Arm Control Type", m_ArmControlType.toString());
     }
 }

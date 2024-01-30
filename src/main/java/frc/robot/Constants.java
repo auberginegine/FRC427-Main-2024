@@ -152,10 +152,10 @@ public final class Constants {
 
     public static final int kMotorCurrentLimit = 40;
     
-    public static final float kSoftLimitForward = 100;
-    public static final float kSoftLimitReverse = 0;
+    public static final float kForwardSoftLimit = 100;
 
     public static final double kPositionConversionFactor = 360;
+
     // velocity = position / 60
     public static final double kVelocityConversionFactor = 360 / 60.0; 
     public static final double kTolerance = 0;
@@ -166,5 +166,10 @@ public final class Constants {
     public static final double kSpeakerPosition = 0;
 
     public static final double kTravelSpeed = 0;
+
+    // torque from gas spring:
+    // https://www.desmos.com/calculator/3mcdsjeubz
+    public static final double kGasSpringFF = 180;
+    public static final double kGasSpringOffset = 18.872; 
   }
 }
