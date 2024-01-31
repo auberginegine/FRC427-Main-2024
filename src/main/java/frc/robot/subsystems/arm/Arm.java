@@ -90,7 +90,7 @@ public class Arm extends SubsystemBase {
 
     }
 
-    public void goToAngle(double angle) {
+    public boolean goToAngle(double angle) {
         this.m_targetPosition = angle;
     }
 

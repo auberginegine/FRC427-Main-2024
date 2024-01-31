@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.commands.GoToAmp;
+import frc.robot.subsystems.arm.commands.GoToAngle;
 import frc.robot.subsystems.arm.commands.GoToGround;
 import frc.robot.subsystems.arm.commands.GoToSpeaker;
 import frc.robot.subsystems.arm.commands.GoToTravel;
@@ -13,6 +14,7 @@ import frc.robot.subsystems.arm.commands.SetVelocity;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.commands.IntakeFromGround;
 import frc.robot.subsystems.intake.commands.SetShooterSpeed;
 import frc.robot.subsystems.intake.commands.SetSuckerIntakeSpeed;
 import frc.robot.subsystems.limelight.Limelight;
@@ -20,9 +22,10 @@ import frc.robot.subsystems.hang.Hang;
 import frc.robot.subsystems.hang.commands.SetHangSpeed;
 import frc.robot.util.DriverController;
 import frc.robot.util.DriverController.Mode;
-
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -62,6 +65,8 @@ public class RobotContainer {
     // driverController.setChassisSpeedsSupplier(drivetrain::getChassisSpeeds); // comment in simulation
     // default command for drivetrain is to calculate speeds from controller and drive the robot
     drivetrain.setDefaultCommand(new TeleOpCommand(drivetrain, driverController));
+
+    manipulatorController.getHID().setRumble(RumbleType.kBothRumble, 0);
   }
 
   /**
@@ -154,5 +159,27 @@ public class RobotContainer {
     //  return null; 
     return autoPicker.getAuto();
   }
+
+  public Command autoIntakeCommand() {
+    return Commands.sequence(new GoToGround(arm), new IntakeFromGround(intake, Constants.IntakeConstants.kSuckerManualSpeed)).finallyDo(() -> {
+      arm.goToAngle(Constants.ArmConstants.kTravelPosition);
+    });
+
+  }
   
+  public Command vibrateController() {
+    return Commands.runOnce(() -> {
+      manipulatorController.getHID().setRumble(RumbleType.kBothRumble, 1);
+    }).withTimeout(1).andThen(() -> { 
+      manipulatorController.getHID().setRumble(RumbleType.kBothRumble, 0);
+    });  
+  }
+
+public Command vibrateControllerDriver() {
+    return Commands.runOnce(() -> {
+      driverController.getHID().setRumble(RumbleType.kBothRumble, 1);
+    }).withTimeout(1).andThen(() -> { 
+      driverController.getHID().setRumble(RumbleType.kBothRumble, 0);
+
+
 }
