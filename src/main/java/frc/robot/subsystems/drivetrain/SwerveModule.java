@@ -100,6 +100,8 @@ public class SwerveModule {
         SmartDashboard.putNumber(name + " Turn Vel (arb)", this.turnMotor.getEncoder().getVelocity());
         SmartDashboard.putNumber(name + " Drive Vel (m/s)", this.driveEncoder.getVelocity());
 
+        if (this.getReferenceState() != null) SmartDashboard.putNumber(name + "Commanded Drive Vel (m/s)", this.getReferenceState().speedMetersPerSecond); 
+
         SmartDashboard.putNumber(name + " Abs Turn Angle (degrees)", this.getAngle().getDegrees());
     }
 

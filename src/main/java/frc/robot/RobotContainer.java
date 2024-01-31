@@ -12,6 +12,8 @@ import frc.robot.subsystems.arm.commands.GoToTravel;
 import frc.robot.subsystems.arm.commands.SetVelocity;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.SwerveDriveTunerCommand;
+import frc.robot.subsystems.drivetrain.commands.SwerveTurnTunerCommand;
+import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.SetShooterSpeed;
 import frc.robot.subsystems.intake.commands.SetSuckerIntakeSpeed;
@@ -32,7 +34,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
   // private final AutoPicker autoPicker; 
-  // private final SwerveDriveTunerCommand tunerCommand = new SwerveDriveTunerCommand(Constants.DrivetrainConstants.frontLeft);
+  // private final SwerveTurnTunerCommand tunerCommand = new SwerveTurnTunerCommand(Constants.DrivetrainConstants.frontLeft);
 
   // drivetrain of the robot
   private final Drivetrain drivetrain = new Drivetrain();
@@ -72,7 +74,7 @@ public class RobotContainer {
 
     // driverController.setChassisSpeedsSupplier(drivetrain::getChassisSpeeds); // comment in simulation
     // default command for drivetrain is to calculate speeds from controller and drive the robot
-    // drivetrain.setDefaultCommand(new TeleOpCommand(drivetrain, driverController));
+    drivetrain.setDefaultCommand(new TeleOpCommand(drivetrain, driverController));
 
     patterns.addOption("Idle", Constants.LEDs.Patterns.kIdle);
     patterns.addOption("Rainbow", Constants.LEDs.Patterns.kBalanceFinished);

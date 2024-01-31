@@ -76,10 +76,10 @@ public final class Constants {
     // TODO: tune these
     public static double kMaxSpeedMetersPerSecond = 2.0; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
     public static double kMaxSlowSpeedMetersPerSecond = 1.0; 
-    public static final double kMaxAccelerationMetersPerSecondSquared = kMaxSpeedMetersPerSecond / 1.0; // max acceleration of robot (accelerate to max speed in 1 second)
+    public static final double kMaxAccelerationMetersPerSecondSquared = kMaxSpeedMetersPerSecond / 0.2; // max acceleration of robot (accelerate to max speed in 1 second)
     public static double kMaxRotationRadPerSecond = 3.14; // max rotation speed of the robot
     public static final double kMaxSlowRotationRadPerSecond = Math.PI / 2; 
-    public static final double kMaxRotationAccelerationRadPerSecondSquared = Math.PI; // max angular acceleration of robot
+    public static final double kMaxRotationAccelerationRadPerSecondSquared = kMaxRotationRadPerSecond / 0.2; // max angular acceleration of robot
 
     // feedforward values (NO NEED to tune these)
     public static final double ksVolts = 0; 
@@ -87,16 +87,16 @@ public final class Constants {
     public static final double kaVoltSecondsSquaredPerMeter = 0; 
 
     // drive speed PID values for a swerve module
-    public static final double kModuleDrive_P = 6.8901E-06; 
+    public static final double kModuleDrive_P = 0.0006890099939482752; 
     public static final double kModuleDrive_I = 0; 
     public static final double kModuleDrive_D = 0; 
-    public static final double kModuleDrive_FF = 0.31;
+    public static final double kModuleDrive_FF = 0.2;
 
     // found from sysid for one of the turn modules or tune by yourself
     // turn PID values for a swerve module
-    public static final double kModuleTurn_P = 0.01; 
+    public static final double kModuleTurn_P = 0.0081; 
     public static final double kModuleTurn_I = 0; 
-    public static final double kModuleTurn_D = 0.0001; 
+    public static final double kModuleTurn_D = 0.00032; 
 
     // turn in place PID for the whole robot
     public static final double kTurn_P = 0.054; 
