@@ -135,6 +135,7 @@ public final class Constants {
     public static final int kArmMotorRightId = 0;
     public static final int kArmMotorLeftId = 0;
 
+    // tune arm constants
     public static final double kP = 0;
     public static final double kI = 0;
     public static final double kD = 0;
@@ -153,6 +154,7 @@ public final class Constants {
     public static final int kMotorCurrentLimit = 40;
     
     public static final float kForwardSoftLimit = 100;
+    public static final double kReverseSoftLimit = 0; 
 
     public static final double kPositionConversionFactor = 360;
 
@@ -170,6 +172,6 @@ public final class Constants {
     // torque from gas spring:
     // https://www.desmos.com/calculator/3mcdsjeubz
     public static final double kGasSpringFF = 180;
-    public static final double kGasSpringOffset = 18.872; 
+    public static final double kGasSpringOffset = 18.872;
   }
 }

@@ -59,10 +59,8 @@ public class Arm extends SubsystemBase {
         
         double impendingVelocity = 0; 
 
+        // TODO: fix this
         // velocity controlled by PID and FF.
-        // pretending that this goofy ahh because jason plugged in the force eq; 
-        // but ig the second derivative of the force eq is basically position,
-        // luck for him the second derivative of sine is still sine
         if (m_ArmControlType == ArmControlType.PID) {
            impendingVelocity =  m_armPIDController.calculate(m_armEncoderRight.getPosition(), m_targetPosition) 
                               + m_armFeedforward.calculate(m_armEncoderRight.getPosition() - Constants.ArmConstants.kGasSpringFF * Math.sin(m_armEncoderRight.getPosition() - Constants.ArmConstants.kGasSpringOffset), 0);
@@ -77,8 +75,7 @@ public class Arm extends SubsystemBase {
         // or if the arm is not reaching beyond 100 degs, 
         // arm is allowed to move 
         // forward defined as away from the limit switch.
-        // God knows if this works.
-        boolean passReverseSoftLimit = m_limitSwitch.get() && impendingVelocity < 0;
+        boolean passReverseSoftLimit = (m_limitSwitch.get() || getAngle() < Constants.ArmConstants.kReverseSoftLimit) && impendingVelocity < 0;
         boolean passForwardSoftLimit = getAngle() > Constants.ArmConstants.kForwardSoftLimit && impendingVelocity > 0;
 
         if (!passReverseSoftLimit && !passForwardSoftLimit) {
@@ -89,6 +86,10 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putBoolean("Reverse soft limit", passReverseSoftLimit);
         SmartDashboard.putBoolean("forward soft limit", passForwardSoftLimit);
 
+    }
+
+    public double getError() {
+        return m_armPIDController.getPositionError();
     }
 
     public void goToAngle(double angle) {
@@ -116,17 +117,46 @@ public class Arm extends SubsystemBase {
         this.m_armPIDController.setPID(p, i, d);
     }
 
+    public ArmControlState getArmControlState() {
+        if (m_targetPosition == Constants.ArmConstants.kGroundPosition) {
+            return ArmControlState.GROUND;
+        }
+        else if (m_targetPosition == Constants.ArmConstants.kTravelPosition) {
+            return ArmControlState.TRAVEL;
+        }
+        else if (m_targetPosition == Constants.ArmConstants.kAmpPosition) {
+            return ArmControlState.AMP;
+        }
+        else if (m_targetPosition == Constants.ArmConstants.kSpeakerPosition) {
+            return ArmControlState.SPEAKER;
+        }
+        else {
+            return ArmControlState.CUSTOM;
+        }
+    }
+
     public enum ArmControlType {
         MANUAL, 
         PID
     }
 
+    public enum ArmControlState {
+        GROUND,
+        TRAVEL,
+        AMP,
+        SPEAKER, 
+        CUSTOM
+    }
+
     // add logging for arm 
+    // are units correct?
     public void doSendables() {
-        SmartDashboard.putNumber("Arm Position (degrees)", getAngle()); 
-        SmartDashboard.putNumber("Arm Velocity (degrees/sec)", m_armEncoderRight.getVelocity());
+        SmartDashboard.putNumber("Arm Position (deg)", getAngle()); 
+        SmartDashboard.putNumber("Arm Velocity (deg/sec)", m_armEncoderRight.getVelocity());
+        SmartDashboard.putNumber("Arm Error (deg)", getError());
         SmartDashboard.putBoolean("Is Arm At Set Point", isAtAngle());
         SmartDashboard.putBoolean("Arm Limit Switch", m_limitSwitch.get());
         SmartDashboard.putString("Arm Control Type", m_ArmControlType.toString());
+        SmartDashboard.putString("Arm Control State", getArmControlState().toString());
     }
 }
