@@ -27,9 +27,11 @@ public class Arm extends SubsystemBase {
     
     private PIDController m_armPIDController = new PIDController(Constants.ArmConstants.kP, Constants.ArmConstants.kI, Constants.ArmConstants.kD);
     
-    public ArmFeedforward m_armFeedforward = new ArmFeedforward(Constants.ArmConstants.kS, Constants.ArmConstants.kG, Constants.ArmConstants.kV, Constants.ArmConstants.kA);
+    // public ArmFeedforward m_armFeedforward = new ArmFeedforward(Constants.ArmConstants.kS, Constants.ArmConstants.kG, Constants.ArmConstants.kV, Constants.ArmConstants.kA);
 
     private ArmControlType m_ArmControlType = Arm.ArmControlType.PID;
+    private double m_kG = Constants.ArmConstants.kGravityFF;
+    private double m_kS = Constants.ArmConstants.kSpringFF;
 
     public Arm() {
         setupMotors();
@@ -59,11 +61,11 @@ public class Arm extends SubsystemBase {
         
         double impendingVelocity = 0; 
 
-        // TODO: fix this
-        // velocity controlled by PID and FF.
+        // velocity controlled by PID and custom FF
         if (m_ArmControlType == ArmControlType.PID) {
            impendingVelocity =  m_armPIDController.calculate(m_armEncoderRight.getPosition(), m_targetPosition) 
-                              + m_armFeedforward.calculate(m_armEncoderRight.getPosition() - Constants.ArmConstants.kGasSpringFF * Math.sin(m_armEncoderRight.getPosition() - Constants.ArmConstants.kGasSpringOffset), 0);
+                              + m_kG * Math.cos(m_armEncoderRight.getPosition())
+                              + m_kS;
         }
         
         // velocity controlled manually
@@ -83,9 +85,17 @@ public class Arm extends SubsystemBase {
         }
 
         SmartDashboard.putNumber("Impending Velocity (m/s)", impendingVelocity);
-        SmartDashboard.putBoolean("Reverse soft limit", passReverseSoftLimit);
-        SmartDashboard.putBoolean("forward soft limit", passForwardSoftLimit);
+        SmartDashboard.putBoolean("Pass Reverse Soft Limit", passReverseSoftLimit);
+        SmartDashboard.putBoolean("Pass Forward Soft Limit", passForwardSoftLimit);
 
+    }
+
+    public void setKG(double kG) {
+        this.m_kG = kG;
+    }
+
+    public void setKS(double kS) {
+        this.m_kS = kS;
     }
 
     public double getError() {
@@ -99,6 +109,7 @@ public class Arm extends SubsystemBase {
     public double getAngle() {
         return m_armEncoderRight.getPosition();
     }
+
 
     public void setSpeed(double speed) {
         this.m_manualVelocity = speed;

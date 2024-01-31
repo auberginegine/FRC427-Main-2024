@@ -1,6 +1,5 @@
 package frc.robot.subsystems.arm.commands;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.arm.Arm;
@@ -25,11 +24,9 @@ public class TunePIDGoToAngle extends Command {
                     IOUtils.get("Arm I", Constants.ArmConstants.kI), 
                     IOUtils.get("Arm D", Constants.ArmConstants.kD));
 
-        m_arm.m_armFeedforward = new ArmFeedforward(IOUtils.get("Arm kS", Constants.ArmConstants.kS), 
-                                                    IOUtils.get("Arm kG", Constants.ArmConstants.kG), 
-                                                    IOUtils.get("Arm kV", Constants.ArmConstants.kV), 
-                                                    IOUtils.get("Arm kA", Constants.ArmConstants.kA));
-                                      
+        m_arm.setKG(IOUtils.get("Arm kG", Constants.ArmConstants.kGravityFF));
+        m_arm.setKS(IOUtils.get("Arm kS", Constants.ArmConstants.kSpringFF));
+
         m_arm.goToAngle(IOUtils.get("Arm Angle"));
     }
 
