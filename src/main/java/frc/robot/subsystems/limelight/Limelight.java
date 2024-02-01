@@ -11,12 +11,18 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj.Timer;
 
-public class Limelight extends SubsystemBase{
+public class Limelight extends SubsystemBase {
+
+    
+    private static Limelight instance = new Limelight(Drivetrain.getInstance());
+
+    public static Limelight getInstance() {
+        return instance; 
+    }
 
     private static NetworkTable limelightNT = NetworkTableInstance.getDefault().getTable("limelight");
     private double limelightX;
@@ -33,7 +39,7 @@ public class Limelight extends SubsystemBase{
     private double[] botPoseValues;
 
     // Creates a new limelight object
-    public Limelight(Drivetrain drivetrain) {
+    private Limelight(Drivetrain drivetrain) {
         limelightNT = NetworkTableInstance.getDefault().getTable("limelight");
         this.drivetrain = drivetrain;
     }

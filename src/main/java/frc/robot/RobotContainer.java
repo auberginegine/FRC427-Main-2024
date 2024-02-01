@@ -6,7 +6,6 @@ package frc.robot;
 
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.commands.GoToAmp;
-import frc.robot.subsystems.arm.commands.GoToAngle;
 import frc.robot.subsystems.arm.commands.GoToGround;
 import frc.robot.subsystems.arm.commands.GoToSpeaker;
 import frc.robot.subsystems.arm.commands.GoToTravel;
@@ -27,6 +26,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -34,19 +34,19 @@ public class RobotContainer {
   private final AutoPicker autoPicker; 
 
   // drivetrain of the robot
-  private final Drivetrain drivetrain = new Drivetrain();
+  private final Drivetrain drivetrain = Drivetrain.getInstance();
 
   // intake of the bot
-  private final Intake intake = new Intake(); 
+  private final Intake intake = Intake.getInstance(); 
 
   // limelight subsystem of robot
-  private final Limelight limelight = new Limelight(drivetrain); 
+  // private final Limelight limelight = Limelight.getInstance(); 
 
   // hang mechanism of robot
-  private final Hang hang = new Hang();
+  private final Hang hang = Hang.getInstance();
   
   // arm of the robot
-  private final Arm arm = new Arm();
+  private final Arm arm = Arm.getInstance();
   
  //  public Command tunegotoangle2 = new TuneGoToAngle(arm);
 
@@ -65,8 +65,6 @@ public class RobotContainer {
     // driverController.setChassisSpeedsSupplier(drivetrain::getChassisSpeeds); // comment in simulation
     // default command for drivetrain is to calculate speeds from controller and drive the robot
     drivetrain.setDefaultCommand(new TeleOpCommand(drivetrain, driverController));
-
-    manipulatorController.getHID().setRumble(RumbleType.kBothRumble, 0);
   }
 
   /**
@@ -135,7 +133,7 @@ public class RobotContainer {
 
     // --- Hang ---
 
-    //Hang Up when DPAD UP
+    // Hang Up when DPAD UP
     manipulatorController.povUp()
       .onTrue(new SetHangSpeed(hang, Constants.HangConstants.kHangSpeed)); 
     //Hang Down when DPAD DOWN
@@ -159,27 +157,4 @@ public class RobotContainer {
     //  return null; 
     return autoPicker.getAuto();
   }
-
-  public Command autoIntakeCommand() {
-    return Commands.sequence(new GoToGround(arm), new IntakeFromGround(intake, Constants.IntakeConstants.kSuckerManualSpeed)).finallyDo(() -> {
-      arm.goToAngle(Constants.ArmConstants.kTravelPosition);
-    });
-
-  }
-  
-  public Command vibrateController() {
-    return Commands.runOnce(() -> {
-      manipulatorController.getHID().setRumble(RumbleType.kBothRumble, 1);
-    }).withTimeout(1).andThen(() -> { 
-      manipulatorController.getHID().setRumble(RumbleType.kBothRumble, 0);
-    });  
-  }
-
-public Command vibrateControllerDriver() {
-    return Commands.runOnce(() -> {
-      driverController.getHID().setRumble(RumbleType.kBothRumble, 1);
-    }).withTimeout(1).andThen(() -> { 
-      driverController.getHID().setRumble(RumbleType.kBothRumble, 0);
-
-
 }
