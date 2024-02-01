@@ -14,7 +14,6 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.SetShooterSpeed;
 import frc.robot.subsystems.intake.commands.SetSuckerIntakeSpeed;
-import frc.robot.subsystems.limelight.Limelight;
 import frc.robot.subsystems.hang.Hang;
 import frc.robot.subsystems.hang.commands.SetHangSpeed;
 import frc.robot.util.DriverController;
@@ -32,22 +31,24 @@ public class RobotContainer {
   private final AutoPicker autoPicker; 
 
   // drivetrain of the robot
-  private final Drivetrain drivetrain = new Drivetrain();
+  private final Drivetrain drivetrain = Drivetrain.getInstance();
 
   // intake of the bot
-  private final Intake intake = new Intake(); 
+  private final Intake intake = Intake.getInstance(); 
 
   // limelight subsystem of robot
   // private final Limelight limelight = new Limelight(drivetrain); 
 
-  // hang mechanism of robot
-  private final Hang hang = new Hang();
-
   // hang of the robot
   private final Led led = new Led();
 
+  // private final Limelight limelight = Limelight.getInstance(); 
+
+  // hang mechanism of robot
+  private final Hang hang = Hang.getInstance();
+  
   // arm of the robot
-  private final Arm arm = new Arm();
+  private final Arm arm = Arm.getInstance();
   
   private SendableChooser<LEDPattern> patterns = new SendableChooser<>();
   
@@ -141,7 +142,7 @@ public class RobotContainer {
 
     // --- Hang ---
 
-    //Hang Up when DPAD UP
+    // Hang Up when DPAD UP
     manipulatorController.povUp()
       .onTrue(new SetHangSpeed(hang, Constants.HangConstants.kHangSpeed)); 
     //Hang Down when DPAD DOWN
@@ -156,8 +157,8 @@ public class RobotContainer {
 
   // send any data as needed to the dashboard
   public void doSendables() {
-    // SmartDashboard.putData("Autonomous", autoPicker.getChooser());
-    // SmartDashboard.putBoolean("gyro connected", drivetrain.gyro.isConnected()); 
+    SmartDashboard.putData("Autonomous", autoPicker.getChooser());
+    SmartDashboard.putBoolean("gyro connected", drivetrain.gyro.isConnected()); 
     SmartDashboard.putData(patterns);
     led.setPattern(patterns.getSelected());
   }
@@ -167,5 +168,4 @@ public class RobotContainer {
       // return null; 
     return autoPicker.getAuto();
   }
-  
 }
