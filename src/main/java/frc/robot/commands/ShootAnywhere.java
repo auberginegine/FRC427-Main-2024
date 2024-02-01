@@ -34,7 +34,7 @@ public class ShootAnywhere extends SequentialCommandGroup {
     }
 
     public Command shootAnywhere() {
-        double angleToTurnRobot = drivetrain.getHeading() - ;
+        double angleToTurnRobot = drivetrain.getHeading();
         TurnToAngle turnToAngle = new TurnToAngle(drivetrain, angleToTurnRobot);
         double angleToTurnArm = 0.0;
         GoToAngle goToAngle = new GoToAngle(arm, angleToTurnArm);

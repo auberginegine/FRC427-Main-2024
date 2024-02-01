@@ -224,6 +224,7 @@ public final class Constants {
     public static final double kRotationStdDevCoefficient = 1;
     public static final AprilTagFieldLayout kAprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(); 
     public static final double limelightZHeight = 0; // TODO: Fix this
+    public static final double kMaxAccuracyRange = 1000;
 
     static {
       kAprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
