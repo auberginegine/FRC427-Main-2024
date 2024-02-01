@@ -64,7 +64,7 @@ public class Arm extends SubsystemBase {
         // velocity controlled by PID and custom FF
         if (m_ArmControlType == ArmControlType.PID) {
            impendingVelocity =  m_armPIDController.calculate(m_armEncoderRight.getPosition(), m_targetPosition) 
-                              + m_kG * Math.cos(m_armEncoderRight.getPosition())
+                              + m_kG * Math.cos(Math.toRadians(m_armEncoderRight.getPosition()))
                               + m_kS;
         }
         
