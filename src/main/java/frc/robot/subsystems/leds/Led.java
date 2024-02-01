@@ -10,9 +10,13 @@ import frc.robot.subsystems.leds.patterns.LEDPattern;
 import edu.wpi.first.wpilibj.Timer;
 
 
+public class Led extends SubsystemBase {
+    
+    private static Led instance = new Led();
 
-
-public class Led extends SubsystemBase{
+    public static Led getInstance() {
+        return instance; 
+    }
     //Create Led, ledstrips, buffer, pattern, and timer
     AddressableLED m_Led;
 
@@ -25,18 +29,18 @@ public class Led extends SubsystemBase{
     private Timer timer = new Timer();
 
     //If port and Length aren't given, take from Constants. Will then run next Led below
-    public Led() {
+    private Led() {
         this(Constants.LEDs.kLedPort, Constants.LEDs.kLedLength); 
     }
 
     //If Pattern isn't given, will run with default pattern and then run next Led below
-    public Led(int port, int length) {
+    private Led(int port, int length) {
         // default pattern
         this(port, length, Constants.LEDs.Patterns.kDefault); 
     }
 
     //Tells Leds what to do with given port, legnth, and pattern
-    public Led(int port, int length, LEDPattern pattern) {
+    private Led(int port, int length, LEDPattern pattern) {
         //Sets Port
         this.m_Led = new AddressableLED(port);
         //Sets Length to buffer
@@ -45,7 +49,7 @@ public class Led extends SubsystemBase{
         this.buffer = new AddressableLEDBuffer(length); 
 
         this.ledStrips = List.of(
-            new LEDStrip(buffer, port, length)
+            new LEDStrip(buffer, Constants.LEDs.kLed1Start, Constants.LEDs.kLed1End)
         ); 
         //Starts timer
         this.timer.start();

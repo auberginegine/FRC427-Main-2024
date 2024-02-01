@@ -36,10 +36,10 @@ public final class Constants {
   }
   public static class DrivetrainConstants {
     // Swerve IDs
-    public static SwerveModuleConfig frontLeft = new SwerveModuleConfig(7, 8, 12, 0, false, false, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig frontRight = new SwerveModuleConfig(1, 2, 9, 0, true, true, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig backLeft = new SwerveModuleConfig(3, 4, 10, 0, true, true, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig backRight = new SwerveModuleConfig(5, 6, 11, 0, true, true, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig frontLeft = new SwerveModuleConfig("FrontLeft", 1, 2, 12, 0.44921875, true, true, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig frontRight = new SwerveModuleConfig("FrontRight", 7, 8, 9, -0.160889, true, true, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig backLeft = new SwerveModuleConfig("BackLeft", 3, 4, 10, 0.216797, true, true, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig backRight = new SwerveModuleConfig("BackRight", 5, 6, 11, 0.167236, true, true, SensorDirectionValue.CounterClockwise_Positive); 
 
 
     // Gearing & Conversions
@@ -76,10 +76,10 @@ public final class Constants {
     // TODO: tune these
     public static double kMaxSpeedMetersPerSecond = 2.0; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
     public static double kMaxSlowSpeedMetersPerSecond = 1.0; 
-    public static final double kMaxAccelerationMetersPerSecondSquared = kMaxSpeedMetersPerSecond / 1.0; // max acceleration of robot (accelerate to max speed in 1 second)
+    public static final double kMaxAccelerationMetersPerSecondSquared = kMaxSpeedMetersPerSecond / 0.2; // max acceleration of robot (accelerate to max speed in 1 second)
     public static double kMaxRotationRadPerSecond = 3.14; // max rotation speed of the robot
     public static final double kMaxSlowRotationRadPerSecond = Math.PI / 2; 
-    public static final double kMaxRotationAccelerationRadPerSecondSquared = Math.PI; // max angular acceleration of robot
+    public static final double kMaxRotationAccelerationRadPerSecondSquared = kMaxRotationRadPerSecond / 0.2; // max angular acceleration of robot
 
     // feedforward values (NO NEED to tune these)
     public static final double ksVolts = 0; 
@@ -87,16 +87,16 @@ public final class Constants {
     public static final double kaVoltSecondsSquaredPerMeter = 0; 
 
     // drive speed PID values for a swerve module
-    public static final double kModuleDrive_P = 6.8901E-06; 
+    public static final double kModuleDrive_P = 0.0006890099939482752; 
     public static final double kModuleDrive_I = 0; 
     public static final double kModuleDrive_D = 0; 
-    public static final double kModuleDrive_FF = 0.31;
+    public static final double kModuleDrive_FF = 0.2;
 
     // found from sysid for one of the turn modules or tune by yourself
     // turn PID values for a swerve module
-    public static final double kModuleTurn_P = 0.01; 
+    public static final double kModuleTurn_P = 0.0081; 
     public static final double kModuleTurn_I = 0; 
-    public static final double kModuleTurn_D = 0.0001; 
+    public static final double kModuleTurn_D = 0.00032; 
 
     // turn in place PID for the whole robot
     public static final double kTurn_P = 0.054; 
@@ -231,19 +231,19 @@ public final class Constants {
   }
   public static final class LEDs {
 
-    public static final Color kDefaultColor = Color.fromHSV(215, 100, 67);
+    public static final Color kDefaultColor = Color.kDarkBlue;
 
-    public static final int kLedPort = 0; 
+    public static final int kLedPort = 6; 
     public static final int kLedLength = 10; 
 
     public static final int kLed1Start = 0; 
-    public static final int kLed1End = 0; 
+    public static final int kLed1End = 10; 
     public static final int kLed2Start = 0; 
     public static final int kLed2End = 0;
 
     public static final class Patterns {
       public static final LEDPattern kDefault = new SolidLEDPattern(LEDs.kDefaultColor);
-      public static final LEDPattern kIdle = new FadeLEDPattern(2.5, LEDs.kDefaultColor, Color.fromHSV(44, 86, 93));
+      public static final LEDPattern kIdle = new FadeLEDPattern(2.5, LEDs.kDefaultColor, Color.kYellow);
       public static final LEDPattern kCube = new SolidLEDPattern(Color.kPurple);
       public static final LEDPattern kCone = new SolidLEDPattern(Color.kYellow);
       public static final LEDPattern kDead = new MorseCodePattern(Color.kRed, Color.kBlue, "dead");

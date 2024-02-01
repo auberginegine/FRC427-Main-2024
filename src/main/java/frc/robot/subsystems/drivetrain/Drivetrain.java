@@ -82,11 +82,19 @@ public class Drivetrain extends SubsystemBase {
 
     SmartDashboard.putData("Robot Odometry Field", m_odometryField);
     SmartDashboard.putData("Robot Vision Field", m_visionField);
+    doSendables();
   }
 
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+  }
+
+  public void doSendables() {
+    frontLeft.doSendables();
+    frontRight.doSendables();
+    backLeft.doSendables();
+    backRight.doSendables();
   }
 
   
