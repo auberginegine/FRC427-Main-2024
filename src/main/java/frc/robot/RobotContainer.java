@@ -102,56 +102,56 @@ public class RobotContainer {
     // --- Intake --- 
 
     //  both Suck and Shoot have teh same controls RN (CHANGE ONCE DRIVERS TELL U WHAT CONTROLS THEY WANT)
-    new Trigger(() -> manipulatorController.getRightY() > 0.5) // outtake sucker
-      .onTrue(new SetSuckerIntakeSpeed(intake, -Constants.IntakeConstants.kSuckerManualSpeed));
+    // new Trigger(() -> manipulatorController.getRightY() > 0.5) // outtake sucker
+    //   .onTrue(new SetSuckerIntakeSpeed(intake, -Constants.IntakeConstants.kSuckerManualSpeed));
 
-    new Trigger(() -> manipulatorController.getRightY() < -0.5) // intake sucker
-      .onTrue(new SetSuckerIntakeSpeed(intake, Constants.IntakeConstants.kSuckerManualSpeed));
+    // new Trigger(() -> manipulatorController.getRightY() < -0.5) // intake sucker
+    //   .onTrue(new SetSuckerIntakeSpeed(intake, Constants.IntakeConstants.kSuckerManualSpeed));
 
-    new Trigger(() -> manipulatorController.getRightY() > 0.5)  // shoot out
-      .onTrue(new SetShooterSpeed(intake, Constants.IntakeConstants.kShooterManualSpeed));
+    // new Trigger(() -> manipulatorController.getRightY() > 0.5)  // shoot out
+    //   .onTrue(new SetShooterSpeed(intake, Constants.IntakeConstants.kShooterManualSpeed));
 
-    new Trigger(() -> manipulatorController.getRightY() < -0.5) // shoot in? (probably not needed)
-      .onTrue(new SetShooterSpeed(intake, -Constants.IntakeConstants.kShooterManualSpeed));
+    // new Trigger(() -> manipulatorController.getRightY() < -0.5) // shoot in? (probably not needed)
+    //   .onTrue(new SetShooterSpeed(intake, -Constants.IntakeConstants.kShooterManualSpeed));
 
-    new Trigger(() -> (manipulatorController.getRightY() <= 0.5 && manipulatorController.getRightY() >= -0.5)) 
-      .onTrue(new SetSuckerIntakeSpeed(intake, 0))
-      .onTrue(new SetShooterSpeed(intake, 0));
+    // new Trigger(() -> (manipulatorController.getRightY() <= 0.5 && manipulatorController.getRightY() >= -0.5)) 
+    //   .onTrue(new SetSuckerIntakeSpeed(intake, 0))
+    //   .onTrue(new SetShooterSpeed(intake, 0));
 
 
     // TODO: add automated controls for intaking from ground, outtaking to amp, outtaking to shooter
       
     // --- Arm ---
 
-    // right stick y to manually move arm
-    new Trigger(() -> manipulatorController.getLeftY() < -0.5) 
-      .onTrue(new SetVelocity(arm, -Constants.ArmConstants.kTravelSpeed));
+    // // right stick y to manually move arm
+    // new Trigger(() -> manipulatorController.getLeftY() < -0.5) 
+    //   .onTrue(new SetVelocity(arm, -Constants.ArmConstants.kTravelSpeed));
       
-    new Trigger(() -> (manipulatorController.getLeftY() <= 0.5 && manipulatorController.getLeftY() >= -0.5))
-      .onTrue(new SetVelocity(arm, 0));
+    // new Trigger(() -> (manipulatorController.getLeftY() <= 0.5 && manipulatorController.getLeftY() >= -0.5))
+    //   .onTrue(new SetVelocity(arm, 0));
 
-    new Trigger(() -> manipulatorController.getLeftY() > 0.5)
-      .onTrue(new SetVelocity(arm, Constants.ArmConstants.kTravelSpeed));
+    // new Trigger(() -> manipulatorController.getLeftY() > 0.5)
+    //   .onTrue(new SetVelocity(arm, Constants.ArmConstants.kTravelSpeed));
       
-    // buttons to move arm to go to setpoints
-    manipulatorController.a().onTrue(new GoToGround(arm));
-    manipulatorController.b().onTrue(new GoToTravel(arm));
-    manipulatorController.x().onTrue(new GoToSpeaker(arm));
-    manipulatorController.y().onTrue(new GoToAmp(arm));
+    // // buttons to move arm to go to setpoints
+    // manipulatorController.a().onTrue(new GoToGround(arm));
+    // manipulatorController.b().onTrue(new GoToTravel(arm));
+    // manipulatorController.x().onTrue(new GoToSpeaker(arm));
+    // manipulatorController.y().onTrue(new GoToAmp(arm));
 
 
     // --- Hang ---
 
     // Hang Up when DPAD UP
-    manipulatorController.povUp()
-      .onTrue(new SetHangSpeed(hang, Constants.HangConstants.kHangSpeed)); 
-    //Hang Down when DPAD DOWN
-    manipulatorController.povDown()
-      .onTrue(new SetHangSpeed(hang, -Constants.HangConstants.kHangSpeed)); 
+    // manipulatorController.povUp()
+    //   .onTrue(new SetHangSpeed(hang, Constants.HangConstants.kHangSpeed)); 
+    // //Hang Down when DPAD DOWN
+    // manipulatorController.povDown()
+    //   .onTrue(new SetHangSpeed(hang, -Constants.HangConstants.kHangSpeed)); 
 
     // // // Stop hang when neither is pressed
-    manipulatorController.povDown().negate().and(manipulatorController.povUp().negate())
-    .onTrue(new SetHangSpeed((hang), 0)); 
+    // manipulatorController.povDown().negate().and(manipulatorController.povUp().negate())
+    // .onTrue(new SetHangSpeed((hang), 0)); 
   }
   
 
@@ -160,7 +160,7 @@ public class RobotContainer {
     SmartDashboard.putData("Autonomous", autoPicker.getChooser());
     SmartDashboard.putBoolean("gyro connected", drivetrain.gyro.isConnected()); 
     SmartDashboard.putData(patterns);
-    led.setPattern(patterns.getSelected());
+    // led.setPattern(patterns.getSelected());
   }
 
   // givess the currently picked auto as the chosen auto for the match
