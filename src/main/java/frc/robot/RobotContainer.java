@@ -77,6 +77,8 @@ public class RobotContainer {
     patterns.addOption("Idle", Constants.LEDs.Patterns.kIdle);
     patterns.addOption("Rainbow", Constants.LEDs.Patterns.kBalanceFinished);
     patterns.addOption("Dead", Constants.LEDs.Patterns.kDead);
+    patterns.addOption("Enabled", Constants.LEDs.Patterns.kEnabled);
+    patterns.addOption("Disabled", Constants.LEDs.Patterns.kDisabled);
   }
   
   /**

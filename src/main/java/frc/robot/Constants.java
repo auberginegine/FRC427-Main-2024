@@ -19,6 +19,7 @@ import frc.robot.subsystems.leds.patterns.LEDPattern;
 import frc.robot.subsystems.leds.patterns.MorseCodePattern;
 import frc.robot.subsystems.leds.patterns.RainbowPattern;
 import frc.robot.subsystems.leds.patterns.SolidLEDPattern;
+import frc.robot.subsystems.leds.patterns.TriFlashPattern;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -251,6 +252,9 @@ public final class Constants {
       public static final LEDPattern kBalanceFinished = new RainbowPattern(0.5);
       public static final LEDPattern kAllianceRed = new SolidLEDPattern(Color.kRed);
       public static final LEDPattern kAllianceBlue = new SolidLEDPattern(Color.kBlue);
+      public static final LEDPattern kEnabled = new TriFlashPattern(Color.kRed, Color.kYellow, Color.kGreen);
+      public static final LEDPattern kDisabled = new TriFlashPattern(Color.kGreen, Color.kYellow, Color.kRed);
+
     }
 
   }
