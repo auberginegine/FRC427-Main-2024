@@ -168,37 +168,49 @@ public final class Constants {
     public static final int kArmMotorRightId = 14;
     public static final int kArmMotorLeftId = 13;
 
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kD = 0;
-
-    // calculate using reca.lc
-    // CoM distance: 21.77 in
-    // Arm mass: 20.755 lbs
-    public static final double kS = 0; 
-    public static final double kG = 0; // 0.79 V
-    public static final double kV = 0; // 1.95 V*s/rad
-    public static final double kA = 0; // 0.06 V*s^2/rad
-
     public static final boolean kRightMotorInverted = false;
     public static final boolean kLeftMotorInverted = false; 
 
     public static final int kMotorCurrentLimit = 40;
     
-    public static final float kSoftLimitForward = 100;
-    public static final float kSoftLimitReverse = 0;
+    public static final float kForwardSoftLimit = 100;
+    public static final double kReverseSoftLimit = 0; 
 
     public static final double kPositionConversionFactor = 360;
+
     // velocity = position / 60
     public static final double kVelocityConversionFactor = 360 / 60.0; 
     public static final double kTolerance = 0;
-    
+
     public static final double kGroundPosition = 0;
     public static final double kTravelPosition = 0;
     public static final double kAmpPosition = 0;
     public static final double kSpeakerPosition = 0;
 
     public static final double kTravelSpeed = 0;
+
+
+    // TODO: tune arm pid
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+
+    // torque from gas spring:
+    // https://www.desmos.com/calculator/3mcdsjeubz
+    public static final double kGravityFF = 0;
+    public static final double kSpringFF = 0;
+
+    /*  
+    // calculate using reca.lc
+    // CoM distance: 21.77 in
+    // Arm mass: 20.755 lbs
+    
+    public static final double kS = 0; 
+    public static final double kG = 0; // 0.79 V
+    public static final double kV = 0; // 1.95 V*s/rad
+    public static final double kA = 0; // 0.06 V*s^2/rad
+    */
+
   }
 
   public static class HangConstants {
