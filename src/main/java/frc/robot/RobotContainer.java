@@ -11,10 +11,10 @@ import frc.robot.subsystems.arm.commands.GoToSpeaker;
 import frc.robot.subsystems.arm.commands.GoToTravel;
 import frc.robot.subsystems.arm.commands.SetVelocity;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.SetShooterSpeed;
 import frc.robot.subsystems.intake.commands.SetSuckerIntakeSpeed;
-import frc.robot.subsystems.limelight.Limelight;
 import frc.robot.subsystems.hang.Hang;
 import frc.robot.subsystems.hang.commands.SetHangSpeed;
 import frc.robot.util.DriverController;
@@ -30,24 +30,25 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
   private final AutoPicker autoPicker; 
+  // private final SwerveTurnTunerCommand tunerCommand = new SwerveTurnTunerCommand(Constants.DrivetrainConstants.frontLeft);
 
   // drivetrain of the robot
-  private final Drivetrain drivetrain = new Drivetrain();
+  private final Drivetrain drivetrain = Drivetrain.getInstance();
 
   // intake of the bot
-  private final Intake intake = new Intake(); 
+  private final Intake intake = Intake.getInstance(); 
+
+  // leds!
+  private final Led led = Led.getInstance(); 
 
   // limelight subsystem of robot
-  // private final Limelight limelight = new Limelight(drivetrain); 
+  // private final Limelight limelight = Limelight.getInstance(); 
 
   // hang mechanism of robot
-  private final Hang hang = new Hang();
-
-  // hang of the robot
-  private final Led led = new Led();
-
+  private final Hang hang = Hang.getInstance();
+  
   // arm of the robot
-  private final Arm arm = new Arm();
+  private final Arm arm = Arm.getInstance();
   
   private SendableChooser<LEDPattern> patterns = new SendableChooser<>();
   
@@ -68,7 +69,7 @@ public class RobotContainer {
 
     // driverController.setChassisSpeedsSupplier(drivetrain::getChassisSpeeds); // comment in simulation
     // default command for drivetrain is to calculate speeds from controller and drive the robot
-    // drivetrain.setDefaultCommand(new TeleOpCommand(drivetrain, driverController));
+    drivetrain.setDefaultCommand(new TeleOpCommand(drivetrain, driverController));
 
     patterns.addOption("Idle", Constants.LEDs.Patterns.kIdle);
     patterns.addOption("Rainbow", Constants.LEDs.Patterns.kBalanceFinished);
@@ -89,7 +90,7 @@ public class RobotContainer {
 
     // --- Driver ---
 
-    driverController.a().onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
+    // driverController.a().onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
 
     // driverController.b().onTrue(new TuneTurnToAngle(drivetrain)); 
     // driverController.y().onTrue(new TuneBalance(drivetrain)); 
@@ -141,14 +142,14 @@ public class RobotContainer {
 
     // --- Hang ---
 
-    //Hang Up when DPAD UP
+    // Hang Up when DPAD UP
     manipulatorController.povUp()
       .onTrue(new SetHangSpeed(hang, Constants.HangConstants.kHangSpeed)); 
     //Hang Down when DPAD DOWN
     manipulatorController.povDown()
       .onTrue(new SetHangSpeed(hang, -Constants.HangConstants.kHangSpeed)); 
 
-    // // Stop hang when neither is pressed
+    // // // Stop hang when neither is pressed
     manipulatorController.povDown().negate().and(manipulatorController.povUp().negate())
     .onTrue(new SetHangSpeed((hang), 0)); 
   }
@@ -156,8 +157,8 @@ public class RobotContainer {
 
   // send any data as needed to the dashboard
   public void doSendables() {
-    // SmartDashboard.putData("Autonomous", autoPicker.getChooser());
-    // SmartDashboard.putBoolean("gyro connected", drivetrain.gyro.isConnected()); 
+    SmartDashboard.putData("Autonomous", autoPicker.getChooser());
+    SmartDashboard.putBoolean("gyro connected", drivetrain.gyro.isConnected()); 
     SmartDashboard.putData(patterns);
     led.setPattern(patterns.getSelected());
   }
@@ -166,6 +167,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
       // return null; 
     return autoPicker.getAuto();
+    // return tunerCommand;
+
   }
-  
 }
