@@ -76,6 +76,7 @@ public class RobotContainer {
     patterns.addOption("Dead", Constants.LEDs.Patterns.kDead);
     patterns.addOption("Enabled", Constants.LEDs.Patterns.kEnabled);
     patterns.addOption("Disabled", Constants.LEDs.Patterns.kDisabled);
+    patterns.addOption("Moving", Constants.LEDs.Patterns.kMoving);
   }
   
   /**
