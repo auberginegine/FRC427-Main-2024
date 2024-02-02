@@ -14,9 +14,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  
 
 public class Arm extends SubsystemBase {
+    
+    private static Arm instance = new Arm(); 
+
+    public static Arm getInstance() {
+        return instance; 
+    }
+    
     // Define and initiate variables for arm
     private double m_targetPosition = Constants.ArmConstants.kTravelPosition;
     private double m_manualVelocity = 0;
+    
 
     private DigitalInput m_limitSwitch = new DigitalInput(Constants.ArmConstants.kLimitSwitchId);
 
@@ -33,7 +41,7 @@ public class Arm extends SubsystemBase {
     private double m_kG = Constants.ArmConstants.kGravityFF;
     private double m_kS = Constants.ArmConstants.kSpringFF;
 
-    public Arm() {
+    private Arm() {
         setupMotors();
     }
 
