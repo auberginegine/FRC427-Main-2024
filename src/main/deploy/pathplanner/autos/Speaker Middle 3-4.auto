@@ -1,0 +1,61 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.6884877930157377,
+      "y": 4.4852797475010595
+    },
+    "rotation": -60.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Speaker to Note 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note to Speaker 3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootSpeaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Speaker to Note 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note 3 to Middle 4th"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle Note 4th going back"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootSpeaker"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Two Piece Middle Fling",
+  "choreoAuto": false
+}
