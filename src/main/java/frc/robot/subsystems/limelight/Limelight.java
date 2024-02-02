@@ -122,7 +122,7 @@ public class Limelight extends SubsystemBase{
 
     // Returns the rotation3d using values stored in the network table
     private Rotation3d getRotation3d() {
-        return new Rotation3d(limelightRoll, limelightPitch, limelightYaw);
+        return new Rotation3d(Math.toRadians(limelightRoll), Math.toRadians(limelightPitch), Math.toRadians(limelightYaw));
     }
 
     // Returns the rotation3d using values stored in the network table
@@ -138,18 +138,17 @@ public class Limelight extends SubsystemBase{
 
     public boolean isEstimateClose() {
         Pose2d currentPose = new Pose2d(limelightX, limelightY, Rotation2d.fromDegrees(0));
-        if (currentPose == null) return false;
         return getDistanceBetweenPose2d(currentPose, drivetrain.getPose()) < Constants.Vision.kMaxAccuracyRange;
     }
 
     // Sees if the robot's position as given by the limelight is within the field
     public boolean isPoseValid() {
-        boolean isInLowerXLimit = -2.5 < limelightX;
-        boolean isInUpperXLimit = limelightX < Constants.Vision.kAprilTagFieldLayout.getFieldLength() + 2.5;
-        boolean isInLowerYLimit = -2.5 < limelightY;
-        boolean isInUpperYLimit = limelightY < Constants.Vision.kAprilTagFieldLayout.getFieldWidth() + 2.5;
-        boolean isInLowerZLimit = 0 < limelightZ;
-        boolean isInUpperZLimit = limelightZ < Constants.Vision.limelightZHeight + 0.5;
+        boolean isInLowerXLimit = -2.5 <= limelightX;
+        boolean isInUpperXLimit = limelightX <= Constants.Vision.kAprilTagFieldLayout.getFieldLength() + 2.5;
+        boolean isInLowerYLimit = -2.5 <= limelightY;
+        boolean isInUpperYLimit = limelightY <= Constants.Vision.kAprilTagFieldLayout.getFieldWidth() + 2.5;
+        boolean isInLowerZLimit = 0 <= limelightZ;
+        boolean isInUpperZLimit = limelightZ <= Constants.Vision.limelightZHeight + 0.5;
         return isInLowerXLimit && isInUpperXLimit && isInLowerYLimit && isInUpperYLimit && isInLowerZLimit && isInUpperZLimit && isEstimateClose();
     }
 
