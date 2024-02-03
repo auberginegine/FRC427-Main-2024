@@ -6,6 +6,8 @@ package frc.robot;
 
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -225,6 +227,9 @@ public final class Constants {
     public static final AprilTagFieldLayout kAprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(); 
     public static final double limelightZHeight = 0; // TODO: Fix this
     public static final double kMaxAccuracyRange = 1000;
+    public static final Pose3d redAllianceSpeakerPose3d = new Pose3d();
+    public static final Pose3d blueAllianceSpeakerPose3d = new Pose3d();
+
 
     static {
       kAprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
