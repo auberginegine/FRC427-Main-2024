@@ -22,6 +22,7 @@ import frc.robot.util.DriverController.Mode;
 import frc.robot.subsystems.leds.Led;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
 import frc.robot.subsystems.limelight.Limelight;
+import edu.wpi.first.wpilibj.simulation.AddressableLEDSim;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -40,7 +41,8 @@ public class RobotContainer {
   // private final Intake intake = Intake.getInstance(); 
 
   // leds!
-  // private final Led led = Led.getInstance(); 
+  private final Led led = Led.getInstance(); 
+
 
   // limelight subsystem of robot
   private final Limelight limelight = Limelight.getInstance(); 
@@ -75,6 +77,24 @@ public class RobotContainer {
     patterns.addOption("Idle", Constants.LEDs.Patterns.kIdle);
     patterns.addOption("Rainbow", Constants.LEDs.Patterns.kBalanceFinished);
     patterns.addOption("Dead", Constants.LEDs.Patterns.kDead);
+    patterns.addOption("Enabled", Constants.LEDs.Patterns.kEnabled);
+    patterns.addOption("Disabled", Constants.LEDs.Patterns.kDisabled);
+    patterns.addOption("Moving", Constants.LEDs.Patterns.kMoving);
+    patterns.addOption("Failure", Constants.LEDs.Patterns.kFail);
+    patterns.addOption("Intake", Constants.LEDs.Patterns.kIntake);
+    patterns.addOption("Shooting", Constants.LEDs.Patterns.kShootAnywhere);
+    patterns.addOption("Arm Travel", Constants.LEDs.Patterns.kArmMoving);
+    patterns.addOption("Arm at amp", Constants.LEDs.Patterns.kArmAtAmp);
+    patterns.addOption("Arm At Speaker", Constants.LEDs.Patterns.kArmAtSpeaker);
+    patterns.addOption("Arm At Ground", Constants.LEDs.Patterns.kArmAtGround);
+    patterns.addOption("Arm Moving", Constants.LEDs.Patterns.kArmCustom);
+    patterns.addOption("Hanging", Constants.LEDs.Patterns.kHangActive);
+    patterns.addOption("Auto Begins", Constants.LEDs.Patterns.kAutoBegin);
+    patterns.addOption("Auto Ends", Constants.LEDs.Patterns.kAutoEnd);
+    patterns.addOption("test Yellow", Constants.LEDs.Patterns.kCone);
+     patterns.addOption("test Color", Constants.LEDs.Patterns.kTestColor);
+
+
   }
   
   /**
@@ -161,7 +181,7 @@ public class RobotContainer {
     SmartDashboard.putData("Autonomous", autoPicker.getChooser());
     SmartDashboard.putBoolean("gyro connected", drivetrain.gyro.isConnected()); 
     SmartDashboard.putData(patterns);
-    // led.setPattern(patterns.getSelected());
+    led.setPattern(patterns.getSelected());
   }
 
   // givess the currently picked auto as the chosen auto for the match
