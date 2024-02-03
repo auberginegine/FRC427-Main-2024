@@ -9,7 +9,12 @@ import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.AutomationCommands;
+import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.arm.commands.GoToSpeaker;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.commands.OuttakeToShooter;
 
 // class to store, set up, and choose autos
 public class AutoPicker {
@@ -57,7 +62,10 @@ public class AutoPicker {
 
     public void registerCommands() {
         // eg. NamedCommands.registerCommand("intake_cube", new IntakeForTime(intake, 1, 2)); 
-
+        NamedCommands.registerCommand("GoToSpeaker", new GoToSpeaker(Arm.getInstance()));
+        NamedCommands.registerCommand("IntakeGround", AutomationCommands.autoIntakeCommand());
+        NamedCommands.registerCommand("ShootSpeaker", new OuttakeToShooter(Intake.getInstance(), 1,1));
+        NamedCommands.registerCommand("ShootOut", new OuttakeToShooter(Intake.getInstance(),0.5,1));
     }
 
     // gets the currently selected auto
