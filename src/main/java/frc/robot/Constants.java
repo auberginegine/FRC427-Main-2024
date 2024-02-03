@@ -278,11 +278,14 @@ public final class Constants {
 public static final class PathFollower {
   public static final Pose2d speakerBlue1 = new Pose2d(0.66, 6.60, Rotation2d.fromDegrees(60));
   public static final Pose2d speakerBlue2 = new Pose2d(1.25, 5.48, Rotation2d.fromDegrees(0));
-  public static final Pose2d speakerBlue3 = new Pose2d(0.69, 4.49, Rotation2d.fromDegrees(-60)); // degrees -60
+  public static final Pose2d speakerBlue3 = new Pose2d(0.69, 4.49, Rotation2d.fromDegrees(-60));
   public static final Pose2d speakerRed1 = new Pose2d(15.83, 6.58, Rotation2d.fromDegrees(120));
   public static final Pose2d speakerRed2 = new Pose2d(15.29, 5.48, Rotation2d.fromDegrees(180));
-  public static final Pose2d speakerRed3 = new Pose2d(15.83, 4.51, Rotation2d.fromDegrees(-120)); // degrees -120
-
+  public static final Pose2d speakerRed3 = new Pose2d(15.83, 4.51, Rotation2d.fromDegrees(-120));
+  public static final Pose2d ampBlue = new Pose2d(1.96, 7.75, Rotation2d.fromDegrees(-90));
+  public static final Pose2d ampRed = new Pose2d(14.62, 7.75, Rotation2d.fromDegrees(-90));
 }
+  
+  
   
 }
