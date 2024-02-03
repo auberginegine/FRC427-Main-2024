@@ -59,7 +59,7 @@ public final class Constants {
 
     // Drivebase
     public static final double kTrackWidthMeters = Units.inchesToMeters(23.0); // horizontal dist between wheels
-    public static final double kWheelBaseMeters = Units.inchesToMeters(23.0); // vertical dist between wheels
+    public static final double kWheelBaseMeters = Units.inchesToMeters(21.0); // vertical dist between wheels
 
     public static final double kDriveBaseRadius = Math.hypot(kTrackWidthMeters, kWheelBaseMeters) / 2; 
 
@@ -139,6 +139,9 @@ public final class Constants {
     // max velocity & acceleration robot can go n following a trajectory
     public static final double kMaxVelocityMetersPerSecond = 1; 
     public static final double kMaxAccelerationMetersPerSecondSquared = 1; 
+
+    public static final double kMaxAngularVelocityRadiansPerSecond = Math.PI; 
+    public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI / 2; 
 
     public static final double kMaxCentripetalAcceleration = 0.8; 
   }
