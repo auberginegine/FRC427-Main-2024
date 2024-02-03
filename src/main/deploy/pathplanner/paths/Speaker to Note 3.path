@@ -20,8 +20,8 @@
         "y": 4.122214464115091
       },
       "prevControl": {
-        "x": 2.0443179654821093,
-        "y": 4.221756574754233
+        "x": 1.7923046272632828,
+        "y": 3.9976550095280277
       },
       "nextControl": null,
       "isLocked": false,
@@ -58,7 +58,7 @@
   "goalEndState": {
     "velocity": 0,
     "rotation": 0,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "Speaker Note",
