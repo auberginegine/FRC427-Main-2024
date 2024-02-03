@@ -132,6 +132,16 @@ public class Drivetrain extends SubsystemBase {
 
     swerveDrive(states);
   }
+
+  public void swerveDriveWithoutCompensation(ChassisSpeeds speeds) {
+    SwerveModuleState[] states = Constants.DrivetrainConstants.kDriveKinematics.toSwerveModuleStates(speeds); 
+    // ensure all speeds are reachable by the wheel
+    SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.DrivetrainConstants.kMaxAttainableModuleSpeedMetersPerSecond);
+
+    swerveDrive(states);
+  }
+
+
   public void swerveDriveRobotCentric(ChassisSpeeds speeds) {
     // correct for drift in the chassis
     ChassisSpeeds correctedSpeeds = SwerveUtils.correctInputWithRotation(speeds); 

@@ -91,7 +91,7 @@ public class RobotContainer {
 
     // --- Driver ---
 
-    // driverController.a().onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
+    driverController.a().onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
 
     // driverController.b().onTrue(new TuneTurnToAngle(drivetrain)); 
     // driverController.y().onTrue(new TuneBalance(drivetrain)); 
