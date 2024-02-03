@@ -23,22 +23,20 @@ public class MoveToAmp {
 
         Alliance alliance = optAlliance.get(); 
 
-        Pose2d TargetPose = null;
+        Pose2d targetPose = null;
 
         if (alliance == Alliance.Blue) {
-            TargetPose = Constants.PathFollower.ampBlue;
-
+            targetPose = Constants.PathFollower.ampBlue;
         }
         if (alliance == Alliance.Red) {
-            TargetPose = Constants.PathFollower.ampRed;
-
+            targetPose = Constants.PathFollower.ampRed;
         }
 
-        return TargetPose;
+        return targetPose;
 
     }
 
-    public static Command GoToAmp() {
+    public static Command goToAmp() {
         Pose2d targetPose = getTargetPose();
 
         if (targetPose == null) {
@@ -47,8 +45,11 @@ public class MoveToAmp {
 
         // Create the constraints to use while pathfinding
         PathConstraints constraints = new PathConstraints(
-        3.0, 4.0,
-        Units.degreesToRadians(540), Units.degreesToRadians(720));
+            Constants.Trajectory.kMaxVelocityMetersPerSecond, 
+            Constants.Trajectory.kMaxAccelerationMetersPerSecondSquared,
+            Constants.Trajectory.kMaxAngularVelocityRadiansPerSecond, 
+            Constants.Trajectory.kMaxAngularAccelerationRadiansPerSecondSquared
+        );
 
         // Since AutoBuilder is configured, we can use it to build pathfinding commands
         Command pathfindingCommand = AutoBuilder.pathfindToPose(
