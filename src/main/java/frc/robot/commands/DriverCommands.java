@@ -7,8 +7,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 
 public class DriverCommands {
-
-
   public Command vibrateController(CommandGenericHID controller, double timeSeconds) {
     return Commands.runOnce(() -> {
       controller.getHID().setRumble(RumbleType.kBothRumble, 1);

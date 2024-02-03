@@ -11,6 +11,7 @@ import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -250,6 +251,9 @@ public final class Constants {
     public static final AprilTagFieldLayout kAprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(); 
     public static final double limelightZHeight = 0; // TODO: Fix this
     public static final double kMaxAccuracyRange = 1000;
+    public static final Pose2d kRedAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
+    public static final Pose2d kBlueAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
+
 
     static {
       kAprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
