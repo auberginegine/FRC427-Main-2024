@@ -132,9 +132,9 @@ public final class Constants {
     public static final double kDrive_D = 0;
 
     // angular PID (same as turn pid)
-    public static final double kOmega_P = 3.24; 
+    public static final double kOmega_P = 4; 
     public static final double kOmega_I = 0; 
-    public static final double kOmega_D = 0; 
+    public static final double kOmega_D = 0.0001; 
 
     // max velocity & acceleration robot can go n following a trajectory
     public static final double kMaxVelocityMetersPerSecond = 1; 
