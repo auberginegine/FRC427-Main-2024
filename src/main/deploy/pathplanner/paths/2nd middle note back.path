@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.858762985696398,
-        "y": 5.997518561453163
+        "x": 6.634569660116764,
+        "y": 6.151828644509419
       },
       "isLocked": false,
       "linkedName": "Middle Note 2"
@@ -20,8 +20,8 @@
         "y": 6.182690661120671
       },
       "prevControl": {
-        "x": 6.171639410953139,
-        "y": 6.439874132881099
+        "x": 6.233363444170498,
+        "y": 6.234127355472756
       },
       "nextControl": null,
       "isLocked": false,
@@ -50,14 +50,14 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 1.5,
-    "maxAcceleration": 1.5,
-    "maxAngularVelocity": 120.0,
-    "maxAngularAcceleration": 120.0
+    "maxVelocity": 3.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 90.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
