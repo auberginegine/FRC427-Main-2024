@@ -58,8 +58,8 @@ public final class Constants {
     public static final double kDegreesPerSecondPerRPM = kDegreesPerRot / 60; // velocity conversion factor of the turn encoder 
 
     // Drivebase
-    public static final double kTrackWidthMeters = Units.inchesToMeters(23.0); // horizontal dist between wheels
-    public static final double kWheelBaseMeters = Units.inchesToMeters(21.0); // vertical dist between wheels
+    public static final double kTrackWidthMeters = Units.inchesToMeters(20.75); // horizontal dist between wheels
+    public static final double kWheelBaseMeters = Units.inchesToMeters(22.75); // vertical dist between wheels
 
     public static final double kDriveBaseRadius = Math.hypot(kTrackWidthMeters, kWheelBaseMeters) / 2; 
 
