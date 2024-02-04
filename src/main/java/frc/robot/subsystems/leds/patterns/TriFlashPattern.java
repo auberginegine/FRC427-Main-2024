@@ -9,7 +9,6 @@ public class TriFlashPattern extends LEDPattern{
     Color color1;
     Color color2;
     Color color3;
-    private Timer timer = new Timer();
     private double maxTime; 
     
     

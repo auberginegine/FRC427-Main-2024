@@ -1,15 +1,10 @@
 package frc.robot.subsystems.leds;
 import java.util.List;
-import java.util.regex.Pattern;
 
-import edu.wpi.first.math.trajectory.ExponentialProfile.Constraints;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.arm.Arm;
-import frc.robot.subsystems.arm.Arm.ArmControlState;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
 
 import edu.wpi.first.wpilibj.Timer;

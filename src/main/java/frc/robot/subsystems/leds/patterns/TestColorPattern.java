@@ -1,7 +1,6 @@
 package frc.robot.subsystems.leds.patterns;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.subsystems.leds.AddressableLed;
 
 public class TestColorPattern extends LEDPattern {
