@@ -4,25 +4,13 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.arm.Arm;
-import frc.robot.subsystems.arm.commands.GoToAmp;
-import frc.robot.subsystems.arm.commands.GoToGround;
-import frc.robot.subsystems.arm.commands.GoToSpeaker;
-import frc.robot.subsystems.arm.commands.GoToTravel;
-import frc.robot.subsystems.arm.commands.SetVelocity;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
-import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.intake.commands.SetShooterSpeed;
-import frc.robot.subsystems.intake.commands.SetSuckerIntakeSpeed;
-import frc.robot.subsystems.hang.Hang;
-import frc.robot.subsystems.hang.commands.SetHangSpeed;
 import frc.robot.util.DriverController;
 import frc.robot.util.DriverController.Mode;
 import frc.robot.subsystems.leds.Led;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
-import frc.robot.subsystems.limelight.Limelight;
-import edu.wpi.first.wpilibj.simulation.AddressableLEDSim;
+import frc.robot.subsystems.vision.Vision;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,7 +33,7 @@ public class RobotContainer {
 
 
   // limelight subsystem of robot
-  private final Limelight limelight = Limelight.getInstance(); 
+  private final Vision limelight = Vision.getInstance(); 
 
   // hang mechanism of robot
   // private final Hang hang = Hang.getInstance();

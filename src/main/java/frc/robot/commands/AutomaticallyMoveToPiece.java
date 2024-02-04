@@ -33,6 +33,6 @@ public class AutomaticallyMoveToPiece extends SequentialCommandGroup{
         PhotonTrackedTarget target = result.getBestTarget();
         double angleToTurn = target.getYaw();
 
-        return Commands.sequence(null);
+        return Commands.none(); 
     }
 }

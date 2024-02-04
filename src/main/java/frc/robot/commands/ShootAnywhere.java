@@ -6,27 +6,20 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import java.util.Optional;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
 import frc.robot.Constants;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.commands.GoToAngle;
 import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.robot.subsystems.limelight.Limelight;
 import frc.robot.subsystems.drivetrain.commands.TurnToAngle;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.OuttakeToSpeaker;
-import frc.robot.subsystems.arm.commands.GoToAngle;
-import frc.robot.subsystems.arm.commands.SetVelocity;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
-public class ShootAnywhere extends SequentialCommandGroup {
+public class ShootAnywhere {
 
-    public ShootAnywhere() {}
-
-    public Command shootAnywhere(Drivetrain drivetrain, Arm arm, Intake intake) {
+    public static Command shootAnywhere(Drivetrain drivetrain, Arm arm, Intake intake) {
         Pose2d currentPose = drivetrain.getPose();
         Pose2d targetPose = null;
 
@@ -48,7 +41,7 @@ public class ShootAnywhere extends SequentialCommandGroup {
         TurnToAngle turnToAngle = new TurnToAngle(drivetrain, finalAngle);
         double angleToTurnArm = 0.0;
         GoToAngle goToAngle = new GoToAngle(arm, angleToTurnArm);
-        OuttakeToSpeaker outtake = new OuttakeToSpeaker(intake, 1, 1);
+        OuttakeToSpeaker outtake = new OuttakeToSpeaker(intake);
         return Commands.sequence(turnToAngle, goToAngle, outtake)
         .finallyDo(() -> {
             arm.goToAngle(Constants.ArmConstants.kTravelPosition);

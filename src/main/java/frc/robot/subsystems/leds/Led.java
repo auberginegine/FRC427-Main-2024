@@ -17,8 +17,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Led extends SubsystemBase {
     
-    private static Led instance; 
-    // = new Led();
+    private static Led instance = new Led();
 
     public static Led getInstance() {
         return instance; 

@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.function.Function;
+
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.pathplanner.lib.commands.PathfindHolonomic;
@@ -146,14 +148,11 @@ public final class Constants {
     public static final double kMaxVelocityMetersPerSecond = 1; 
     public static final double kMaxAccelerationMetersPerSecondSquared = 1; 
 
-    public static final double kMaxAngularVelocityRadiansPerSecond = Math.PI; 
-    public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI / 2; 
-
-    public static final double kMaxCentripetalAcceleration = 0.8; 
+    public static final double kMaxAngularVelocityRadiansPerSecond = Units.degreesToRadians(120); 
+    public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Units.degreesToRadians(120); 
   }
 
   public static class IntakeConstants {
-
     public static int kIntakeMotorShootTopId = 15;
     public static int kIntakeMotorShootBottomId = 16;
     public static int kOuttakeMotorSuckId = 17;
@@ -166,15 +165,21 @@ public final class Constants {
     public static int kShootBottomMotorlimit = 40;
 
     public static final boolean kSuckOuttakeInverted = false;
-    public static final int kSuckOuttakeMotorLimit = 20;
+    public static final int kSuckOuttakeMotorLimit = 40;
 
-    public static final double kShootVelocityConversionFactor = 0; 
-    public static final double kIntakeVelocityConversionFactor = 0; 
+    public static final double kShootVelocityConversionFactor = 1; 
+    public static final double kIntakeVelocityConversionFactor = 1; 
 
     public static final int kBeamBreakId = 0;
 
-    public static final double kSuckerManualSpeed = 0; 
-    public static final double kShooterManualSpeed = 0; 
+    public static final double kSuckerIntakeSpeed = 0.5;
+
+    public static final double kShootSpeed = 1; 
+    public static final double kShootSuckerSpeed = 1; 
+    public static final double kShootRevTime = 0.5; 
+    public static final double kShootWaitTime = 0.5; 
+
+    public static final double kAmpOuttakeSpeed = 0.5; 
   }
 
   public class ArmConstants {
@@ -197,11 +202,11 @@ public final class Constants {
     public static final double kTolerance = 0;
 
     public static final double kGroundPosition = 0;
-    public static final double kTravelPosition = 0;
-    public static final double kAmpPosition = 0;
-    public static final double kSpeakerPosition = 0;
+    public static final double kTravelPosition = 20;
+    public static final double kAmpPosition = 90;
+    public static final double kSpeakerPosition = 10;
 
-    public static final double kTravelSpeed = 0;
+    public static final double kTravelSpeed = 30;
 
 
     // TODO: tune arm pid
@@ -236,13 +241,13 @@ public final class Constants {
 
     public static final int kHangMotorLimit = 40;
 
-    public static final double kPositionConversionFactor = 0;
+    public static final double kPositionConversionFactor = 1;
     public static final double kVelocityConversionFactor = kPositionConversionFactor / 60;
 
     public static final float kFowardHangSoftLimit = 0;
     public static final float kReverseHangSoftLimit = 0;
 
-    public static final double kHangSpeed = 1;
+    public static final double kHangSpeed = 0.25;
   }
 
   public static class Vision {
@@ -254,13 +259,14 @@ public final class Constants {
     public static final Pose2d kRedAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
     public static final Pose2d kBlueAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
 
+    // TODO: tune
+    public static final Function<Double, Double> distanceToArmAngle = (dist) -> 0.0; 
 
     static {
       kAprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
     }
   }
   public static final class LEDs {
-
     public static final Color kDefaultColor = Color.kDarkBlue;
     public static final Color kCobaltBlue = new Color("#0047AB");
     public static final Color kGold = new Color(142, 66, 0); // 142.17, 66.44

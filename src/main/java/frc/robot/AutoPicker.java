@@ -67,11 +67,13 @@ public class AutoPicker {
         // NamedCommands.registerCommand("IntakeGround", AutomationCommands.autoIntakeCommand());
         // NamedCommands.registerCommand("ShootSpeaker", new OuttakeToSpeaker(Intake.getInstance(), 1,1));
         // NamedCommands.registerCommand("ShootOut", new OuttakeToSpeaker(Intake.getInstance(),0.5,1));
+        // NamedCommands.registerCommand("ShootAnywhere", AutomationCommands.shootFromAnywhere());
 
         NamedCommands.registerCommand("GoToSpeaker", new PrintCommand("Going to Speaker"));
         NamedCommands.registerCommand("IntakeGround", new PrintCommand("Intaking from ground!"));
         NamedCommands.registerCommand("ShootSpeaker", new PrintCommand("shooting to speaker!!"));
         NamedCommands.registerCommand("ShootOut", new PrintCommand("Shooting out to nowhere!!!"));
+        NamedCommands.registerCommand("ShootAnywhere", new PrintCommand("Shooting from anywhere!!!!"));
     }
 
     // gets the currently selected auto

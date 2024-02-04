@@ -1,4 +1,5 @@
-package frc.robot.subsystems.limelight;
+package frc.robot.subsystems.vision;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.VecBuilder;
@@ -18,12 +19,12 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
-public class Limelight extends SubsystemBase {
+public class Vision extends SubsystemBase {
 
     
-    private static Limelight instance = new Limelight(Drivetrain.getInstance());
+    private static Vision instance = new Vision(Drivetrain.getInstance());
 
-    public static Limelight getInstance() {
+    public static Vision getInstance() {
         return instance; 
     }
 
@@ -42,7 +43,7 @@ public class Limelight extends SubsystemBase {
     private double[] botPoseValues;
 
     // Creates a new limelight object
-    private Limelight(Drivetrain drivetrain) {
+    private Vision(Drivetrain drivetrain) {
         limelightNT = NetworkTableInstance.getDefault().getTable("limelight");
         this.drivetrain = drivetrain;
     }
