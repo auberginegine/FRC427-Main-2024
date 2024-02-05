@@ -1,17 +1,16 @@
 package frc.robot.subsystems.intake.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.intake.Intake;
 
 public class IntakeFromGround extends Command {
      // declare to intake with speed
     Intake m_intake;
-    double m_speed;
 
      // establishes intake, speed
-    public IntakeFromGround(Intake intake, double speed) {
+    public IntakeFromGround(Intake intake) {
         this.m_intake = intake;
-        this.m_speed = speed;
 
         addRequirements(intake);
     }
@@ -24,7 +23,7 @@ public class IntakeFromGround extends Command {
     // keeps intaking with the sucker
     public void execute() {
         // runs repeatedly until the command is finished
-        this.m_intake.intakeRing(m_speed);
+        this.m_intake.intakeRing(Constants.IntakeConstants.kSuckerIntakeSpeed);
     }
 
     // checks to stops sucking

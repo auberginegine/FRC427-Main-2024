@@ -24,6 +24,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "ShootSpeaker"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Speaker Middle 1"
@@ -33,6 +39,30 @@
           "type": "path",
           "data": {
             "pathName": "Middle Note 1st going back"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootOut"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1st back to 2nd middle note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2nd middle note back"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootOut"
           }
         }
       ]

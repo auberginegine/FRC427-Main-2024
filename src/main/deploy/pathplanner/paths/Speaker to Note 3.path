@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 2.531946633080141,
-        "y": 4.122214464115091
+        "x": 2.5539374447669423,
+        "y": 3.6128694795942384
       },
       "prevControl": {
-        "x": 2.0443179654821093,
-        "y": 4.221756574754233
+        "x": 1.7923046272632828,
+        "y": 3.9976550095280277
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,17 +30,35 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.65,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeGround"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 2.0,
-    "maxAngularVelocity": 180.0,
-    "maxAngularAcceleration": 90.0
+    "maxVelocity": 1.5,
+    "maxAcceleration": 1.5,
+    "maxAngularVelocity": 120.0,
+    "maxAngularAcceleration": 120.0
   },
   "goalEndState": {
     "velocity": 0,
     "rotation": 0,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "Speaker Note",

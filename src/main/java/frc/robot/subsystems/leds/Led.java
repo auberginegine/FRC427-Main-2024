@@ -10,9 +10,13 @@ import frc.robot.subsystems.leds.patterns.LEDPattern;
 import edu.wpi.first.wpilibj.Timer;
 
 
+public class Led extends SubsystemBase {
+    
+    private static Led instance = new Led();
 
-
-public class Led extends SubsystemBase{
+    public static Led getInstance() {
+        return instance; 
+    }
     //Create Led, ledstrips, buffer, pattern, and timer
     AddressableLED m_Led;
 
@@ -22,21 +26,41 @@ public class Led extends SubsystemBase{
 
     private AddressableLEDBuffer buffer;
 
+    public boolean isMovingToAmp = false; 
+    public boolean isMovingToSpeaker = false; 
+    public boolean isShooting = false; 
+    public boolean isIntaking = false; 
+    public boolean isHanging = false;
+    public boolean beamHit = false;
+    public boolean autoBegin = false;
+    public boolean autoEnd = false; 
+    //public boolean isShootingToAmp = false;
+    //public boolean isShootingToSpeaker = false;
+
+    private LEDStrip armLeft; 
+    private LEDStrip armRight;
+    private LEDStrip hangLeft;
+    private LEDStrip hangRight;
+
+
+
+
+
     private Timer timer = new Timer();
 
     //If port and Length aren't given, take from Constants. Will then run next Led below
-    public Led() {
+    private Led() {
         this(Constants.LEDs.kLedPort, Constants.LEDs.kLedLength); 
     }
 
     //If Pattern isn't given, will run with default pattern and then run next Led below
-    public Led(int port, int length) {
+    private Led(int port, int length) {
         // default pattern
         this(port, length, Constants.LEDs.Patterns.kDefault); 
     }
 
     //Tells Leds what to do with given port, legnth, and pattern
-    public Led(int port, int length, LEDPattern pattern) {
+    private Led(int port, int length, LEDPattern pattern) {
         //Sets Port
         this.m_Led = new AddressableLED(port);
         //Sets Length to buffer
@@ -44,9 +68,19 @@ public class Led extends SubsystemBase{
         //Actually sets length from buffer to Leds
         this.buffer = new AddressableLEDBuffer(length); 
 
+        armLeft = new LEDStrip(buffer, Constants.LEDs.kLed1Start, Constants.LEDs.kLed1End); 
+        armRight = new LEDStrip(buffer, Constants.LEDs.kLed2Start, Constants.LEDs.kLed2End); 
+        hangRight = new LEDStrip(buffer, Constants.LEDs.kLed3Start, Constants.LEDs.kLed3End); 
+        hangLeft = new LEDStrip(buffer, Constants.LEDs.kLed4Start, Constants.LEDs.kLed4End); 
+
         this.ledStrips = List.of(
-            new LEDStrip(buffer, port, length)
+            armLeft,
+            armRight,
+            hangLeft,
+            hangRight
+
         ); 
+            
         //Starts timer
         this.timer.start();
         //Starts Leds!
@@ -71,10 +105,45 @@ public class Led extends SubsystemBase{
         //Restart timer for whatever reason?
         this.timer.restart();
     }
+
+    public void setArmPattern(LEDPattern pattern) {
+        armLeft.setPattern(pattern);
+        armRight.setPattern(pattern);
+    }
+
+    public void setHangPattern(LEDPattern pattern) {
+        hangLeft.setPattern(pattern);
+        hangRight.setPattern(pattern);
+    }
    
 
     @Override
     public void periodic() {
+
+        // LEDPattern decidedArmPattern = LEDPattern.kEmpty; 
+        // LEDPattern decidedHangPattern = LEDPattern.kEmpty;
+
+       // lower priorities
+        // if (DriverStation.isEnabled()) decidedArmPattern = Constants.LEDs.Patterns.kEnabled; 
+        // if (DriverStation.isDisabled()) decidedArmPattern = Constants.LEDs.Patterns.kDisabled; 
+       
+         // if (Arm.getInstance().getArmControlState() == ArmControlState.TRAVEL) decidedHangPattern = Constants.LEDs.Patterns.kArmMoving;
+        // if (Arm.getInstance().getArmControlState() == ArmControlState.AMP) decidedHangPattern = Constants.LEDs.Patterns.kArmAtAmp;
+        // if (Arm.getInstance().getArmControlState() == ArmControlState.SPEAKER) decidedHangPattern = Constants.LEDs.Patterns.kArmAtSpeaker;
+        // if (Arm.getInstance().getArmControlState() == ArmControlState.GROUND) decidedHangPattern = Constants.LEDs.Patterns.kArmAtGround;
+        // if (Arm.getInstance().getArmControlState() == ArmControlState.CUSTOM) decidedHangPattern = Constants.LEDs.Patterns.kArmCustom;
+
+        // if (this.isMovingToAmp || this.isMovingToSpeaker) decidedHangPattern = Constants.LEDs.Patterns.kMoving;
+        // if (this.isShooting) decidedHangPattern = Constants.LEDs.Patterns.kShootAnywhere;
+        // if (this.isIntaking) decidedHangPattern = Constants.LEDs.Patterns.kIntake;
+        // if (this.isHanging) decidedHangPattern = Constants.LEDs.Patterns.kHangActive;
+        // if (this.beamHit) decidedHangPattern = Constants.LEDs.Patterns.kBeamHit;
+        // if (this.autoBegin) decidedHangPattern = Constants.LEDs.Patterns.kAutoBegin;
+        // if (this.autoEnd) decidedHangPattern = Constants.LEDs.Patterns.kAutoEnd;
+        // setArmPattern(decidedArmPattern);
+        // setHangPattern(decidedHangPattern);
+
+
         //Constantly updates leds with respect to time
         for (int i = 0; i < ledStrips.size(); i++) {
             ledStrips.get(i).update(timer.get());

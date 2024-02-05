@@ -25,6 +25,12 @@ import frc.robot.util.SwerveUtils;
 
 public class Drivetrain extends SubsystemBase {
 
+  private static Drivetrain instance = new Drivetrain();
+
+    public static Drivetrain getInstance() {
+        return instance; 
+    }
+
   // set up the four swerve modules  
   private SwerveModule frontLeft = new SwerveModule(Constants.DrivetrainConstants.frontLeft); 
   private SwerveModule frontRight = new SwerveModule(Constants.DrivetrainConstants.frontRight); 
@@ -49,7 +55,7 @@ public class Drivetrain extends SubsystemBase {
   private Field2d m_odometryField = new Field2d(); 
   private Field2d m_visionField = new Field2d(); 
 
-  public Drivetrain() {
+  private Drivetrain() {
 
     this.rotationController.enableContinuousInput(-180, 180); 
 
@@ -75,11 +81,19 @@ public class Drivetrain extends SubsystemBase {
 
     SmartDashboard.putData("Robot Odometry Field", m_odometryField);
     SmartDashboard.putData("Robot Vision Field", m_visionField);
+    doSendables();
   }
 
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+  }
+
+  public void doSendables() {
+    frontLeft.doSendables();
+    frontRight.doSendables();
+    backLeft.doSendables();
+    backRight.doSendables();
   }
 
   
@@ -117,6 +131,16 @@ public class Drivetrain extends SubsystemBase {
 
     swerveDrive(states);
   }
+
+  public void swerveDriveWithoutCompensation(ChassisSpeeds speeds) {
+    SwerveModuleState[] states = Constants.DrivetrainConstants.kDriveKinematics.toSwerveModuleStates(speeds); 
+    // ensure all speeds are reachable by the wheel
+    SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.DrivetrainConstants.kMaxAttainableModuleSpeedMetersPerSecond);
+
+    swerveDrive(states);
+  }
+
+
   public void swerveDriveRobotCentric(ChassisSpeeds speeds) {
     // correct for drift in the chassis
     ChassisSpeeds correctedSpeeds = SwerveUtils.correctInputWithRotation(speeds); 

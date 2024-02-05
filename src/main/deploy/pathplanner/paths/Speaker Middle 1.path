@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.665344728692309,
-        "y": 7.37782702384235
+        "x": 2.7768175837103555,
+        "y": 6.892517043179449
       },
       "isLocked": false,
       "linkedName": "Speaker 1"
@@ -20,8 +20,8 @@
         "y": 7.3922574385433135
       },
       "prevControl": {
-        "x": 6.477219581255351,
-        "y": 7.3922574385433135
+        "x": 7.35468338104596,
+        "y": 7.468608019922806
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,17 +30,35 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.85,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeGround"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 2.0,
-    "maxAngularVelocity": 180.0,
-    "maxAngularAcceleration": 90.0
+    "maxVelocity": 1.5,
+    "maxAcceleration": 1.5,
+    "maxAngularVelocity": 120.0,
+    "maxAngularAcceleration": 120.0
   },
   "goalEndState": {
     "velocity": 0,
     "rotation": 0,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "Speaker Middle",

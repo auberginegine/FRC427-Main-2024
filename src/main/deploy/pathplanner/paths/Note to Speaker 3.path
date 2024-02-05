@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.531946633080141,
-        "y": 4.122214464115091
+        "x": 2.5539374447669423,
+        "y": 3.6128694795942384
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2747631613197132,
-        "y": 4.101639786374257
+        "x": 2.0085986553942274,
+        "y": 3.6128694795942384
       },
       "isLocked": false,
       "linkedName": "Note 3"
@@ -30,12 +30,30 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.5,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "GoToSpeaker"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 2.0,
-    "maxAngularVelocity": 180.0,
-    "maxAngularAcceleration": 90.0
+    "maxVelocity": 1.5,
+    "maxAcceleration": 1.5,
+    "maxAngularVelocity": 120.0,
+    "maxAngularAcceleration": 120.0
   },
   "goalEndState": {
     "velocity": 0,
