@@ -7,7 +7,7 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
-import edu.wpi.first.math.controller.ArmFeedforward;
+//import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -77,17 +77,24 @@ public class Arm extends SubsystemBase {
         // or if the arm is not reaching beyond 100 degs, 
         // arm is allowed to move 
         // forward defined as away from the limit switch.
-        boolean passReverseSoftLimit = (m_limitSwitch.get() || getAngle() < Constants.ArmConstants.kReverseSoftLimit) && impendingVelocity < 0;
-        boolean passForwardSoftLimit = getAngle() > Constants.ArmConstants.kForwardSoftLimit && impendingVelocity > 0;
+        boolean passReverseSoftLimit = reverseSoftLimit() && impendingVelocity < 0;
+        boolean passForwardSoftLimit = forwardSoftLimit() && impendingVelocity > 0;
 
         if (!passReverseSoftLimit && !passForwardSoftLimit) {
-                m_armMotorRight.set(impendingVelocity); 
+            m_armMotorRight.set(impendingVelocity); 
         }
 
         SmartDashboard.putNumber("Impending Velocity (m/s)", impendingVelocity);
         SmartDashboard.putBoolean("Pass Reverse Soft Limit", passReverseSoftLimit);
         SmartDashboard.putBoolean("Pass Forward Soft Limit", passForwardSoftLimit);
+    }
 
+    public boolean reverseSoftLimit() {
+        return (m_limitSwitch.get() || getAngle() < Constants.ArmConstants.kReverseSoftLimit);
+    }
+
+    public boolean forwardSoftLimit() {
+        return getAngle() > Constants.ArmConstants.kForwardSoftLimit;
     }
 
     public void setKG(double kG) {
