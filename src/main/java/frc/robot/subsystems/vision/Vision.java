@@ -1,4 +1,5 @@
-package frc.robot.subsystems.limelight;
+package frc.robot.subsystems.vision;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.VecBuilder;
@@ -17,12 +18,12 @@ import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj.Timer;
 
-public class Limelight extends SubsystemBase {
+public class Vision extends SubsystemBase {
 
     
-    private static Limelight instance = new Limelight(Drivetrain.getInstance());
+    private static Vision instance = new Vision(Drivetrain.getInstance());
 
-    public static Limelight getInstance() {
+    public static Vision getInstance() {
         return instance; 
     }
 
@@ -41,7 +42,7 @@ public class Limelight extends SubsystemBase {
     private double[] botPoseValues;
 
     // Creates a new limelight object
-    private Limelight(Drivetrain drivetrain) {
+    private Vision(Drivetrain drivetrain) {
         limelightNT = NetworkTableInstance.getDefault().getTable("limelight");
         this.drivetrain = drivetrain;
     }
@@ -79,9 +80,9 @@ public class Limelight extends SubsystemBase {
         SmartDashboard.putNumber("LimelightTargetY", limelightTargetY);
         // SmartDashboard.putNumber("LimelightDistanceToTarget", getDistanceToAprilTag());
         SmartDashboard.putNumber("LimelightNearestAprilTag", getClosestAprilTagID());
-        SmartDashboard.putNumber("LimelightNearestAprilTagPositionX", getAprilTagPos(getClosestAprilTagID()).getX());
-        SmartDashboard.putNumber("LimelightNearestAprilTagPositionY", getAprilTagPos(getClosestAprilTagID()).getY());
-        SmartDashboard.putNumber("LimelightNearestAprilTagPositionZ", getAprilTagPos(getClosestAprilTagID()).getZ());
+        if (getAprilTagPos(getClosestAprilTagID()) != null) SmartDashboard.putNumber("LimelightNearestAprilTagPositionX", getAprilTagPos(getClosestAprilTagID()).getX());
+        if (getAprilTagPos(getClosestAprilTagID()) != null) SmartDashboard.putNumber("LimelightNearestAprilTagPositionY", getAprilTagPos(getClosestAprilTagID()).getY());
+        if (getAprilTagPos(getClosestAprilTagID()) != null) SmartDashboard.putNumber("LimelightNearestAprilTagPositionZ", getAprilTagPos(getClosestAprilTagID()).getZ());
 
         if (getAprilTagPos(getClosestAprilTagID()) != null) addVisionFromDrivetrain();
     }
@@ -91,6 +92,9 @@ public class Limelight extends SubsystemBase {
         double distance = getDistanceToAprilTag();
         var translationStdDev = Constants.Vision.kTranslationStdDevCoefficient * Math.pow(distance, 2);
         var rotationStdDev = Constants.Vision.kRotationStdDevCoefficient * Math.pow(distance, 2);
+
+        SmartDashboard.putNumber("translation stddev", translationStdDev); 
+        SmartDashboard.putNumber("rotation stddev", rotationStdDev); 
         return VecBuilder.fill(translationStdDev, translationStdDev, rotationStdDev);
     }
 
@@ -101,7 +105,7 @@ public class Limelight extends SubsystemBase {
 
     // Returns the pose3d of the closest april tag
     private Pose3d getAprilTagPos(int aprilTagID) {
-        return Constants.Vision.kAprilTagFieldLayout.getTagPose(aprilTagID).orElse(new Pose3d(0, 0, 0, new Rotation3d()));
+        return Constants.Vision.kAprilTagFieldLayout.getTagPose(aprilTagID).orElse(null);
     }
 
     // Gets the distance to the closest april tag by finding the 3-dimensional norm
@@ -138,7 +142,7 @@ public class Limelight extends SubsystemBase {
 
     // Adds vision measurements to the drivetrain if they are within the field
     public void addVisionFromDrivetrain() {
-        // if (!isPoseValid()) return; 
+        if (!isPoseValid()) return; 
         drivetrain.addVisionPoseEstimate(getCurrentPose3d(), getDistanceToAprilTag(), Timer.getFPGATimestamp() - (limelightTotalLatency/1000.0), calculateVisionStdDevs());
     }
 

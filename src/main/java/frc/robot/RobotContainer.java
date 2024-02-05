@@ -4,23 +4,13 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.arm.Arm;
-import frc.robot.subsystems.arm.commands.GoToAmp;
-import frc.robot.subsystems.arm.commands.GoToGround;
-import frc.robot.subsystems.arm.commands.GoToSpeaker;
-import frc.robot.subsystems.arm.commands.GoToTravel;
-import frc.robot.subsystems.arm.commands.SetVelocity;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
-import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.intake.commands.SetShooterSpeed;
-import frc.robot.subsystems.intake.commands.SetSuckerIntakeSpeed;
-import frc.robot.subsystems.hang.Hang;
-import frc.robot.subsystems.hang.commands.SetHangSpeed;
 import frc.robot.util.DriverController;
 import frc.robot.util.DriverController.Mode;
 import frc.robot.subsystems.leds.Led;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
+import frc.robot.subsystems.vision.Vision;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,19 +26,20 @@ public class RobotContainer {
   private final Drivetrain drivetrain = Drivetrain.getInstance();
 
   // intake of the bot
-  private final Intake intake = Intake.getInstance(); 
+  // private final Intake intake = Intake.getInstance(); 
 
   // leds!
   private final Led led = Led.getInstance(); 
 
+
   // limelight subsystem of robot
-  // private final Limelight limelight = Limelight.getInstance(); 
+  private final Vision limelight = Vision.getInstance(); 
 
   // hang mechanism of robot
-  private final Hang hang = Hang.getInstance();
+  // private final Hang hang = Hang.getInstance();
   
   // arm of the robot
-  private final Arm arm = Arm.getInstance();
+  // private final Arm arm = Arm.getInstance();
   
   private SendableChooser<LEDPattern> patterns = new SendableChooser<>();
   
@@ -74,6 +65,24 @@ public class RobotContainer {
     patterns.addOption("Idle", Constants.LEDs.Patterns.kIdle);
     patterns.addOption("Rainbow", Constants.LEDs.Patterns.kBalanceFinished);
     patterns.addOption("Dead", Constants.LEDs.Patterns.kDead);
+    patterns.addOption("Enabled", Constants.LEDs.Patterns.kEnabled);
+    patterns.addOption("Disabled", Constants.LEDs.Patterns.kDisabled);
+    patterns.addOption("Moving", Constants.LEDs.Patterns.kMoving);
+    patterns.addOption("Failure", Constants.LEDs.Patterns.kFail);
+    patterns.addOption("Intake", Constants.LEDs.Patterns.kIntake);
+    patterns.addOption("Shooting", Constants.LEDs.Patterns.kShootAnywhere);
+    patterns.addOption("Arm Travel", Constants.LEDs.Patterns.kArmMoving);
+    patterns.addOption("Arm at amp", Constants.LEDs.Patterns.kArmAtAmp);
+    patterns.addOption("Arm At Speaker", Constants.LEDs.Patterns.kArmAtSpeaker);
+    patterns.addOption("Arm At Ground", Constants.LEDs.Patterns.kArmAtGround);
+    patterns.addOption("Arm Moving", Constants.LEDs.Patterns.kArmCustom);
+    patterns.addOption("Hanging", Constants.LEDs.Patterns.kHangActive);
+    patterns.addOption("Auto Begins", Constants.LEDs.Patterns.kAutoBegin);
+    patterns.addOption("Auto Ends", Constants.LEDs.Patterns.kAutoEnd);
+    patterns.addOption("test Yellow", Constants.LEDs.Patterns.kCone);
+     patterns.addOption("test Color", Constants.LEDs.Patterns.kTestColor);
+
+
   }
   
   /**
@@ -90,7 +99,7 @@ public class RobotContainer {
 
     // --- Driver ---
 
-    // driverController.a().onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
+    driverController.a().onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
 
     // driverController.b().onTrue(new TuneTurnToAngle(drivetrain)); 
     // driverController.y().onTrue(new TuneBalance(drivetrain)); 
@@ -160,7 +169,7 @@ public class RobotContainer {
     SmartDashboard.putData("Autonomous", autoPicker.getChooser());
     SmartDashboard.putBoolean("gyro connected", drivetrain.gyro.isConnected()); 
     SmartDashboard.putData(patterns);
-    // led.setPattern(patterns.getSelected());
+    led.setPattern(patterns.getSelected());
   }
 
   // givess the currently picked auto as the chosen auto for the match

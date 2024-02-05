@@ -4,8 +4,11 @@
 
 package frc.robot;
 
-import com.ctre.phoenix6.signals.SensorDirectionValue;
+import java.util.function.Function;
 
+import com.ctre.phoenix6.signals.SensorDirectionValue;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -18,7 +21,9 @@ import frc.robot.subsystems.leds.patterns.FadeLEDPattern;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
 import frc.robot.subsystems.leds.patterns.MorseCodePattern;
 import frc.robot.subsystems.leds.patterns.RainbowPattern;
+import frc.robot.subsystems.leds.patterns.SineLEDPattern;
 import frc.robot.subsystems.leds.patterns.SolidLEDPattern;
+import frc.robot.subsystems.leds.patterns.TestColorPattern;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -53,8 +58,8 @@ public final class Constants {
     public static final double kDegreesPerSecondPerRPM = kDegreesPerRot / 60; // velocity conversion factor of the turn encoder 
 
     // Drivebase
-    public static final double kTrackWidthMeters = Units.inchesToMeters(23.0); // horizontal dist between wheels
-    public static final double kWheelBaseMeters = Units.inchesToMeters(23.0); // vertical dist between wheels
+    public static final double kTrackWidthMeters = Units.inchesToMeters(20.75); // horizontal dist between wheels
+    public static final double kWheelBaseMeters = Units.inchesToMeters(22.75); // vertical dist between wheels
 
     public static final double kDriveBaseRadius = Math.hypot(kTrackWidthMeters, kWheelBaseMeters) / 2; 
 
@@ -127,19 +132,19 @@ public final class Constants {
     public static final double kDrive_D = 0;
 
     // angular PID (same as turn pid)
-    public static final double kOmega_P = 3.24; 
+    public static final double kOmega_P = 4; 
     public static final double kOmega_I = 0; 
-    public static final double kOmega_D = 0; 
+    public static final double kOmega_D = 0.0001; 
 
     // max velocity & acceleration robot can go n following a trajectory
     public static final double kMaxVelocityMetersPerSecond = 1; 
     public static final double kMaxAccelerationMetersPerSecondSquared = 1; 
 
-    public static final double kMaxCentripetalAcceleration = 0.8; 
+    public static final double kMaxAngularVelocityRadiansPerSecond = Units.degreesToRadians(120); 
+    public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Units.degreesToRadians(120); 
   }
 
   public static class IntakeConstants {
-
     public static int kIntakeMotorShootTopId = 15;
     public static int kIntakeMotorShootBottomId = 16;
     public static int kOuttakeMotorSuckId = 17;
@@ -152,15 +157,21 @@ public final class Constants {
     public static int kShootBottomMotorlimit = 40;
 
     public static final boolean kSuckOuttakeInverted = false;
-    public static final int kSuckOuttakeMotorLimit = 20;
+    public static final int kSuckOuttakeMotorLimit = 40;
 
-    public static final double kShootVelocityConversionFactor = 0; 
-    public static final double kIntakeVelocityConversionFactor = 0; 
+    public static final double kShootVelocityConversionFactor = 1; 
+    public static final double kIntakeVelocityConversionFactor = 1; 
 
     public static final int kBeamBreakId = 0;
 
-    public static final double kSuckerManualSpeed = 0; 
-    public static final double kShooterManualSpeed = 0; 
+    public static final double kSuckerIntakeSpeed = 0.5;
+
+    public static final double kShootSpeed = 1; 
+    public static final double kShootSuckerSpeed = 1; 
+    public static final double kShootRevTime = 0.5; 
+    public static final double kShootWaitTime = 0.5; 
+
+    public static final double kAmpOuttakeSpeed = 0.5; 
   }
 
   public class ArmConstants {
@@ -183,11 +194,11 @@ public final class Constants {
     public static final double kTolerance = 0;
 
     public static final double kGroundPosition = 0;
-    public static final double kTravelPosition = 0;
-    public static final double kAmpPosition = 0;
-    public static final double kSpeakerPosition = 0;
+    public static final double kTravelPosition = 20;
+    public static final double kAmpPosition = 90;
+    public static final double kSpeakerPosition = 10;
 
-    public static final double kTravelSpeed = 0;
+    public static final double kTravelSpeed = 30;
 
 
     // TODO: tune arm pid
@@ -222,13 +233,13 @@ public final class Constants {
 
     public static final int kHangMotorLimit = 40;
 
-    public static final double kPositionConversionFactor = 0;
+    public static final double kPositionConversionFactor = 1;
     public static final double kVelocityConversionFactor = kPositionConversionFactor / 60;
 
     public static final float kFowardHangSoftLimit = 0;
     public static final float kReverseHangSoftLimit = 0;
 
-    public static final double kHangSpeed = 1;
+    public static final double kHangSpeed = 0.25;
   }
 
   public static class Vision {
@@ -237,34 +248,75 @@ public final class Constants {
     public static final AprilTagFieldLayout kAprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(); 
     public static final double limelightZHeight = 0; // TODO: Fix this
     public static final double kMaxAccuracyRange = 1000;
+    public static final Pose2d kRedAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
+    public static final Pose2d kBlueAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
+
+    // TODO: tune
+    public static final Function<Double, Double> distanceToArmAngle = (dist) -> 0.0; 
 
     static {
       kAprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
     }
   }
   public static final class LEDs {
-
     public static final Color kDefaultColor = Color.kDarkBlue;
+    public static final Color kCobaltBlue = new Color("#0047AB");
+    public static final Color kGold = new Color(142, 66, 0); // 142.17, 66.44
 
     public static final int kLedPort = 6; 
-    public static final int kLedLength = 10; 
+    public static final int kLedLength = 40; 
 
     public static final int kLed1Start = 0; 
     public static final int kLed1End = 10; 
-    public static final int kLed2Start = 0; 
-    public static final int kLed2End = 0;
+    public static final int kLed2Start = 10; 
+    public static final int kLed2End = 20;
+    public static final int kLed3Start = 20;
+    public static final int kLed3End = 30;
+    public static final int kLed4Start = 30;
+    public static final int kLed4End = 40;
 
     public static final class Patterns {
       public static final LEDPattern kDefault = new SolidLEDPattern(LEDs.kDefaultColor);
-      public static final LEDPattern kIdle = new FadeLEDPattern(2.5, LEDs.kDefaultColor, Color.kYellow);
+      public static final LEDPattern kDisabled = new FadeLEDPattern(4, LEDs.kDefaultColor, kGold);
       public static final LEDPattern kCube = new SolidLEDPattern(Color.kPurple);
-      public static final LEDPattern kCone = new SolidLEDPattern(Color.kYellow);
-      public static final LEDPattern kDead = new MorseCodePattern(Color.kRed, Color.kBlue, "dead");
+      public static final LEDPattern kCone = new SolidLEDPattern(kGold);
+      public static final LEDPattern kDead = new MorseCodePattern(Color.kRed, kCobaltBlue, "dead");
       public static final LEDPattern kDeadAlternate = new FadeLEDPattern(1, Color.kRed, Color.kBlack);
       public static final LEDPattern kBalanceFinished = new RainbowPattern(0.5);
       public static final LEDPattern kAllianceRed = new SolidLEDPattern(Color.kRed);
       public static final LEDPattern kAllianceBlue = new SolidLEDPattern(Color.kBlue);
+      public static final LEDPattern kEnabled = new SineLEDPattern(1, kGold, kCobaltBlue, 8);
+      public static final LEDPattern kIdle= new FadeLEDPattern(2, Color.kRed, kGold);
+      public static final LEDPattern kMoving = new FadeLEDPattern(1,kGold, Color.kWhite);
+      public static final LEDPattern kFail = new FadeLEDPattern(1,Color.kRed, kGold);
+      public static final LEDPattern kIntake = new FadeLEDPattern(1,kCobaltBlue, Color.kGreen);
+      public static final LEDPattern kShootAnywhere = new SolidLEDPattern(kCobaltBlue);
+      public static final LEDPattern kArmMoving = new SolidLEDPattern(Color.kOrange);
+      public static final LEDPattern kArmAtAmp = new SolidLEDPattern(Color.kPink);
+      public static final LEDPattern kArmAtSpeaker = new SolidLEDPattern(kGold);
+      public static final LEDPattern kArmAtGround = new SolidLEDPattern(Color.kDarkGreen);
+      // public static final LEDPattern kShootAmp = new SolidLEDPattern(Color.kBlue);
+      // public static final LEDPattern kShootSpeaker = new SolidLEDPattern(Color.kBlue);
+      public static final LEDPattern kArmCustom = new SolidLEDPattern(Color.kSeaGreen);
+      public static final LEDPattern kHangActive = new SineLEDPattern(2, Color.kPurple, Color.kBlack, 5);
+      public static final LEDPattern kBeamHit = new SolidLEDPattern(Color.kGreen, 3);
+      public static final LEDPattern kAutoBegin = new FadeLEDPattern(.5, Color.kPurple, Color.kBlack);
+      public static final LEDPattern kAutoEnd = new FadeLEDPattern(.5, Color.kPurple, Color.kBlack);
+      public static final LEDPattern kTestColor = new TestColorPattern();
     }
 
   }
+  public static final class PathFollower {
+    public static final Pose2d speakerBlue1 = new Pose2d(0.66, 6.60, Rotation2d.fromDegrees(60));
+    public static final Pose2d speakerBlue2 = new Pose2d(1.25, 5.48, Rotation2d.fromDegrees(0));
+    public static final Pose2d speakerBlue3 = new Pose2d(0.69, 4.49, Rotation2d.fromDegrees(-60));
+    public static final Pose2d speakerRed1 = new Pose2d(15.83, 6.58, Rotation2d.fromDegrees(120));
+    public static final Pose2d speakerRed2 = new Pose2d(15.29, 5.48, Rotation2d.fromDegrees(180));
+    public static final Pose2d speakerRed3 = new Pose2d(15.83, 4.51, Rotation2d.fromDegrees(-120));
+    public static final Pose2d ampBlue = new Pose2d(1.96, 7.75, Rotation2d.fromDegrees(-90));
+    public static final Pose2d ampRed = new Pose2d(14.62, 7.75, Rotation2d.fromDegrees(-90));
+  }
+  
+  
+  
 }

@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.drivetrain.SwerveModule.DriveState;
 import frc.robot.util.ChassisState;
 import frc.robot.util.SwerveUtils;
@@ -132,6 +131,16 @@ public class Drivetrain extends SubsystemBase {
 
     swerveDrive(states);
   }
+
+  public void swerveDriveWithoutCompensation(ChassisSpeeds speeds) {
+    SwerveModuleState[] states = Constants.DrivetrainConstants.kDriveKinematics.toSwerveModuleStates(speeds); 
+    // ensure all speeds are reachable by the wheel
+    SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.DrivetrainConstants.kMaxAttainableModuleSpeedMetersPerSecond);
+
+    swerveDrive(states);
+  }
+
+
   public void swerveDriveRobotCentric(ChassisSpeeds speeds) {
     // correct for drift in the chassis
     ChassisSpeeds correctedSpeeds = SwerveUtils.correctInputWithRotation(speeds); 
