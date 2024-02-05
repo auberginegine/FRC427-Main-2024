@@ -16,7 +16,6 @@ public class TuneIntakeShooter extends Command {
     }
 
     public void initialize() {
-
         this.m_intake.intakeRing(m_speed);
     }
 

@@ -1,19 +1,16 @@
 package frc.robot.subsystems.drivetrain.commands;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
-import frc.robot.subsystems.drivetrain.Drivetrain;
 
 public class MoveToAmp {
     public static Pose2d getTargetPose() {
@@ -23,22 +20,20 @@ public class MoveToAmp {
 
         Alliance alliance = optAlliance.get(); 
 
-        Pose2d TargetPose = null;
+        Pose2d targetPose = null;
 
         if (alliance == Alliance.Blue) {
-            TargetPose = Constants.PathFollower.ampBlue;
-
+            targetPose = Constants.PathFollower.ampBlue;
         }
         if (alliance == Alliance.Red) {
-            TargetPose = Constants.PathFollower.ampRed;
-
+            targetPose = Constants.PathFollower.ampRed;
         }
 
-        return TargetPose;
+        return targetPose;
 
     }
 
-    public static Command GoToAmp() {
+    public static Command goToAmp() {
         Pose2d targetPose = getTargetPose();
 
         if (targetPose == null) {
@@ -47,8 +42,11 @@ public class MoveToAmp {
 
         // Create the constraints to use while pathfinding
         PathConstraints constraints = new PathConstraints(
-        3.0, 4.0,
-        Units.degreesToRadians(540), Units.degreesToRadians(720));
+            Constants.Trajectory.kMaxVelocityMetersPerSecond, 
+            Constants.Trajectory.kMaxAccelerationMetersPerSecondSquared,
+            Constants.Trajectory.kMaxAngularVelocityRadiansPerSecond, 
+            Constants.Trajectory.kMaxAngularAccelerationRadiansPerSecondSquared
+        );
 
         // Since AutoBuilder is configured, we can use it to build pathfinding commands
         Command pathfindingCommand = AutoBuilder.pathfindToPose(

@@ -9,12 +9,8 @@ import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.AutomationCommands;
-import frc.robot.subsystems.arm.Arm;
-import frc.robot.subsystems.arm.commands.GoToSpeaker;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.intake.commands.OuttakeToShooter;
 
 // class to store, set up, and choose autos
 public class AutoPicker {
@@ -33,12 +29,12 @@ public class AutoPicker {
             driveSubsystem::getPose, // Pose2d supplier
             driveSubsystem::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
             driveSubsystem::getChassisSpeeds, // current robot-relative speeds for the drivetrain
-            driveSubsystem::swerveDrive, // Module states consumer used to output to the drive subsystem
+            driveSubsystem::swerveDriveWithoutCompensation, // Module states consumer used to output to the drive subsystem
             new HolonomicPathFollowerConfig(
                 new PIDConstants(Constants.Trajectory.kDrive_P, Constants.Trajectory.kDrive_I, Constants.Trajectory.kDrive_D), // PID constants to correct for translation error (used to create the X and Y PID controllers)
                 new PIDConstants(Constants.Trajectory.kOmega_P, Constants.Trajectory.kOmega_I, Constants.Trajectory.kOmega_D), 
                 Constants.DrivetrainConstants.kMaxAttainableModuleSpeedMetersPerSecond, Constants.DrivetrainConstants.kDriveBaseRadius, 
-                new ReplanningConfig()
+                new ReplanningConfig(false, false)
             ),  
             () -> {
                     // Boolean supplier that controls when the path will be mirrored for the red alliance
@@ -62,10 +58,17 @@ public class AutoPicker {
 
     public void registerCommands() {
         // eg. NamedCommands.registerCommand("intake_cube", new IntakeForTime(intake, 1, 2)); 
-        NamedCommands.registerCommand("GoToSpeaker", new GoToSpeaker(Arm.getInstance()));
-        NamedCommands.registerCommand("IntakeGround", AutomationCommands.autoIntakeCommand());
-        NamedCommands.registerCommand("ShootSpeaker", new OuttakeToShooter(Intake.getInstance(), 1,1));
-        NamedCommands.registerCommand("ShootOut", new OuttakeToShooter(Intake.getInstance(),0.5,1));
+        // NamedCommands.registerCommand("GoToSpeaker", new GoToSpeaker(Arm.getInstance()));
+        // NamedCommands.registerCommand("IntakeGround", AutomationCommands.autoIntakeCommand());
+        // NamedCommands.registerCommand("ShootSpeaker", new OuttakeToSpeaker(Intake.getInstance(), 1,1));
+        // NamedCommands.registerCommand("ShootOut", new OuttakeToSpeaker(Intake.getInstance(),0.5,1));
+        // NamedCommands.registerCommand("ShootAnywhere", AutomationCommands.shootFromAnywhere());
+
+        NamedCommands.registerCommand("GoToSpeaker", new PrintCommand("Going to Speaker"));
+        NamedCommands.registerCommand("IntakeGround", new PrintCommand("Intaking from ground!"));
+        NamedCommands.registerCommand("ShootSpeaker", new PrintCommand("shooting to speaker!!"));
+        NamedCommands.registerCommand("ShootOut", new PrintCommand("Shooting out to nowhere!!!"));
+        NamedCommands.registerCommand("ShootAnywhere", new PrintCommand("Shooting from anywhere!!!!"));
     }
 
     // gets the currently selected auto
