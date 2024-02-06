@@ -6,12 +6,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.arm.commands.GoToAmp;
 import frc.robot.subsystems.arm.commands.GoToGround;
+import frc.robot.subsystems.arm.commands.GoToSpeaker;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.MoveToAmp;
 import frc.robot.subsystems.drivetrain.commands.MoveToSpeaker;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.IntakeFromGround;
+import frc.robot.subsystems.intake.commands.OuttakeToAmp;
+import frc.robot.subsystems.intake.commands.OuttakeToSpeaker;
 
 public class AutomationCommands {
     
@@ -32,14 +36,12 @@ public class AutomationCommands {
     return Commands.defer(() -> MoveToAmp.goToAmp(), Set.of(Drivetrain.getInstance())); 
   }
 
-  public static Command pathFindToSpeakerAndScore() {
-    // TODO
-    return Commands.none(); 
+  public static Command pathFindToSpeakerAndScore(Arm arm, Intake intake) {
+    return pathFindToSpeaker().alongWith(new GoToSpeaker(arm)).andThen(new OuttakeToSpeaker(intake)); 
   }
 
-  public static Command pathFindToAmpAndScore() {
-    // TODO
-    return Commands.none(); 
+  public static Command pathFindToAmpAndScore(Arm arm, Intake intake) {
+    return pathFindToAmp().alongWith(new GoToAmp(arm)).andThen(new OuttakeToAmp(intake));
   }
 
   public static Command pathFindToGamePiece() {
