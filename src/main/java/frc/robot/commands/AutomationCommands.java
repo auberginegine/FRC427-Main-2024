@@ -12,24 +12,33 @@ import frc.robot.subsystems.drivetrain.commands.MoveToAmp;
 import frc.robot.subsystems.drivetrain.commands.MoveToSpeaker;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.IntakeFromGround;
+import frc.robot.subsystems.leds.Led;
 
 public class AutomationCommands {
     
   public static Command autoIntakeCommand() {
     return Commands.sequence(
+        Commands.runOnce(() -> Led.getInstance().isIntaking = true),
         new GoToGround(Arm.getInstance()), 
         new IntakeFromGround(Intake.getInstance())
     ).finallyDo(() -> {
       Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
+      Commands.runOnce(() -> Led.getInstance().isIntaking = false);
     });
   }
 
   public static Command pathFindToSpeaker() {
-    return Commands.defer(() -> MoveToSpeaker.goToSpeaker(), Set.of(Drivetrain.getInstance())); 
+    return Commands.runOnce(() -> Led.getInstance().isMovingToSpeaker = true).andThen(
+      Commands.defer(() -> MoveToSpeaker.goToSpeaker(), Set.of(Drivetrain.getInstance()))).finallyDo(() -> {
+        Led.getInstance().isMovingToSpeaker = false;
+      }); 
   }
 
   public static Command pathFindToAmp() {
-    return Commands.defer(() -> MoveToAmp.goToAmp(), Set.of(Drivetrain.getInstance())); 
+    return Commands.runOnce(() -> Led.getInstance().isMovingToAmp = true).andThen(
+      Commands.defer(() -> MoveToAmp.goToAmp(), Set.of(Drivetrain.getInstance()))).finallyDo(() -> {
+        Led.getInstance().isMovingToAmp = false;
+      }); 
   }
 
   public static Command pathFindToSpeakerAndScore() {
@@ -48,8 +57,10 @@ public class AutomationCommands {
   }
 
   public static Command shootFromAnywhere() {
-    return Commands.defer(
+    return Commands.runOnce(() -> Led.getInstance().isShooting = true).andThen(Commands.defer(
       () -> ShootAnywhere.shootAnywhere(Drivetrain.getInstance(), Arm.getInstance(), Intake.getInstance()), 
-    Set.of(Drivetrain.getInstance(), Arm.getInstance(), Intake.getInstance()));  
+    Set.of(Drivetrain.getInstance(), Arm.getInstance(), Intake.getInstance()))).finallyDo(() -> {
+      Led.getInstance().isShooting = false;
+    });  
   }
 }
