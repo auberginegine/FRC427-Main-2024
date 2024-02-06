@@ -250,6 +250,7 @@ public final class Constants {
     public static final double kMaxAccuracyRange = 1000;
     public static final Pose2d kRedAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
     public static final Pose2d kBlueAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
+    public static final double isEstimateReasonable = 100000;
 
     // TODO: tune
     public static final Function<Double, Double> distanceToArmAngle = (dist) -> 0.0; 

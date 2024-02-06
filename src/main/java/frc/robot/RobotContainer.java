@@ -10,7 +10,7 @@ import frc.robot.util.DriverController;
 import frc.robot.util.DriverController.Mode;
 import frc.robot.subsystems.leds.Led;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
-import frc.robot.subsystems.vision.Vision;
+import frc.robot.subsystems.vision.Vision_old;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -33,7 +33,7 @@ public class RobotContainer {
 
 
   // limelight subsystem of robot
-  private final Vision limelight = Vision.getInstance(); 
+  private final Vision_old limelight = Vision_old.getInstance(); 
 
   // hang mechanism of robot
   // private final Hang hang = Hang.getInstance();
