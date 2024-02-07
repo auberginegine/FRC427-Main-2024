@@ -5,8 +5,12 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.hang.commands.SetHangSpeed;
+import frc.robot.subsystems.leds.Led;
 import frc.robot.util.IOUtils;
 
 public class Hang extends SubsystemBase {
@@ -71,6 +75,9 @@ public class Hang extends SubsystemBase {
         //Constantly sets speed to whatever velocity is
         m_HangMotorRight.set(m_velocity);
 
+        //Check for LEDs on Hang
+        
+
         //Constantly sends logs to Smart Dashboard
         doSendables();
     }
@@ -101,5 +108,12 @@ public class Hang extends SubsystemBase {
         //Method to change speed
         this.m_velocity = speed;
     }
+
+    public double getHangPosition() {
+        return m_HangEncoderRight.getPosition();
+    }
+
+  
+
 
 }
