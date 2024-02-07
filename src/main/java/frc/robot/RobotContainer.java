@@ -4,8 +4,26 @@
 
 package frc.robot;
 
+import frc.robot.commands.AutomationCommands;
+import frc.robot.commands.ShootAnywhere;
+import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.arm.Arm.ArmControlState;
+import frc.robot.subsystems.arm.commands.GoToAmp;
+import frc.robot.subsystems.arm.commands.GoToGround;
+import frc.robot.subsystems.arm.commands.GoToSpeaker;
+import frc.robot.subsystems.arm.commands.GoToTravel;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.commands.MoveToAmp;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
+import frc.robot.subsystems.hang.Hang;
+import frc.robot.subsystems.hang.commands.SetHangSpeed;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.commands.IntakeFromGround;
+import frc.robot.subsystems.intake.commands.OuttakeToAmp;
+import frc.robot.subsystems.intake.commands.OuttakeToSpeaker;
+import frc.robot.subsystems.intake.commands.SetShooterSpeed;
+import frc.robot.subsystems.intake.commands.SetSuckerIntakeSpeed;
+import frc.robot.subsystems.intake.commands.TuneIntakeShooter;
 import frc.robot.util.DriverController;
 import frc.robot.util.DriverController.Mode;
 import frc.robot.subsystems.leds.Led;
@@ -26,7 +44,7 @@ public class RobotContainer {
   private final Drivetrain drivetrain = Drivetrain.getInstance();
 
   // intake of the bot
-  // private final Intake intake = Intake.getInstance(); 
+  private final Intake intake = Intake.getInstance(); 
 
   // leds!
   private final Led led = Led.getInstance(); 
@@ -36,10 +54,10 @@ public class RobotContainer {
   private final Vision limelight = Vision.getInstance(); 
 
   // hang mechanism of robot
-  // private final Hang hang = Hang.getInstance();
+  private final Hang hang = Hang.getInstance();
   
   // arm of the robot
-  // private final Arm arm = Arm.getInstance();
+  private final Arm arm = Arm.getInstance();
   
   private SendableChooser<LEDPattern> patterns = new SendableChooser<>();
   
@@ -108,11 +126,50 @@ public class RobotContainer {
       .onTrue(new InstantCommand(() -> driverController.setSlowMode(Mode.SLOW)))
       .onFalse(new InstantCommand(() -> driverController.setSlowMode(Mode.NORMAL))); 
 
+    // new Trigger(() -> driverController.getRightY() > 0.5)
+    //   .onTrue(new ())
+
+   //  driverController.y().onTrue(new MoveToAmp(() -> drivetrain()));
+   driverController.y()
+   .onTrue(AutomationCommands.pathFindToAmpAndScore());
+
+
+   driverController.b()
+   .onTrue(AutomationCommands.pathFindToSpeakerAndScore());
+
+   driverController.a()
+   .onTrue(AutomationCommands.pathFindToGamePiece()); // make find to note
+
+ 
+
     // --- Intake --- 
 
-    //  both Suck and Shoot have teh same controls RN (CHANGE ONCE DRIVERS TELL U WHAT CONTROLS THEY WANT)
-    // new Trigger(() -> manipulatorController.getRightY() > 0.5) // outtake sucker
-    //   .onTrue(new SetSuckerIntakeSpeed(intake, -Constants.IntakeConstants.kSuckerManualSpeed));
+    // outtake
+    manipulatorController.leftBumper().and(() -> arm.getArmControlState() == ArmControlState.AMP)
+      .onTrue(new OuttakeToAmp(intake));
+
+    manipulatorController.leftBumper().and(() -> arm.getArmControlState() == ArmControlState.SPEAKER)
+      .onTrue(new OuttakeToSpeaker(intake));
+      
+    // intake
+    manipulatorController.rightBumper()
+      .onTrue(new IntakeFromGround(intake));
+
+    // intake from ground
+   
+
+    new Trigger(() -> manipulatorController.getRightY() > 0.5)
+      .onTrue(AutomationCommands.shootFromAnywhere()); // TODO: make drivetrain thing
+
+    new Trigger(() -> manipulatorController.getRightY() > -0.5 && manipulatorController.getRightY() < 0.5)
+      .onTrue(new SetShooterSpeed(intake, 0));
+
+      manipulatorController.rightTrigger()
+      .onTrue(AutomationCommands.autoIntakeCommand()); // intake from ground auto
+
+    // shoot
+    new Trigger(() -> manipulatorController.getRightY() < -0.5) // outtake sucker
+       .onTrue(new SetShooterSpeed(intake, Constants.IntakeConstants.kShootSpeed));
 
     // new Trigger(() -> manipulatorController.getRightY() < -0.5) // intake sucker
     //   .onTrue(new SetSuckerIntakeSpeed(intake, Constants.IntakeConstants.kSuckerManualSpeed));
@@ -132,6 +189,7 @@ public class RobotContainer {
       
     // --- Arm ---
 
+    // TODO: add manual control?
     // // right stick y to manually move arm
     // new Trigger(() -> manipulatorController.getLeftY() < -0.5) 
     //   .onTrue(new SetVelocity(arm, -Constants.ArmConstants.kTravelSpeed));
@@ -143,24 +201,24 @@ public class RobotContainer {
     //   .onTrue(new SetVelocity(arm, Constants.ArmConstants.kTravelSpeed));
       
     // // buttons to move arm to go to setpoints
-    // manipulatorController.a().onTrue(new GoToGround(arm));
-    // manipulatorController.b().onTrue(new GoToTravel(arm));
-    // manipulatorController.x().onTrue(new GoToSpeaker(arm));
-    // manipulatorController.y().onTrue(new GoToAmp(arm));
+    manipulatorController.a().onTrue(new GoToTravel(arm));
+    manipulatorController.b().onTrue(new GoToAmp(arm));
+    manipulatorController.x().onTrue(new GoToSpeaker(arm));
+    manipulatorController.y().onTrue(new GoToGround(arm));
 
 
     // --- Hang ---
 
     // Hang Up when DPAD UP
-    // manipulatorController.povUp()
-    //   .onTrue(new SetHangSpeed(hang, Constants.HangConstants.kHangSpeed)); 
-    // //Hang Down when DPAD DOWN
-    // manipulatorController.povDown()
-    //   .onTrue(new SetHangSpeed(hang, -Constants.HangConstants.kHangSpeed)); 
+    manipulatorController.povUp()
+      .onTrue(new SetHangSpeed(hang, Constants.HangConstants.kHangSpeed)); 
+    //Hang Down when DPAD DOWN
+    manipulatorController.povDown()
+      .onTrue(new SetHangSpeed(hang, -Constants.HangConstants.kHangSpeed)); 
 
-    // // // Stop hang when neither is pressed
-    // manipulatorController.povDown().negate().and(manipulatorController.povUp().negate())
-    // .onTrue(new SetHangSpeed((hang), 0)); 
+    // Stop hang when neither is pressed
+    manipulatorController.povDown().negate().and(manipulatorController.povUp().negate())
+    .onTrue(new SetHangSpeed(hang, 0)); 
   }
   
 

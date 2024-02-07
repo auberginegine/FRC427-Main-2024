@@ -7,12 +7,11 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
-//import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  
-
 public class Arm extends SubsystemBase {
     
     private static Arm instance; 
@@ -36,11 +35,13 @@ public class Arm extends SubsystemBase {
     
     private PIDController m_armPIDController = new PIDController(Constants.ArmConstants.kP, Constants.ArmConstants.kI, Constants.ArmConstants.kD);
     
-    // public ArmFeedforward m_armFeedforward = new ArmFeedforward(Constants.ArmConstants.kS, Constants.ArmConstants.kG, Constants.ArmConstants.kV, Constants.ArmConstants.kA);
+    public ArmFeedforward m_armFeedforward = new ArmFeedforward(Constants.ArmConstants.kS, Constants.ArmConstants.kG, Constants.ArmConstants.kV, Constants.ArmConstants.kA);
 
     private ArmControlType m_ArmControlType = Arm.ArmControlType.PID;
-    private double m_kG = Constants.ArmConstants.kGravityFF;
-    private double m_kS = Constants.ArmConstants.kSpringFF;
+
+    // custom arm feedforward with gas springs
+    // private double m_kG = Constants.ArmConstants.kGravityFF;
+    // private double m_kS = Constants.ArmConstants.kSpringFF;
 
     private Arm() {
         setupMotors();
@@ -70,11 +71,15 @@ public class Arm extends SubsystemBase {
         
         double impendingVelocity = 0; 
 
-        // velocity controlled by PID and custom FF
         if (m_ArmControlType == ArmControlType.PID) {
-           impendingVelocity =  m_armPIDController.calculate(m_armEncoderRight.getPosition(), m_targetPosition) 
-                              + m_kG * Math.cos(Math.toRadians(m_armEncoderRight.getPosition()))
-                              + m_kS;
+
+            impendingVelocity = m_armPIDController.calculate(getAngle(), m_targetPosition) 
+                                + m_armFeedforward.calculate(Math.toRadians(getAngle()), 0);
+            
+            // custom arm feedforward
+            // impendingVelocity =  m_armPIDController.calculate(m_armEncoderRight.getPosition(), m_targetPosition) 
+            //                  + m_kG * Math.cos(Math.toRadians(m_armEncoderRight.getPosition()))
+            //                  + m_kS;
         }
         
         // velocity controlled manually
@@ -106,13 +111,13 @@ public class Arm extends SubsystemBase {
         return getAngle() > Constants.ArmConstants.kForwardSoftLimit;
     }
 
-    public void setKG(double kG) {
-        this.m_kG = kG;
-    }
+    // public void setKG(double kG) {
+    //     this.m_kG = kG;
+    // }
 
-    public void setKS(double kS) {
-        this.m_kS = kS;
-    }
+    // public void setKS(double kS) {
+    //     this.m_kS = kS;
+    // }
 
     public double getError() {
         return m_armPIDController.getPositionError();
