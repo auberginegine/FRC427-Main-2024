@@ -1,0 +1,25 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.501187563778637,
+      "y": 1.61
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Leave Auto"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Leave Autos",
+  "choreoAuto": false
+}

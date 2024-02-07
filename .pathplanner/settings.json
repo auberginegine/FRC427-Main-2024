@@ -1,12 +1,30 @@
 {
-  "robotWidth": 0.9,
-  "robotLength": 0.9,
+  "robotWidth": 0.66,
+  "robotLength": 0.71,
   "holonomicMode": true,
-  "pathFolders": [],
-  "autoFolders": [],
-  "defaultMaxVel": 3.0,
-  "defaultMaxAccel": 3.0,
-  "defaultMaxAngVel": 540.0,
-  "defaultMaxAngAccel": 720.0,
+  "pathFolders": [
+    "Amp Note",
+    "Middle Back",
+    "Special",
+    "Note Middle",
+    "Speaker Amp",
+    "Speaker Middle",
+    "Speaker Note",
+    "Testing"
+  ],
+  "autoFolders": [
+    "3 piece auto",
+    "Archive",
+    "Leave Autos",
+    "Shoot anywhere",
+    "Score Preload",
+    "Testing",
+    "Two Piece Middle Fling",
+    "TwoPieceReturn"
+  ],
+  "defaultMaxVel": 1.5,
+  "defaultMaxAccel": 1.5,
+  "defaultMaxAngVel": 120.0,
+  "defaultMaxAngAccel": 120.0,
   "maxModuleSpeed": 4.5
 }

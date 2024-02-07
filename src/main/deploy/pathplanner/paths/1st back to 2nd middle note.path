@@ -1,0 +1,67 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.6366977896863055,
+        "y": 7.3922574385433135
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.883593922576317,
+        "y": 7.13941317606946
+      },
+      "isLocked": false,
+      "linkedName": "Middle 1 Back"
+    },
+    {
+      "anchor": {
+        "x": 8.056270140976302,
+        "y": 5.797086096541862
+      },
+      "prevControl": {
+        "x": 7.107787248155949,
+        "y": 5.524300973413978
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Middle Note 2"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.6,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeGround"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 90.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Middle Back",
+  "previewStartingState": null,
+  "useDefaultConstraints": true
+}

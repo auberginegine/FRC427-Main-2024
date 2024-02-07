@@ -46,6 +46,8 @@ public class SwerveModule {
         Constants.DrivetrainConstants.kaVoltSecondsSquaredPerMeter
     ); 
 
+    private String name; 
+
     /**
      * 
      * @param config the config of the corresponding swerve module
@@ -55,6 +57,8 @@ public class SwerveModule {
         int kDrive = config.getDriveId(); 
         int kTurnEncoder = config.getEncoderId();
         double kOffset = config.getAbsoluteEncoderOffset(); 
+
+        this.name = config.getName(); 
 
         this.turnMotor = new CANSparkMax(kTurn, MotorType.kBrushless); 
         this.driveMotor = new CANSparkMax(kDrive, MotorType.kBrushless); 
@@ -92,13 +96,22 @@ public class SwerveModule {
         this.turnMotor.setInverted(rotateInverted);
     }
 
+    public void doSendables() {
+        SmartDashboard.putNumber(name + " Turn Vel (arb)", this.turnMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber(name + " Drive Vel (m/s)", this.driveEncoder.getVelocity());
+
+        if (this.getReferenceState() != null) SmartDashboard.putNumber(name + "Commanded Drive Vel (m/s)", this.getReferenceState().speedMetersPerSecond); 
+
+        SmartDashboard.putNumber(name + " Abs Turn Angle (degrees)", this.getAngle().getDegrees());
+    }
+
     // sets the conversion factors for the drive encoder based on gear ratios
     private void configureEncoders(SensorDirectionValue direction, double kAbsoluteOffset) {
         this.driveEncoder.setPositionConversionFactor(Constants.DrivetrainConstants.kMetersPerRot);
         this.driveEncoder.setVelocityConversionFactor(Constants.DrivetrainConstants.kMetersPerSecondPerRPM); 
 
         final MagnetSensorConfigs config = new MagnetSensorConfigs(); 
-        config.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1; 
+        config.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf; 
         config.MagnetOffset = kAbsoluteOffset; 
         config.SensorDirection = direction; 
 
