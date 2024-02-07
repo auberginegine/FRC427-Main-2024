@@ -107,17 +107,13 @@ public class BackVision {
 
     // Adds vision measurements to the drivetrain if they are within the field
     public void addVisionFromDrivetrain() {
-        if (!isPoseValid() || !isAccuracyReasonable()) return; 
+        if (!isPoseValid()) return; 
         drivetrain.addVisionPoseEstimate(getCurrentPose3d(), getDistanceToAprilTag(), Timer.getFPGATimestamp() - (this.latestResult.getLatencyMillis() / 1000), calculateVisionStdDevs());
     }
 
     public boolean isEstimateClose() {
         Pose2d currentPose2d = getCurrentPose3d().toPose2d();
         return (getDistanceBetweenPose2d(currentPose2d, drivetrain.getPose()) < Constants.Vision.kMaxAccuracyRange);
-    }
-
-    public boolean isAccuracyReasonable() {
-        return latestResult.getBestTarget().getPoseAmbiguity < Constants.Vision.isEstimateReasonable;
     }
 
     // Sees if the robot's position as given by the limelight is within the field

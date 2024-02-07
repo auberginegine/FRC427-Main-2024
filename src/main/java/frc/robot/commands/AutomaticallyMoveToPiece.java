@@ -1,24 +1,30 @@
 package frc.robot.commands;
 
-import org.photonvision.PhotonCamera;
-import org.photonvision.targeting.PhotonTrackedTarget;
-
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.subsystems.arm.Arm;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.commands.TurnToAngle;
+import frc.robot.subsystems.vision.FrontVision;
+import frc.robot.util.DriverController;
 
 public class AutomaticallyMoveToPiece {
-    private PhotonCamera camera = new PhotonCamera("photonvision");
 
-    public Command automaticallyMoveToPiece(Drivetrain drivetrain, Arm arm) {
-        var result = camera.getLatestResult();
+    public Command automaticallyMoveToPiece(DriverController driverController, Drivetrain drivetrain, FrontVision frontVision) {
+        var result = frontVision.getLatestVisionResult();
         if (!result.hasTargets()) {
             return Commands.none();
         }
-        PhotonTrackedTarget target = result.getBestTarget();
-        double angleToTurn = target.getYaw();
+        
+        double angleToTurn = frontVision.getNoteRotation();;
 
-        return Commands.none(); 
+        return new ParallelCommandGroup(new TurnToAngle(drivetrain, angleToTurn).andThen(Commands.run(() -> {
+            drivetrain.swerveDriveRobotCentric(new ChassisSpeeds(driverController.getLeftStickX(), 0, 0));
+        }, drivetrain)), AutomationCommands.autoIntakeCommand()); // Any processing before turning to that angle
+
+        // make command that feeds controller left y input to the swerve drive command
+        // swerve drive robot centric
+        // parallel race with auto intake command
     }
 }
