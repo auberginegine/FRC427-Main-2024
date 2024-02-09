@@ -80,9 +80,7 @@ public class RobotContainer {
     patterns.addOption("Auto Begins", Constants.LEDs.Patterns.kAutoBegin);
     patterns.addOption("Auto Ends", Constants.LEDs.Patterns.kAutoEnd);
     patterns.addOption("test Yellow", Constants.LEDs.Patterns.kCone);
-     patterns.addOption("test Color", Constants.LEDs.Patterns.kTestColor);
-
-
+    patterns.addOption("test Color", Constants.LEDs.Patterns.kTestColor);
   }
   
   /**
