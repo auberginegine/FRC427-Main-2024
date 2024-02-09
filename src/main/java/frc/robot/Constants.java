@@ -171,7 +171,8 @@ public final class Constants {
     public static final double kShootRevTime = 0.5; 
     public static final double kShootWaitTime = 0.5; 
 
-    public static final double kAmpOuttakeSpeed = 0.5; 
+    public static final double kAmpOuttakeSpeed = 0.5;
+    public static final int kSuckerManualSpeed = 0; 
   }
 
   public class ArmConstants {
@@ -198,20 +199,20 @@ public final class Constants {
     public static final double kAmpPosition = 90;
     public static final double kSpeakerPosition = 10;
 
-    public static final double kTravelSpeed = 30;
+    public static final double kTravelSpeed = 0.5;
 
 
-    // TODO: tune arm pid
+    // TODO: tune arm 
     public static final double kP = 0;
     public static final double kI = 0;
     public static final double kD = 0;
 
-    // torque from gas spring:
+    // custom feedforward
     // https://www.desmos.com/calculator/3mcdsjeubz
-    public static final double kGravityFF = 0;
-    public static final double kSpringFF = 0;
+    // public static final double kGravityFF = 0;
+    // public static final double kSpringFF = 0;
 
-    /*  
+     
     // calculate using reca.lc
     // CoM distance: 21.77 in
     // Arm mass: 20.755 lbs
@@ -220,7 +221,7 @@ public final class Constants {
     public static final double kG = 0; // 0.79 V
     public static final double kV = 0; // 1.95 V*s/rad
     public static final double kA = 0; // 0.06 V*s^2/rad
-    */
+    
 
   }
 
