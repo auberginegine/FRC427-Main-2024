@@ -24,38 +24,26 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "ShootAnywhere"
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "Note to Speaker 2"
+            "pathName": "Note 2 to Note 3"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ShootSpeaker"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Speaker 2 to Note 3"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Note 3 to Speaker 2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootSpeaker"
+            "name": "ShootAnywhere"
           }
         }
       ]
     }
   },
-  "folder": "3 piece auto",
+  "folder": "Shoot anywhere",
   "choreoAuto": false
 }
