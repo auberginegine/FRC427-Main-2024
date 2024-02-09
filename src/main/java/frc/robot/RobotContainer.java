@@ -79,7 +79,8 @@ public class RobotContainer {
     // driverController.setChassisSpeedsSupplier(drivetrain::getChassisSpeeds); // comment in simulation
     // default command for drivetrain is to calculate speeds from controller and drive the robot
     drivetrain.setDefaultCommand(new TeleOpCommand(drivetrain, driverController));
-
+    
+    // patterns for LEDS
     patterns.addOption("Idle", Constants.LEDs.Patterns.kIdle);
     patterns.addOption("Rainbow", Constants.LEDs.Patterns.kBalanceFinished);
     patterns.addOption("Dead", Constants.LEDs.Patterns.kDead);
@@ -116,88 +117,49 @@ public class RobotContainer {
 
     driverController.a().onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
 
-    // driverController.b().onTrue(new TuneTurnToAngle(drivetrain)); 
-    // driverController.y().onTrue(new TuneBalance(drivetrain)); 
-
+  // add headers 
+    //
     driverController.rightTrigger()
       .onTrue(new InstantCommand(() -> driverController.setSlowMode(Mode.SLOW)))
       .onFalse(new InstantCommand(() -> driverController.setSlowMode(Mode.NORMAL))); 
 
-    // new Trigger(() -> driverController.getRightY() > 0.5)
-    //   .onTrue(new ())
+  
 
-   //  driverController.y().onTrue(new MoveToAmp(() -> drivetrain()));
+   //  move to setpoints
    driverController.y()
-   .onTrue(AutomationCommands.pathFindToAmpAndScore(arm, intake));
-
+   .whileTrue(AutomationCommands.pathFindToAmpAndScore(arm, intake)); // move to amp & score
 
    driverController.b()
-   .onTrue(AutomationCommands.pathFindToSpeakerAndScore(arm, intake));
+   .whileTrue(AutomationCommands.pathFindToSpeakerAndScore(arm, intake)); // move to speaker & score
 
-   driverController.a()
-   .onTrue(AutomationCommands.pathFindToGamePiece()); // make find to note
-
- 
+   driverController.x()
+   .whileTrue(AutomationCommands.pathFindToGamePiece()); // make find to note
 
     // --- Intake --- 
 
     // outtake
     manipulatorController.leftBumper().and(() -> arm.getArmControlState() == ArmControlState.AMP)
-      .onTrue(new OuttakeToAmp(intake));
+      .whileTrue(new OuttakeToAmp(intake).finallyDo(() -> {
+        intake.stopSuck(); 
+        intake.stopShoot();
+      }));
 
     manipulatorController.leftBumper().and(() -> arm.getArmControlState() == ArmControlState.SPEAKER)
-      .onTrue(new OuttakeToSpeaker(intake));
+      .whileTrue(new OuttakeToSpeaker(intake));
       
-    // intake
-    manipulatorController.rightBumper()
-      .onTrue(new IntakeFromGround(intake));
+     // intake
+     manipulatorController.leftBumper(). and(() -> arm.getArmControlState() == ArmControlState.GROUND)
+      .whileTrue(new IntakeFromGround(intake));
 
-    // intake from ground
+      // intake from ground
    
-
-    new Trigger(() -> manipulatorController.getRightY() > 0.5)
-      .onTrue(AutomationCommands.shootFromAnywhere()); // TODO: make drivetrain thing
-
-    new Trigger(() -> manipulatorController.getRightY() > -0.5 && manipulatorController.getRightY() < 0.5)
-      .onTrue(new SetShooterSpeed(intake, 0));
+       manipulatorController.leftTrigger()
+      .onTrue(AutomationCommands.shootFromAnywhere()); 
 
       manipulatorController.rightTrigger()
       .onTrue(AutomationCommands.autoIntakeCommand()); // intake from ground auto
 
-    // shoot
-    new Trigger(() -> manipulatorController.getRightY() < -0.5) // outtake sucker
-       .onTrue(new SetShooterSpeed(intake, Constants.IntakeConstants.kShootSpeed));
-
-    // new Trigger(() -> manipulatorController.getRightY() < -0.5) // intake sucker
-    //   .onTrue(new SetSuckerIntakeSpeed(intake, Constants.IntakeConstants.kSuckerManualSpeed));
-
-    // new Trigger(() -> manipulatorController.getRightY() > 0.5)  // shoot out
-    //   .onTrue(new SetShooterSpeed(intake, Constants.IntakeConstants.kShooterManualSpeed));
-
-    // new Trigger(() -> manipulatorController.getRightY() < -0.5) // shoot in? (probably not needed)
-    //   .onTrue(new SetShooterSpeed(intake, -Constants.IntakeConstants.kShooterManualSpeed));
-
-    // new Trigger(() -> (manipulatorController.getRightY() <= 0.5 && manipulatorController.getRightY() >= -0.5)) 
-    //   .onTrue(new SetSuckerIntakeSpeed(intake, 0))
-    //   .onTrue(new SetShooterSpeed(intake, 0));
-
-
-    // TODO: add automated controls for intaking from ground, outtaking to amp, outtaking to shooter
-      
-    // --- Arm ---
-
-    // TODO: add manual control?
-    // // right stick y to manually move arm
-    // new Trigger(() -> manipulatorController.getLeftY() < -0.5) 
-    //   .onTrue(new SetVelocity(arm, -Constants.ArmConstants.kTravelSpeed));
-      
-    // new Trigger(() -> (manipulatorController.getLeftY() <= 0.5 && manipulatorController.getLeftY() >= -0.5))
-    //   .onTrue(new SetVelocity(arm, 0));
-
-    // new Trigger(() -> manipulatorController.getLeftY() > 0.5)
-    //   .onTrue(new SetVelocity(arm, Constants.ArmConstants.kTravelSpeed));
-      
-    // // buttons to move arm to go to setpoints
+    // arm setpoints
     manipulatorController.a().onTrue(new GoToTravel(arm));
     manipulatorController.b().onTrue(new GoToAmp(arm));
     manipulatorController.x().onTrue(new GoToSpeaker(arm));
@@ -209,6 +171,7 @@ public class RobotContainer {
     // Hang Up when DPAD UP
     manipulatorController.povUp()
       .onTrue(new SetHangSpeed(hang, Constants.HangConstants.kHangSpeed)); 
+
     //Hang Down when DPAD DOWN
     manipulatorController.povDown()
       .onTrue(new SetHangSpeed(hang, -Constants.HangConstants.kHangSpeed)); 
@@ -227,7 +190,7 @@ public class RobotContainer {
     led.setPattern(patterns.getSelected());
   }
 
-  // givess the currently picked auto as the chosen auto for the match
+  // gives the currently picked auto as the chosen auto for the match
   public Command getAutonomousCommand() {
       // return null; 
     return autoPicker.getAuto();
