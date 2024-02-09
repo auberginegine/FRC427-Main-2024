@@ -37,11 +37,15 @@ public class AutomationCommands {
   }
 
   public static Command pathFindToSpeakerAndScore(Arm arm, Intake intake) {
-    return pathFindToSpeaker().alongWith(new GoToSpeaker(arm)).andThen(new OuttakeToSpeaker(intake)); 
+    return pathFindToSpeaker().alongWith(new GoToSpeaker(arm)).andThen(new OuttakeToSpeaker(intake)).finallyDo(() -> {
+      Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
+    }); 
   }
 
   public static Command pathFindToAmpAndScore(Arm arm, Intake intake) {
-    return pathFindToAmp().alongWith(new GoToAmp(arm)).andThen(new OuttakeToAmp(intake));
+    return pathFindToAmp().alongWith(new GoToAmp(arm)).andThen(new OuttakeToAmp(intake)).finallyDo(() -> {
+      Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
+    });
   }
 
   public static Command pathFindToGamePiece() {
