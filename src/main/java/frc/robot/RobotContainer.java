@@ -129,11 +129,11 @@ public class RobotContainer {
 
    //  driverController.y().onTrue(new MoveToAmp(() -> drivetrain()));
    driverController.y()
-   .onTrue(AutomationCommands.pathFindToAmpAndScore());
+   .onTrue(AutomationCommands.pathFindToAmpAndScore(arm, intake));
 
 
    driverController.b()
-   .onTrue(AutomationCommands.pathFindToSpeakerAndScore());
+   .onTrue(AutomationCommands.pathFindToSpeakerAndScore(arm, intake));
 
    driverController.a()
    .onTrue(AutomationCommands.pathFindToGamePiece()); // make find to note
