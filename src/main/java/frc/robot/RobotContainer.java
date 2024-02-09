@@ -95,8 +95,6 @@ public class RobotContainer {
     patterns.addOption("Arm At Ground", Constants.LEDs.Patterns.kArmAtGround);
     patterns.addOption("Arm Moving", Constants.LEDs.Patterns.kArmCustom);
     patterns.addOption("Hanging", Constants.LEDs.Patterns.kHangActive);
-    patterns.addOption("Auto Begins", Constants.LEDs.Patterns.kAutoBegin);
-    patterns.addOption("Auto Ends", Constants.LEDs.Patterns.kAutoEnd);
     patterns.addOption("test Yellow", Constants.LEDs.Patterns.kCone);
     patterns.addOption("test Color", Constants.LEDs.Patterns.kTestColor);
   }
