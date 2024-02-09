@@ -301,8 +301,7 @@ public final class Constants {
       public static final LEDPattern kArmCustom = new SolidLEDPattern(Color.kSeaGreen);
       public static final LEDPattern kHangActive = new SineLEDPattern(2, Color.kPurple, Color.kBlack, 5);
       public static final LEDPattern kBeamHit = new SolidLEDPattern(Color.kGreen, 3);
-      public static final LEDPattern kAutoBegin = new FadeLEDPattern(.5, Color.kPurple, Color.kBlack);
-      public static final LEDPattern kAutoEnd = new FadeLEDPattern(.5, Color.kPurple, Color.kBlack);
+      public static final LEDPattern kAuto = new FadeLEDPattern(1, Color.kPurple, Color.kBlack);
       public static final LEDPattern kTestColor = new TestColorPattern();
     }
 

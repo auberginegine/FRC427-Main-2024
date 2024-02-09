@@ -3,8 +3,11 @@ import java.util.List;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.hang.Hang;
+import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -30,7 +33,6 @@ public class Led extends SubsystemBase {
     public boolean isMovingToSpeaker = false; 
     public boolean isShooting = false; 
     public boolean isIntaking = false; 
-    public boolean isHanging = false;
     public boolean beamHit = false;
     public boolean autoBegin = false;
     public boolean autoEnd = false; 
@@ -126,6 +128,7 @@ public class Led extends SubsystemBase {
        // lower priorities
         // if (DriverStation.isEnabled()) decidedArmPattern = Constants.LEDs.Patterns.kEnabled; 
         // if (DriverStation.isDisabled()) decidedArmPattern = Constants.LEDs.Patterns.kDisabled; 
+        // if (DriverStation.isAutonomousEnabled()) decidedArmPattern = Constants.LEDs.Patterns.kAuto;
        
          // if (Arm.getInstance().getArmControlState() == ArmControlState.TRAVEL) decidedHangPattern = Constants.LEDs.Patterns.kArmMoving;
         // if (Arm.getInstance().getArmControlState() == ArmControlState.AMP) decidedHangPattern = Constants.LEDs.Patterns.kArmAtAmp;
@@ -136,10 +139,8 @@ public class Led extends SubsystemBase {
         // if (this.isMovingToAmp || this.isMovingToSpeaker) decidedHangPattern = Constants.LEDs.Patterns.kMoving;
         // if (this.isShooting) decidedHangPattern = Constants.LEDs.Patterns.kShootAnywhere;
         // if (this.isIntaking) decidedHangPattern = Constants.LEDs.Patterns.kIntake;
-        // if (this.isHanging) decidedHangPattern = Constants.LEDs.Patterns.kHangActive;
-        // if (this.beamHit) decidedHangPattern = Constants.LEDs.Patterns.kBeamHit;
-        // if (this.autoBegin) decidedHangPattern = Constants.LEDs.Patterns.kAutoBegin;
-        // if (this.autoEnd) decidedHangPattern = Constants.LEDs.Patterns.kAutoEnd;
+        // if (Hang.getInstance().getHangPosition() > 0.5) decidedHangPattern = Constants.LEDs.Patterns.kHangActive;
+        // if (Intake.getInstance().beamBreakHit()) decidedHangPattern = Constants.LEDs.Patterns.kBeamHit;
         // setArmPattern(decidedArmPattern);
         // setHangPattern(decidedHangPattern);
 
