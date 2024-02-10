@@ -186,6 +186,7 @@ public class Arm extends SubsystemBase {
     // add logging for arm 
     // are units correct?
     public void doSendables() {
+        SmartDashboard.putNumber("Arm Target Position (deg)", m_targetPosition);
         SmartDashboard.putNumber("Arm Position (deg)", getAngle()); 
         SmartDashboard.putNumber("Arm Velocity (deg/sec)", m_armEncoderRight.getVelocity());
         SmartDashboard.putNumber("Arm Error (deg)", getError());
