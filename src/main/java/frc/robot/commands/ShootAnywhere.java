@@ -16,7 +16,7 @@ import frc.robot.subsystems.intake.commands.OuttakeToSpeaker;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
-public class ShootAnywhere {
+public class ShootAnywhere extends Command { // TODO: Should it extend
 
     public static Command shootAnywhere(Drivetrain drivetrain, Arm arm, Intake intake) {
         Pose2d currentPose = drivetrain.getPose();
@@ -46,6 +46,4 @@ public class ShootAnywhere {
             arm.goToAngle(Constants.ArmConstants.kTravelPosition);
         });
     }
-
-
 }

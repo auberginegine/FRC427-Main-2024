@@ -22,12 +22,13 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.Vision;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 
 // Figures out the position of the robot based on april tags
-public class BackVision {
+public class BackVision extends SubsystemBase{
     
     public static BackVision instance = new BackVision(Drivetrain.getInstance());
 
