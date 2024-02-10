@@ -251,6 +251,10 @@ public final class Constants {
     public static final double kMaxAccuracyRange = 1000;
     public static final Pose2d kRedAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
     public static final Pose2d kBlueAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
+    public static final double blueShootRange = 5.87;
+    public static final double redShootRange = 10.71;
+    public static final double shootAnywhereTimeout = 4;
+    public static final double waitAfterShot = 1;
 
     // TODO: tune
     public static final Function<Double, Double> distanceToArmAngle = (dist) -> 0.0; 
@@ -291,6 +295,7 @@ public final class Constants {
       public static final LEDPattern kMoving = new FadeLEDPattern(1,kGold, Color.kWhite);
       public static final LEDPattern kFail = new FadeLEDPattern(1,Color.kRed, kGold);
       public static final LEDPattern kIntake = new FadeLEDPattern(1,kCobaltBlue, Color.kGreen);
+      public static final LEDPattern kMovingToNote = LEDPattern.kEmpty; // TODO: add a pattern for this
       public static final LEDPattern kShootAnywhere = new SolidLEDPattern(kCobaltBlue);
       public static final LEDPattern kArmMoving = new SolidLEDPattern(Color.kOrange);
       public static final LEDPattern kArmAtAmp = new SolidLEDPattern(Color.kPink);

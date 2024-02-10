@@ -16,7 +16,7 @@ import frc.robot.subsystems.intake.commands.OuttakeToSpeaker;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
-public class ShootAnywhere {
+public class ShootAnywhere { 
 
     public static Command shootAnywhere(Drivetrain drivetrain, Arm arm, Intake intake) {
         Pose2d currentPose = drivetrain.getPose();
@@ -37,7 +37,7 @@ public class ShootAnywhere {
 
         double finalAngle = Math.atan2(currentPose.getY() - targetPose.getY(),  currentPose.getX() - targetPose.getX());
         double distance = Math.hypot(currentPose.getY() - targetPose.getY(), currentPose.getX() - targetPose.getX()); 
-        TurnToAngle turnToAngle = new TurnToAngle(drivetrain, finalAngle);
+        TurnToAngle turnToAngle = new TurnToAngle(drivetrain, Math.toDegrees(finalAngle));
         double angleToTurnArm = Constants.Vision.distanceToArmAngle.apply(distance);
         GoToAngle goToAngle = new GoToAngle(arm, angleToTurnArm);
         Command outtake = OuttakeToSpeaker.outtakeToSpeaker(intake);
@@ -46,6 +46,4 @@ public class ShootAnywhere {
             arm.goToAngle(Constants.ArmConstants.kTravelPosition);
         });
     }
-
-
 }

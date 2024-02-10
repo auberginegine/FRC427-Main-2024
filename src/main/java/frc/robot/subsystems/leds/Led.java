@@ -35,6 +35,7 @@ public class Led extends SubsystemBase {
     public boolean isMovingToSpeaker = false; 
     public boolean isShooting = false; 
     public boolean isIntaking = false; 
+    public boolean isMovingToNote = false; 
     public boolean beamHit = false;
     public boolean autoBegin = false;
     public boolean autoEnd = false; 
@@ -141,6 +142,7 @@ public class Led extends SubsystemBase {
         if (this.isMovingToAmp || this.isMovingToSpeaker) decidedHangPattern = Constants.LEDs.Patterns.kMoving;
         if (this.isShooting) decidedHangPattern = Constants.LEDs.Patterns.kShootAnywhere;
         if (this.isIntaking) decidedHangPattern = Constants.LEDs.Patterns.kIntake;
+        if (this.isMovingToNote) decidedHangPattern = Constants.LEDs.Patterns.kMovingToNote; 
         if (Hang.getInstance().getHangPosition() > 0.5) decidedHangPattern = Constants.LEDs.Patterns.kHangActive;
         if (Intake.getInstance().beamBreakHit()) decidedHangPattern = Constants.LEDs.Patterns.kBeamHit;
         setArmPattern(decidedArmPattern);
