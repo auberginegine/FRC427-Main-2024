@@ -3,14 +3,11 @@ import java.util.List;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.hang.Hang;
-import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
-
-import edu.wpi.first.wpilibj.Timer;
 
 
 public class Led extends SubsystemBase {
@@ -122,6 +119,8 @@ public class Led extends SubsystemBase {
     @Override
     public void periodic() {
 
+        doSendables();
+
         // LEDPattern decidedArmPattern = LEDPattern.kEmpty; 
         // LEDPattern decidedHangPattern = LEDPattern.kEmpty;
 
@@ -159,5 +158,12 @@ public class Led extends SubsystemBase {
     //Method to getLED
     public AddressableLED getLED() {
         return this.m_Led;
+    }
+
+    public void doSendables() {
+        SmartDashboard.putBoolean("Moving To Amp", this.isMovingToAmp);
+        SmartDashboard.putBoolean("Moving To Speaker", this.isMovingToSpeaker);
+        SmartDashboard.putBoolean("Is Shooting", this.isShooting);
+        SmartDashboard.putBoolean("Is Intaking", this.isIntaking);
     }
 }
