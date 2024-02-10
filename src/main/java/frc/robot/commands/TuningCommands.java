@@ -18,7 +18,7 @@ public class TuningCommands {
 
         return Commands.sequence(
             new GoToAngle(arm, angle),
-            new OuttakeToSpeaker(intake)
+            OuttakeToSpeaker.outtakeToSpeaker(intake)
         );
     }, Set.of(arm, intake )); 
 

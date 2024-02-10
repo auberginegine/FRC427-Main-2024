@@ -200,7 +200,6 @@ public class RobotContainer {
     SmartDashboard.putData("Autonomous", autoPicker.getChooser());
     SmartDashboard.putBoolean("gyro connected", drivetrain.gyro.isConnected()); 
     SmartDashboard.putData(patterns);
-    led.setPattern(patterns.getSelected());
   }
 
   // gives the currently picked auto as the chosen auto for the match
