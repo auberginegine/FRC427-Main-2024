@@ -46,7 +46,7 @@ public class AutomationCommands {
   }
 
   public static Command pathFindToSpeakerAndScore(Arm arm, Intake intake) {
-    return pathFindToSpeaker().alongWith(new GoToSpeaker(arm)).andThen(new OuttakeToSpeaker(intake)).finallyDo(() -> {
+    return pathFindToSpeaker().alongWith(new GoToSpeaker(arm)).andThen(OuttakeToSpeaker.outtakeToSpeaker(intake)).finallyDo(() -> {
       Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
     }); 
   }

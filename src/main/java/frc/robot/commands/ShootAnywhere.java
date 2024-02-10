@@ -40,7 +40,7 @@ public class ShootAnywhere {
         TurnToAngle turnToAngle = new TurnToAngle(drivetrain, finalAngle);
         double angleToTurnArm = Constants.Vision.distanceToArmAngle.apply(distance);
         GoToAngle goToAngle = new GoToAngle(arm, angleToTurnArm);
-        OuttakeToSpeaker outtake = new OuttakeToSpeaker(intake);
+        Command outtake = OuttakeToSpeaker.outtakeToSpeaker(intake);
         return Commands.sequence(turnToAngle, goToAngle, outtake)
         .finallyDo(() -> {
             arm.goToAngle(Constants.ArmConstants.kTravelPosition);
