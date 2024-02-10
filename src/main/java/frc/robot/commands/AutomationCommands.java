@@ -23,11 +23,11 @@ public class AutomationCommands {
   public static Command autoIntakeCommand() {
     return Commands.sequence(
         Commands.runOnce(() -> Led.getInstance().isIntaking = true),
-        new GoToGround(Arm.getInstance()), 
-        new IntakeFromGround(Intake.getInstance())
+        new IntakeFromGround(Intake.getInstance()),
+        new GoToGround(Arm.getInstance())
     ).finallyDo(() -> {
       Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
-      Commands.runOnce(() -> Led.getInstance().isIntaking = false);
+      Led.getInstance().isIntaking = false;
     });
   }
 

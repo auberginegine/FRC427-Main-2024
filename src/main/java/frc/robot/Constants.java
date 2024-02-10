@@ -192,7 +192,7 @@ public final class Constants {
 
     // velocity = position / 60
     public static final double kVelocityConversionFactor = 360 / 60.0; 
-    public static final double kTolerance = 0;
+    public static final double kTolerance = 2;
 
     public static final double kGroundPosition = 0;
     public static final double kTravelPosition = 20;

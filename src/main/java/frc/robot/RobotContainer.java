@@ -29,6 +29,7 @@ import frc.robot.util.DriverController.Mode;
 import frc.robot.subsystems.leds.Led;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
 import frc.robot.subsystems.vision.Vision;
+import edu.wpi.first.wpilibj.simulation.AddressableLEDSim;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -49,6 +50,7 @@ public class RobotContainer {
 
   // leds!
   private final Led led = Led.getInstance(); 
+  private final AddressableLEDSim sim = new AddressableLEDSim(led.getLED()); 
 
 
   // limelight subsystem of robot
@@ -161,16 +163,16 @@ public class RobotContainer {
       );
       
      // intake
-     manipulatorController.leftBumper(). and(() -> arm.getArmControlState() == ArmControlState.GROUND)
+     manipulatorController.leftBumper().and(() -> arm.getArmControlState() == ArmControlState.GROUND)
       .whileTrue(new IntakeFromGround(intake));
 
       // intake from ground
    
        manipulatorController.leftTrigger()
-      .onTrue(AutomationCommands.shootFromAnywhere()); 
+      .whileTrue(AutomationCommands.shootFromAnywhere()); 
 
       manipulatorController.rightTrigger()
-      .onTrue(AutomationCommands.autoIntakeCommand()); // intake from ground auto
+      .whileTrue(AutomationCommands.autoIntakeCommand()); // intake from ground auto
 
     // arm setpoints
     manipulatorController.a().onTrue(new GoToTravel(arm));

@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.arm.Arm.ArmControlState;
 import frc.robot.subsystems.hang.Hang;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
@@ -122,27 +124,27 @@ public class Led extends SubsystemBase {
     @Override
     public void periodic() {
 
-        // LEDPattern decidedArmPattern = LEDPattern.kEmpty; 
-        // LEDPattern decidedHangPattern = LEDPattern.kEmpty;
+        LEDPattern decidedArmPattern = LEDPattern.kEmpty; 
+        LEDPattern decidedHangPattern = LEDPattern.kEmpty;
 
-       // lower priorities
-        // if (DriverStation.isEnabled()) decidedArmPattern = Constants.LEDs.Patterns.kEnabled; 
-        // if (DriverStation.isDisabled()) decidedArmPattern = Constants.LEDs.Patterns.kDisabled; 
-        // if (DriverStation.isAutonomousEnabled()) decidedArmPattern = Constants.LEDs.Patterns.kAuto;
+    //    lower priorities
+        if (DriverStation.isEnabled()) decidedArmPattern = Constants.LEDs.Patterns.kEnabled; 
+        if (DriverStation.isDisabled()) decidedArmPattern = Constants.LEDs.Patterns.kDisabled; 
+        if (DriverStation.isAutonomousEnabled()) decidedArmPattern = Constants.LEDs.Patterns.kAuto;
        
-         // if (Arm.getInstance().getArmControlState() == ArmControlState.TRAVEL) decidedHangPattern = Constants.LEDs.Patterns.kArmMoving;
-        // if (Arm.getInstance().getArmControlState() == ArmControlState.AMP) decidedHangPattern = Constants.LEDs.Patterns.kArmAtAmp;
-        // if (Arm.getInstance().getArmControlState() == ArmControlState.SPEAKER) decidedHangPattern = Constants.LEDs.Patterns.kArmAtSpeaker;
-        // if (Arm.getInstance().getArmControlState() == ArmControlState.GROUND) decidedHangPattern = Constants.LEDs.Patterns.kArmAtGround;
-        // if (Arm.getInstance().getArmControlState() == ArmControlState.CUSTOM) decidedHangPattern = Constants.LEDs.Patterns.kArmCustom;
+         if (Arm.getInstance().getArmControlState() == ArmControlState.TRAVEL) decidedHangPattern = Constants.LEDs.Patterns.kArmMoving;
+        if (Arm.getInstance().getArmControlState() == ArmControlState.AMP) decidedHangPattern = Constants.LEDs.Patterns.kArmAtAmp;
+        if (Arm.getInstance().getArmControlState() == ArmControlState.SPEAKER) decidedHangPattern = Constants.LEDs.Patterns.kArmAtSpeaker;
+        if (Arm.getInstance().getArmControlState() == ArmControlState.GROUND) decidedHangPattern = Constants.LEDs.Patterns.kArmAtGround;
+        if (Arm.getInstance().getArmControlState() == ArmControlState.CUSTOM) decidedHangPattern = Constants.LEDs.Patterns.kArmCustom;
 
-        // if (this.isMovingToAmp || this.isMovingToSpeaker) decidedHangPattern = Constants.LEDs.Patterns.kMoving;
-        // if (this.isShooting) decidedHangPattern = Constants.LEDs.Patterns.kShootAnywhere;
-        // if (this.isIntaking) decidedHangPattern = Constants.LEDs.Patterns.kIntake;
-        // if (Hang.getInstance().getHangPosition() > 0.5) decidedHangPattern = Constants.LEDs.Patterns.kHangActive;
-        // if (Intake.getInstance().beamBreakHit()) decidedHangPattern = Constants.LEDs.Patterns.kBeamHit;
-        // setArmPattern(decidedArmPattern);
-        // setHangPattern(decidedHangPattern);
+        if (this.isMovingToAmp || this.isMovingToSpeaker) decidedHangPattern = Constants.LEDs.Patterns.kMoving;
+        if (this.isShooting) decidedHangPattern = Constants.LEDs.Patterns.kShootAnywhere;
+        if (this.isIntaking) decidedHangPattern = Constants.LEDs.Patterns.kIntake;
+        if (Hang.getInstance().getHangPosition() > 0.5) decidedHangPattern = Constants.LEDs.Patterns.kHangActive;
+        if (Intake.getInstance().beamBreakHit()) decidedHangPattern = Constants.LEDs.Patterns.kBeamHit;
+        setArmPattern(decidedArmPattern);
+        setHangPattern(decidedHangPattern);
 
 
         //Constantly updates leds with respect to time
