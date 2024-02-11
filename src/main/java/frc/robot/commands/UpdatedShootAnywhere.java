@@ -39,6 +39,7 @@ public class UpdatedShootAnywhere extends Command {
     }
 
     public void initialize() {
+        timer.reset();
         timer.start();
         intake.outtakeRing(Constants.IntakeConstants.kShootSuckerSpeed);
         this.optAlliance = DriverStation.getAlliance();
@@ -67,6 +68,7 @@ public class UpdatedShootAnywhere extends Command {
     }
 
     public void end(boolean interrupted) {
+        timer.stop();
         boolean isInRange = false;
         if (this.optAlliance.get() == DriverStation.Alliance.Blue) {
             isInRange = drivetrain.getPose().getX() <= Constants.Vision.blueShootRange;
@@ -87,6 +89,7 @@ public class UpdatedShootAnywhere extends Command {
                 new SetSuckerIntakeSpeed(intake, 0), 
                 new SetShooterSpeed(intake, 0)
             ).finallyDo(() -> {
+                System.out.println("arm travel");
                 arm.goToAngle(Constants.ArmConstants.kTravelPosition);
             }); 
             CommandScheduler.getInstance().schedule(command);

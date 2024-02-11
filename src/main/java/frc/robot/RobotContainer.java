@@ -4,14 +4,12 @@
 
 package frc.robot;
 
-import frc.robot.commands.AutomationCommands;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.Arm.ArmControlState;
 import frc.robot.subsystems.arm.commands.GoToAmp;
 import frc.robot.subsystems.arm.commands.GoToGround;
 import frc.robot.subsystems.arm.commands.GoToSpeaker;
 import frc.robot.subsystems.arm.commands.GoToTravel;
-import frc.robot.commands.UpdatedShootAnywhere;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
 import frc.robot.subsystems.hang.Hang;

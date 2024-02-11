@@ -18,7 +18,7 @@ public class FrontVision extends SubsystemBase{
 
     private FrontVision(Drivetrain drivetrain) {
         this.drivetrain = drivetrain;
-        this.camera = new PhotonCamera("backPhotonCamera");
+        this.camera = new PhotonCamera("frontPhotonCamera");
     }
 
     public void periodic() {
