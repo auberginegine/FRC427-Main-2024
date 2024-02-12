@@ -17,21 +17,21 @@ import frc.robot.subsystems.intake.commands.IntakeFromGround;
 import frc.robot.subsystems.intake.commands.OuttakeToAmp;
 import frc.robot.subsystems.intake.commands.OuttakeToSpeaker;
 import frc.robot.subsystems.leds.Led;
+import frc.robot.subsystems.vision.FrontVision;
+import frc.robot.util.DriverController;
 
 public class AutomationCommands {
   
   //Create autoIntakeCOmmand Command
   public static Command autoIntakeCommand() {
-    return Commands.sequence(
-      //Set Leds to Intake
-        Commands.runOnce(() -> Led.getInstance().isIntaking = true),
-        //Go to ground and intake
-        new GoToGround(Arm.getInstance()), 
-        new IntakeFromGround(Intake.getInstance())
-    ).finallyDo(() -> {
-      //Reset arm to travel and reset Leds
-      Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
-      Commands.runOnce(() -> Led.getInstance().isIntaking = false);
+    // Set Leds to Intake
+    return Commands.runOnce(() -> Led.getInstance().isIntaking = true).andThen(Commands.parallel(
+        new IntakeFromGround(Intake.getInstance()),
+        new GoToGround(Arm.getInstance())
+      )).finallyDo(() -> {
+        //Reset arm to travel and reset Leds
+        Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
+        Led.getInstance().isIntaking = false;
     });
   }
 
@@ -58,10 +58,7 @@ public class AutomationCommands {
 
   //Create pathFindToSpeakerAndScore Command
   public static Command pathFindToSpeakerAndScore(Arm arm, Intake intake) {
-    //Run Go to speaker and outtake to speaker
-
-    return pathFindToSpeaker().alongWith(new GoToSpeaker(arm)).andThen(new OuttakeToSpeaker(intake)).finallyDo(() -> {
-      //When done, arm goes to travel position
+    return pathFindToSpeaker().alongWith(new GoToSpeaker(arm)).andThen(OuttakeToSpeaker.outtakeToSpeaker(intake)).finallyDo(() -> {
       Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
     }); 
   }
@@ -70,13 +67,22 @@ public class AutomationCommands {
     //Run pathFindToAmp
     return pathFindToAmp().alongWith(new GoToAmp(arm)).andThen(new OuttakeToAmp(intake)).finallyDo(() -> {
       //When done, arm goes to travel position
+      intake.stopShoot();
+      intake.stopSuck();
       Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
     });
   }
 
-  public static Command pathFindToGamePiece() {
-    // TODO
-    return Commands.none(); 
+  public static Command pathFindToGamePiece(DriverController controller) {
+    return Commands.runOnce(() -> {
+      Led.getInstance().isMovingToNote = true; 
+    }).andThen(Commands.defer(
+        () -> AutomaticallyMoveToPiece.automaticallyMoveToPiece(controller, Drivetrain.getInstance(), FrontVision.getInstance()), 
+        Set.of(Drivetrain.getInstance(), FrontVision.getInstance())
+      )
+    ).finallyDo(() -> {
+      Led.getInstance().isMovingToNote = false; 
+    }); 
   }
 
 
@@ -88,6 +94,14 @@ public class AutomationCommands {
     Set.of(Drivetrain.getInstance(), Arm.getInstance(), Intake.getInstance()))).finallyDo(() -> {
       //Set Is Shooting to False
       Led.getInstance().isShooting = false;
+    }); 
+  }
+
+  public static Command updatedShootFromAnywhere(DriverController controller) {
+    return Commands.runOnce(() -> Led.getInstance().isShooting = true).andThen(
+      new UpdatedShootAnywhere(controller, Drivetrain.getInstance(), Arm.getInstance(), Intake.getInstance())
+    ).finallyDo(() -> {
+      Led.getInstance().isShooting = false; 
     }); 
   }
 }
