@@ -45,7 +45,17 @@ public class BackVision extends SubsystemBase{
     public void periodic() {
         this.latestResult = this.camera.getLatestResult();
         this.latestPoseResult = this.latestResult.getMultiTagResult().estimatedPose.best;
-        // SmartDashboard.putNumber("RobotPositionX", networkTable.);
+        if (getCurrentPose3d() != null) {
+             SmartDashboard.putNumber("VisionRobotX", getCurrentPose3d().getX());
+            SmartDashboard.putNumber("VisionRobotY", getCurrentPose3d().getY());
+            SmartDashboard.putNumber("VisionRobotZ", getCurrentPose3d().getZ());
+        }
+        if (getAprilTagPos(getBestAprilTagID()) != null) {
+            SmartDashboard.putNumber("VisionTargetX", getAprilTagPos(getBestAprilTagID()).getX());
+            SmartDashboard.putNumber("VisionTargetY", getAprilTagPos(getBestAprilTagID()).getY());
+            SmartDashboard.putNumber("VisionTargetZ", getAprilTagPos(getBestAprilTagID()).getZ());
+        }
+        if (this.latestResult.getMultiTagResult().estimatedPose.isPresent) addVisionFromDrivetrain();
     }
 
     public static BackVision getInstance() {

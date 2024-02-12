@@ -78,7 +78,6 @@ public class Drivetrain extends SubsystemBase {
     this.odometry.update(gyro.getRotation2d(), getPositions());
 
     m_odometryField.setRobotPose(getPose());
-
     SmartDashboard.putData("Robot Odometry Field", m_odometryField);
     SmartDashboard.putData("Robot Vision Field", m_visionField);
     doSendables();
