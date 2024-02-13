@@ -19,7 +19,7 @@ import frc.robot.subsystems.intake.commands.SetSuckerIntakeSpeed;
 import frc.robot.util.ChassisState;
 import frc.robot.util.DriverController;
 
-public class UpdatedShootAnywhere extends Command {
+public class GeneralizedReleaseRoutine extends Command {
     
     public Drivetrain drivetrain;
     public Arm arm;
@@ -29,7 +29,7 @@ public class UpdatedShootAnywhere extends Command {
     public Timer timer = new Timer(); 
     public Pose2d targetPose; 
 
-    public UpdatedShootAnywhere(DriverController driverController, Drivetrain drivetrain, Arm arm, Intake intake) {
+    public GeneralizedReleaseRoutine(DriverController driverController, Drivetrain drivetrain, Arm arm, Intake intake) {
         this.arm = arm;
         this.intake = intake;
         this.drivetrain = drivetrain;

@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.commands.GeneralizedHangRoutine;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.Arm.ArmControlState;
 import frc.robot.subsystems.arm.commands.GoToAmp;
@@ -167,7 +168,9 @@ public class RobotContainer {
       // intake from ground
    
       //  manipulatorController.leftTrigger()
-      // .whileTrue(AutomationCommands.updatedShootFromAnywhere(driverController)); 
+      // .whileTrue(AutomationCommands.generalizedReleaseCommand(driverController)); 
+
+      manipulatorController.rightBumper().whileTrue(new GeneralizedHangRoutine(driverController, drivetrain, arm, intake));
 
       // manipulatorController.rightTrigger()
       // .whileTrue(AutomationCommands.autoIntakeCommand()); // intake from ground auto
