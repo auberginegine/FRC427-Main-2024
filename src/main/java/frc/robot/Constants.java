@@ -317,6 +317,16 @@ public final class Constants {
     public static final Pose2d ampBlue = new Pose2d(1.96, 7.75, Rotation2d.fromDegrees(-90));
     public static final Pose2d ampRed = new Pose2d(14.62, 7.75, Rotation2d.fromDegrees(-90));
   }
+  public static final class AutoHang {
+    public static final Pose2d topLeft1 = new Pose2d(3.30, 7.00, Rotation2d.fromDegrees(0));
+    public static final Pose2d bottomRight1 = new Pose2d(5.50, 5.50, Rotation2d.fromDegrees(0));
+
+    public static final Pose2d topLeft2 = new Pose2d(6.20, 5.50, Rotation2d.fromDegrees(0));
+    public static final Pose2d bottomRight2 = new Pose2d(7.90, 3.33, Rotation2d.fromDegrees(0));
+
+    public static final Pose2d topLeft3 = new Pose2d(3.30, 3.50, Rotation2d.fromDegrees(0));
+    public static final Pose2d bottomRight3 = new Pose2d(4.95, 2.50, Rotation2d.fromDegrees(0));
+  }
   
   
   

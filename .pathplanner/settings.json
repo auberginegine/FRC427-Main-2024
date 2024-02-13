@@ -23,8 +23,8 @@
     "Two Piece Middle Fling",
     "TwoPieceReturn"
   ],
-  "defaultMaxVel": 2.0,
-  "defaultMaxAccel": 2.0,
+  "defaultMaxVel": 4.0,
+  "defaultMaxAccel": 4.0,
   "defaultMaxAngVel": 120.0,
   "defaultMaxAngAccel": 120.0,
   "maxModuleSpeed": 4.5
