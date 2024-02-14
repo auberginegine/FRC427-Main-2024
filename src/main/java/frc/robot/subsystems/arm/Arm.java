@@ -108,7 +108,8 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean reverseSoftLimit() {
-        return (getLimitSwitchValue() || getAngle() < Constants.ArmConstants.kReverseSoftLimit);
+        // return (getLimitSwitchValue() || getAngle() < Constants.ArmConstants.kReverseSoftLimit);
+        return (getAngle() < Constants.ArmConstants.kReverseSoftLimit);
     }
 
     public boolean forwardSoftLimit() {
@@ -196,7 +197,7 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("Arm Velocity (deg/sec)", m_armEncoderRight.getVelocity());
         SmartDashboard.putNumber("Arm Error (deg)", getError());
         SmartDashboard.putBoolean("Is Arm At Set Point", isAtAngle());
-        SmartDashboard.putBoolean("Arm Limit Switch", getLimitSwitchValue());
+        // SmartDashboard.putBoolean("Arm Limit Switch", getLimitSwitchValue());
         SmartDashboard.putString("Arm Control Type", m_ArmControlType.toString());
         SmartDashboard.putString("Arm Control State", getArmControlState().toString());
     }
