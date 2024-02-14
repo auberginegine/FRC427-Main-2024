@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import frc.robot.commands.AutomationCommands;
-import frc.robot.commands.ShootAnywhere;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.Arm.ArmControlState;
 import frc.robot.subsystems.arm.commands.GoToAmp;
@@ -13,22 +11,21 @@ import frc.robot.subsystems.arm.commands.GoToGround;
 import frc.robot.subsystems.arm.commands.GoToSpeaker;
 import frc.robot.subsystems.arm.commands.GoToTravel;
 import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.robot.subsystems.drivetrain.commands.MoveToAmp;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
 import frc.robot.subsystems.hang.Hang;
 import frc.robot.subsystems.hang.commands.SetHangSpeed;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.IntakeFromGround;
 import frc.robot.subsystems.intake.commands.OuttakeToAmp;
-import frc.robot.subsystems.intake.commands.OuttakeToSpeaker;
 import frc.robot.subsystems.intake.commands.SetShooterSpeed;
 import frc.robot.subsystems.intake.commands.SetSuckerIntakeSpeed;
-import frc.robot.subsystems.intake.commands.TuneIntakeShooter;
 import frc.robot.util.DriverController;
 import frc.robot.util.DriverController.Mode;
 import frc.robot.subsystems.leds.Led;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
-import frc.robot.subsystems.vision.Vision;
+import frc.robot.subsystems.vision.BackVision;
+import frc.robot.subsystems.vision.FrontVision;
+import edu.wpi.first.wpilibj.simulation.AddressableLEDSim;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,6 +33,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 
 public class RobotContainer {
   private final AutoPicker autoPicker; 
@@ -49,10 +47,12 @@ public class RobotContainer {
 
   // leds!
   private final Led led = Led.getInstance(); 
+  private final AddressableLEDSim sim = new AddressableLEDSim(led.getLED()); 
 
 
   // limelight subsystem of robot
-  private final Vision limelight = Vision.getInstance(); 
+  private final BackVision backVision = BackVision.getInstance();
+  private final FrontVision frontVision = FrontVision.getInstance(); 
 
   // hang mechanism of robot
   private final Hang hang = Hang.getInstance();
@@ -97,7 +97,7 @@ public class RobotContainer {
     patterns.addOption("Arm At Ground", Constants.LEDs.Patterns.kArmAtGround);
     patterns.addOption("Arm Moving", Constants.LEDs.Patterns.kArmCustom);
     patterns.addOption("Hanging", Constants.LEDs.Patterns.kHangActive);
-     patterns.addOption("test Color", Constants.LEDs.Patterns.kTestColor);
+    patterns.addOption("test Color", Constants.LEDs.Patterns.kTestColor);
 
 
   }
@@ -127,14 +127,14 @@ public class RobotContainer {
   
 
    //  move to setpoints
-   driverController.y()
-   .whileTrue(AutomationCommands.pathFindToAmpAndScore(arm, intake)); // move to amp & score
+  //  driverController.y()
+  //  .whileTrue(AutomationCommands.pathFindToAmpAndScore(arm, intake)); // move to amp & score
 
-   driverController.b()
-   .whileTrue(AutomationCommands.pathFindToSpeakerAndScore(arm, intake)); // move to speaker & score
+  //  driverController.b()
+  //  .whileTrue(AutomationCommands.pathFindToSpeakerAndScore(arm, intake)); // move to speaker & score
 
-   driverController.x()
-   .whileTrue(AutomationCommands.pathFindToGamePiece()); // make find to note
+  //  driverController.x()
+  //  .whileTrue(AutomationCommands.pathFindToGamePiece(driverController)); // auto navigate to note
 
     // --- Intake --- 
 
@@ -161,16 +161,16 @@ public class RobotContainer {
       );
       
      // intake
-     manipulatorController.leftBumper(). and(() -> arm.getArmControlState() == ArmControlState.GROUND)
+     manipulatorController.leftBumper().and(() -> arm.getArmControlState() == ArmControlState.GROUND)
       .whileTrue(new IntakeFromGround(intake));
 
       // intake from ground
    
-       manipulatorController.leftTrigger()
-      .onTrue(AutomationCommands.shootFromAnywhere()); 
+      //  manipulatorController.leftTrigger()
+      // .whileTrue(AutomationCommands.updatedShootFromAnywhere(driverController)); 
 
-      manipulatorController.rightTrigger()
-      .onTrue(AutomationCommands.autoIntakeCommand()); // intake from ground auto
+      // manipulatorController.rightTrigger()
+      // .whileTrue(AutomationCommands.autoIntakeCommand()); // intake from ground auto
 
     // arm setpoints
     manipulatorController.a().onTrue(new GoToTravel(arm));
