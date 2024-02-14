@@ -5,6 +5,7 @@ import frc.robot.Constants;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -48,6 +49,10 @@ public class Arm extends SubsystemBase {
 
     // motor and encoder config
     public void setupMotors() {
+
+        m_armMotorRight.setIdleMode(IdleMode.kBrake);
+        m_armMotorLeft.setIdleMode(IdleMode.kBrake);
+
         m_armMotorRight.setInverted(Constants.ArmConstants.kRightMotorInverted);
         m_armMotorLeft.setInverted(Constants.ArmConstants.kLeftMotorInverted);
         
