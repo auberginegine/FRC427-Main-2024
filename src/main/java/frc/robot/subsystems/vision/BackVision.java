@@ -30,7 +30,8 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 // Figures out the position of the robot based on april tags
 public class BackVision extends SubsystemBase{
     
-    public static BackVision instance = new BackVision(Drivetrain.getInstance());
+    public static BackVision instance; 
+    //  = new BackVision(Drivetrain.getInstance());
 
     private Drivetrain drivetrain;
     private PhotonCamera camera;
