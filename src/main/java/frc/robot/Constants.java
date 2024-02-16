@@ -237,7 +237,7 @@ public final class Constants {
     public static final double kPositionConversionFactor = 1;
     public static final double kVelocityConversionFactor = kPositionConversionFactor / 60;
 
-    public static final float kFowardHangSoftLimit = 0;
+    public static final float kFowardHangSoftLimit = 10;
     public static final float kReverseHangSoftLimit = 0;
 
     public static final double kHangSpeed = 0.25;

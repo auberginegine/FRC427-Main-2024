@@ -43,10 +43,7 @@ public class MotorSim {
     if (!SoftLimitHit()) {
     if (this.m_OtherMotor != null) {
         this.m_CurrentPosition = this.m_OtherMotor.m_CurrentPosition;
-    }
-
-
-    else this.m_CurrentPosition += dt*m_CurrentVelocity;
+    } else this.m_CurrentPosition += dt*m_CurrentVelocity;
    }
 }
 
@@ -100,8 +97,8 @@ public void enableSoftLimit(SoftLimitDirection direction, boolean x) {
 }
 
 public boolean SoftLimitHit() {
-return ((this.m_CurrentPosition < this.m_SoftLimitF && this.m_SoftLimitFEnabled && this.m_CurrentVelocity>0) || 
-        (this.m_CurrentPosition > this.m_SoftLimitR && this.m_SoftLimitREnabled && this.m_CurrentVelocity<0));
+return ((this.m_CurrentPosition > this.m_SoftLimitF && this.m_SoftLimitFEnabled && this.m_CurrentVelocity>0) || 
+        (this.m_CurrentPosition < this.m_SoftLimitR && this.m_SoftLimitREnabled && this.m_CurrentVelocity<0));
 }
 
 
