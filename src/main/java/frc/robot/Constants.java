@@ -214,8 +214,9 @@ public final class Constants {
 
      
     // calculate using reca.lc
+    // reduction: 500
     // CoM distance: 21.77 in
-    // Arm mass: 20.755 lbs
+    // Arm mass: 18 lbs
     
     public static final double kS = 0; 
     public static final double kG = 0; // 0.79 V
