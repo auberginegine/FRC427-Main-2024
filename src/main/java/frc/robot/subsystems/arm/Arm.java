@@ -67,7 +67,10 @@ public class Arm extends SubsystemBase {
         m_armPIDController.setTolerance(Constants.ArmConstants.kTolerance);
         
         // left arm motor would follow right arm  motor's voltage intake 
-        m_armMotorLeft.follow(m_armMotorRight);
+        m_armMotorLeft.follow(m_armMotorRight, true);
+
+        m_armMotorLeft.burnFlash(); 
+        m_armMotorRight.burnFlash();
     }
 
     public void periodic() {
@@ -98,9 +101,9 @@ public class Arm extends SubsystemBase {
         boolean passReverseSoftLimit = reverseSoftLimit() && impendingVelocity < 0;
         boolean passForwardSoftLimit = forwardSoftLimit() && impendingVelocity > 0;
 
-        if (!passReverseSoftLimit && !passForwardSoftLimit) {
+        // if (!passReverseSoftLimit && !passForwardSoftLimit) {
             m_armMotorRight.set(impendingVelocity); 
-        }
+        // }
 
         SmartDashboard.putNumber("Impending Velocity (m/s)", impendingVelocity);
         SmartDashboard.putBoolean("Pass Reverse Soft Limit", passReverseSoftLimit);
@@ -137,7 +140,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getAngle() {
-        return m_armEncoderRight.getPosition();
+        return m_armEncoderRight.getPosition() > 180 ? m_armEncoderRight.getPosition() - 360 : m_armEncoderRight.getPosition();
     }
 
 
@@ -200,5 +203,9 @@ public class Arm extends SubsystemBase {
         // SmartDashboard.putBoolean("Arm Limit Switch", getLimitSwitchValue());
         SmartDashboard.putString("Arm Control Type", m_ArmControlType.toString());
         SmartDashboard.putString("Arm Control State", getArmControlState().toString());
+        // SmartDashboard.putBoolean("left inverted", m_armMotorLeft.getInverted()); 
+        // SmartDashboard.putBoolean("right inverted", m_armMotorRight.getInverted()); 
+        SmartDashboard.putNumber("left volt", m_armMotorLeft.get()); 
+        SmartDashboard.putNumber("right volt", m_armMotorRight.get()); 
     }
 }

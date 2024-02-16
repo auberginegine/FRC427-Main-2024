@@ -9,7 +9,8 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 
 // Figures out which game pieces are near
 public class FrontVision extends SubsystemBase{
-     public static FrontVision instance = new FrontVision(Drivetrain.getInstance());
+     public static FrontVision instance; 
+     //  = new FrontVision(Drivetrain.getInstance());
 
     private Drivetrain drivetrain;
     private PhotonCamera camera;
