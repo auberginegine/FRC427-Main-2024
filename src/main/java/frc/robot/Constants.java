@@ -222,6 +222,8 @@ public final class Constants {
     public static final double kG = 0; // 0.79 V
     public static final double kV = 0; // 1.95 V*s/rad
     public static final double kA = 0; // 0.06 V*s^2/rad
+    public static final double kRelativePositionConversionFactor = 0;
+    public static final double kRelativeVelocityConversionFactor = 0;
     
 
   }

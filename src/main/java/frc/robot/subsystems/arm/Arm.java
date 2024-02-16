@@ -5,6 +5,7 @@ import frc.robot.Constants;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
@@ -32,6 +33,7 @@ public class Arm extends SubsystemBase {
     private CANSparkMax m_armMotorLeft = new CANSparkMax(Constants.ArmConstants.kArmMotorLeftId, MotorType.kBrushless);
 
     private AbsoluteEncoder m_armEncoderRight = m_armMotorRight.getAbsoluteEncoder(Type.kDutyCycle);
+    private RelativeEncoder m_armRelativeEncoder = m_armMotorRight.getEncoder();
     
     private PIDController m_armPIDController = new PIDController(Constants.ArmConstants.kP, Constants.ArmConstants.kI, Constants.ArmConstants.kD);
     
@@ -44,10 +46,12 @@ public class Arm extends SubsystemBase {
     // private double m_kS = Constants.ArmConstants.kSpringFF;
 
     private Arm() {
+        setupEncoders();
+        setupControllers();
         setupMotors();
     }
 
-    // motor and encoder config
+    // motor config
     public void setupMotors() {
 
         m_armMotorRight.setIdleMode(IdleMode.kBrake);
@@ -58,19 +62,30 @@ public class Arm extends SubsystemBase {
         
         m_armMotorRight.setSmartCurrentLimit(Constants.ArmConstants.kMotorCurrentLimit);
         m_armMotorLeft.setSmartCurrentLimit(Constants.ArmConstants.kMotorCurrentLimit);
-
-        // conversion factors
-        m_armEncoderRight.setPositionConversionFactor(Constants.ArmConstants.kPositionConversionFactor);
-        m_armEncoderRight.setVelocityConversionFactor(Constants.ArmConstants.kVelocityConversionFactor);
-        
-        // position error on which it is tolerable
-        m_armPIDController.setTolerance(Constants.ArmConstants.kTolerance);
         
         // left arm motor would follow right arm  motor's voltage intake 
         m_armMotorLeft.follow(m_armMotorRight, true);
 
         m_armMotorLeft.burnFlash(); 
         m_armMotorRight.burnFlash();
+    }
+
+    //encoder config
+    public void setupEncoders() {
+        // conversion factors
+        m_armEncoderRight.setPositionConversionFactor(Constants.ArmConstants.kPositionConversionFactor);
+        m_armEncoderRight.setVelocityConversionFactor(Constants.ArmConstants.kVelocityConversionFactor);
+        
+        m_armRelativeEncoder.setPositionConversionFactor(Constants.ArmConstants.kRelativePositionConversionFactor);
+        m_armRelativeEncoder.setVelocityConversionFactor(Constants.ArmConstants.kRelativeVelocityConversionFactor);
+        
+        m_armRelativeEncoder.setPosition(m_armEncoderRight.getPosition());
+    }
+
+    // pid controller config
+    public void setupControllers() {
+        // position error on which it is tolerable
+        m_armPIDController.setTolerance(Constants.ArmConstants.kTolerance);
     }
 
     public void periodic() {
@@ -140,7 +155,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getAngle() {
-        return m_armEncoderRight.getPosition() > 180 ? m_armEncoderRight.getPosition() - 360 : m_armEncoderRight.getPosition();
+        return m_armRelativeEncoder.getPosition() > 180 ? m_armRelativeEncoder.getPosition() - 360 : m_armRelativeEncoder.getPosition();
     }
 
 
@@ -200,12 +215,13 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("Arm Velocity (deg/sec)", m_armEncoderRight.getVelocity());
         SmartDashboard.putNumber("Arm Error (deg)", getError());
         SmartDashboard.putBoolean("Is Arm At Set Point", isAtAngle());
-        // SmartDashboard.putBoolean("Arm Limit Switch", getLimitSwitchValue());
         SmartDashboard.putString("Arm Control Type", m_ArmControlType.toString());
         SmartDashboard.putString("Arm Control State", getArmControlState().toString());
-        // SmartDashboard.putBoolean("left inverted", m_armMotorLeft.getInverted()); 
-        // SmartDashboard.putBoolean("right inverted", m_armMotorRight.getInverted()); 
         SmartDashboard.putNumber("left volt", m_armMotorLeft.get()); 
         SmartDashboard.putNumber("right volt", m_armMotorRight.get()); 
+
+        // SmartDashboard.putBoolean("Arm Limit Switch", getLimitSwitchValue());
+        // SmartDashboard.putBoolean("left inverted", m_armMotorLeft.getInverted()); 
+        // SmartDashboard.putBoolean("right inverted", m_armMotorRight.getInverted()); 
     }
 }
