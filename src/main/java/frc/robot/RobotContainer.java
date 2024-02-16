@@ -56,7 +56,7 @@ public class RobotContainer {
   // private final FrontVision frontVision = FrontVision.getInstance(); 
 
   // hang mechanism of robot
-  // private final Hang hang = Hang.getInstance();
+  private final Hang hang = Hang.getInstance();
   
   // arm of the robot
   private final Arm arm = Arm.getInstance();
@@ -183,21 +183,21 @@ public class RobotContainer {
     // --- Hang ---
 
     // Hang Up when DPAD UP
-    // manipulatorController.povUp()
-    //   .onTrue(new SetHangSpeed(hang, Constants.HangConstants.kHangSpeed)); 
+    manipulatorController.povUp()
+      .onTrue(new SetHangSpeed(hang, Constants.HangConstants.kHangSpeed)); 
 
-    // //Hang Down when DPAD DOWN
-    // manipulatorController.povDown()
-    //   .onTrue(new SetHangSpeed(hang, -Constants.HangConstants.kHangSpeed)); 
+    //Hang Down when DPAD DOWN
+    manipulatorController.povDown()
+      .onTrue(new SetHangSpeed(hang, -Constants.HangConstants.kHangSpeed)); 
 
     // // Stop hang when neither is pressed
-    // manipulatorController.povDown().negate().and(manipulatorController.povUp().negate())
-    // .onTrue(new SetHangSpeed(hang, 0)); 
-    manipulatorController.a().onTrue(new SetVelocity(arm, 0.4)).onFalse(new SetVelocity(arm, 0)); 
+    manipulatorController.povDown().negate().and(manipulatorController.povUp().negate())
+    .onTrue(new SetHangSpeed(hang, 0)); 
+    // manipulatorController.a().onTrue(new SetVelocity(arm, 0.4)).onFalse(new SetVelocity(arm, 0)); 
     
-    manipulatorController.b().onTrue(new SetVelocity(arm, -0.4)).onFalse(new SetVelocity(arm, 0));
-    manipulatorController.x().onTrue(new SetSuckerIntakeSpeed(intake, -0.5)).onFalse(new SetSuckerIntakeSpeed(intake, 0)); 
-    manipulatorController.y().onTrue(new SetShooterSpeed(intake, 1)).onFalse(new SetShooterSpeed(intake, 0));  
+    // manipulatorController.b().onTrue(new SetVelocity(arm, -0.4)).onFalse(new SetVelocity(arm, 0));
+    // manipulatorController.x().onTrue(new SetSuckerIntakeSpeed(intake, -0.5)).onFalse(new SetSuckerIntakeSpeed(intake, 0)); 
+    // manipulatorController.y().onTrue(new SetShooterSpeed(intake, 1)).onFalse(new SetShooterSpeed(intake, 0));  
 
   }
   
