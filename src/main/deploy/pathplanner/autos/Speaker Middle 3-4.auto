@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6884877930157377,
-      "y": 4.4852797475010595
+      "x": 0.6987751318861041,
+      "y": 4.4544177308906
     },
     "rotation": -60.0
   },
@@ -11,6 +11,12 @@
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootSpeaker"
+          }
+        },
         {
           "type": "path",
           "data": {
@@ -32,13 +38,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Speaker to Note 3"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Note 3 to Middle 4th"
+            "pathName": "Speaker to Middle 4th"
           }
         },
         {
