@@ -82,6 +82,11 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putData("Robot Odometry Field", m_odometryField);
     SmartDashboard.putData("Robot Vision Field", m_visionField);
     doSendables();
+
+    frontLeft.updateSim();
+    frontRight.updateSim();
+    backLeft.updateSim();
+    backRight.updateSim();
   }
 
   @Override

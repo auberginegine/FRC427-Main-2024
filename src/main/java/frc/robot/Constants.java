@@ -203,7 +203,7 @@ public final class Constants {
 
 
     // TODO: tune arm 
-    public static final double kP = 0;
+    public static final double kP = 0.6;
     public static final double kI = 0;
     public static final double kD = 0;
 

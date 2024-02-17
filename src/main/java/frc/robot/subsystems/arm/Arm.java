@@ -71,6 +71,8 @@ public class Arm extends SubsystemBase {
     }
 
     public void periodic() {
+        m_armMotorRight.update(0.02);
+        m_armMotorLeft.update(0.02);
         doSendables();
         
         double impendingVelocity = 0; 
@@ -155,6 +157,7 @@ public class Arm extends SubsystemBase {
     }
 
     public void setPID(double p, double i, double d) {
+        this.m_armPIDController.setPID(p, i, d);
         this.m_armPIDController.setPID(p, i, d);
     }
 

@@ -63,6 +63,9 @@ public class Intake extends SubsystemBase {
     }
 
     public void periodic() {
+        m_intakeMotorShootBottom.update(0.02);
+        m_intakeMotorShootTop.update(0.02);
+        m_outtakeMotorSuck.update(0.02);
         // code inside here will run repeatedly while the robot is on
         doSendables();
     }

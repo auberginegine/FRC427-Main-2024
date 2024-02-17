@@ -133,15 +133,15 @@ public class SwerveModule {
 
     // sets the PID constants for the turn motor
     public void setTurnPID(double p, double i, double d) {
-        this.turnPIDController.setPID(p, i, d);
+      //  this.turnPIDController.setPID(p, i, d);
     }
 
     // sets the PID constants for the drive motor
     public void setDrivePID(double p, double i, double d, double ff) {
-        this.drivePIDController.setP(p); 
-        this.drivePIDController.setI(i); 
-        this.drivePIDController.setD(d); 
-        this.drivePIDController.setFF(ff); 
+        // this.drivePIDController.setP(p); 
+        // this.drivePIDController.setI(i); 
+        // this.drivePIDController.setD(d); 
+        // this.drivePIDController.setFF(ff); 
     }
 
     /**
@@ -189,7 +189,7 @@ public class SwerveModule {
 
     // current angle of the swerve pod
     public Rotation2d getAngle() {
-        return Rotation2d.fromRotations(this.turnMotor.getPosition()); 
+        return Rotation2d.fromDegrees(this.turnMotor.getPosition()); 
     }
 
     // current state (velocity & angle) of the swerve pod
@@ -205,6 +205,11 @@ public class SwerveModule {
     // target state (velocity & angle) of the swerve pod
     public SwerveModuleState getReferenceState() {
         return this.targetState; 
+    }
+
+    public void updateSim() {
+        turnMotor.update(0.02);
+        driveMotor.update(0.02);
     }
 
     public static enum DriveState {
