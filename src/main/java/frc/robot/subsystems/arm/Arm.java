@@ -3,6 +3,7 @@ package frc.robot.subsystems.arm;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.MotorSim;
+import frc.robot.util.MotorSim.Mode;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
@@ -28,8 +29,8 @@ public class Arm extends SubsystemBase {
 
     private DigitalInput m_limitSwitch = new DigitalInput(Constants.ArmConstants.kLimitSwitchId);
 
-    private MotorSim m_armMotorRight = new MotorSim(Constants.ArmConstants.kArmMotorRightId, MotorType.kBrushless);
-    private MotorSim m_armMotorLeft = new MotorSim(Constants.ArmConstants.kArmMotorLeftId, MotorType.kBrushless);
+    private MotorSim m_armMotorRight = new MotorSim(Constants.ArmConstants.kArmMotorRightId, MotorType.kBrushless, Mode.MANUAL);
+    private MotorSim m_armMotorLeft = new MotorSim(Constants.ArmConstants.kArmMotorLeftId, MotorType.kBrushless, Mode.MANUAL);
 
     //private AbsoluteEncoder m_armEncoderRight = m_armMotorRight.getAbsoluteEncoder(Type.kDutyCycle);
     
@@ -60,7 +61,7 @@ public class Arm extends SubsystemBase {
         m_armMotorRight.setVelocityConversionFactor(Constants.ArmConstants.kVelocityConversionFactor);
         
         // position error on which it is tolerable
-        m_armPIDController.setTolerance(Constants.ArmConstants.kTolerance);
+    //    m_armPIDController.setTolerance(Constants.ArmConstants.kTolerance);
         
         // left arm motor would follow right arm  motor's voltage intake 
         m_armMotorLeft.follow(m_armMotorRight, true);

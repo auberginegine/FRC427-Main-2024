@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.IOUtils;
 import frc.robot.util.MotorSim;
+import frc.robot.util.MotorSim.Mode;
 import frc.robot.util.MotorSim.SoftLimitDirection;
 
 public class Hang extends SubsystemBase {
@@ -22,8 +23,8 @@ public class Hang extends SubsystemBase {
     private double m_velocity = 0;
     
     //Initialize Motors
-    private MotorSim m_HangMotorRight = new MotorSim(Constants.HangConstants.kHangRightMotorID, MotorType.kBrushless);
-    private MotorSim m_HangMotorLeft = new MotorSim(Constants.HangConstants.kHangLeftMotorID, MotorType.kBrushless);
+    private MotorSim m_HangMotorRight = new MotorSim(Constants.HangConstants.kHangRightMotorID, MotorType.kBrushless, Mode.MANUAL);
+    private MotorSim m_HangMotorLeft = new MotorSim(Constants.HangConstants.kHangLeftMotorID, MotorType.kBrushless, Mode.MANUAL);
 
     // //Encoder Initialize
     // private RelativeEncoder m_HangMotorRight = m_HangMotorRight.getEncoder();

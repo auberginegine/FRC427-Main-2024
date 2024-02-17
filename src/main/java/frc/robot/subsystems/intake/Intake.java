@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.util.MotorSim;
+import frc.robot.util.MotorSim.Mode;
 
  /*
   * Notes about how Intake works
@@ -27,14 +29,14 @@ public class Intake extends SubsystemBase {
     }
     
     // establishes the motors for shooter and sucker. Also establishes the beambreak.
-    CANSparkMax m_intakeMotorShootTop = new CANSparkMax(Constants.IntakeConstants.kIntakeMotorShootTopId, MotorType.kBrushless);
-    RelativeEncoder m_intakeEncoderShootTop = m_intakeMotorShootTop.getEncoder();
+    MotorSim m_intakeMotorShootTop = new MotorSim(Constants.IntakeConstants.kIntakeMotorShootTopId, MotorType.kBrushless, Mode.MANUAL);
+    //RelativeEncoder m_intakeEncoderShootTop = m_intakeMotorShootTop.getEncoder();
 
-    CANSparkMax m_intakeMotorShootBottom = new CANSparkMax(Constants.IntakeConstants.kIntakeMotorShootBottomId, MotorType.kBrushless);
-    RelativeEncoder m_intakeEncoderShootBottom = m_intakeMotorShootBottom.getEncoder();
+    MotorSim m_intakeMotorShootBottom = new MotorSim(Constants.IntakeConstants.kIntakeMotorShootBottomId, MotorType.kBrushless, Mode.MANUAL);
+   // RelativeEncoder m_intakeEncoderShootBottom = m_intakeMotorShootBottom.getEncoder();
 
-    CANSparkMax m_outtakeMotorSuck = new CANSparkMax(Constants.IntakeConstants.kOuttakeMotorSuckId, MotorType.kBrushless);
-    RelativeEncoder m_outtakeEncoderSuck = m_outtakeMotorSuck.getEncoder();
+    MotorSim m_outtakeMotorSuck = new MotorSim(Constants.IntakeConstants.kOuttakeMotorSuckId, MotorType.kBrushless, Mode.MANUAL);
+    //RelativeEncoder m_outtakeEncoderSuck = m_outtakeMotorSuck.getEncoder();
 
 
     // beambreak checks for if theres a note in the intake
@@ -48,16 +50,16 @@ public class Intake extends SubsystemBase {
         // sets limits for all the motors and has the bottom shoot motor, follow the top
         m_intakeMotorShootTop.setInverted(Constants.IntakeConstants.kShootTopIntakeInverted);
         m_intakeMotorShootTop.setSmartCurrentLimit(Constants.IntakeConstants.kShootTopMotorlimit);
-        m_intakeEncoderShootTop.setVelocityConversionFactor(Constants.IntakeConstants.kShootVelocityConversionFactor); 
+        m_intakeMotorShootTop.setVelocityConversionFactor(Constants.IntakeConstants.kShootVelocityConversionFactor); 
 
         m_intakeMotorShootBottom.setInverted(Constants.IntakeConstants.kShootBottomIntakeInverted);
         m_intakeMotorShootBottom.setSmartCurrentLimit(Constants.IntakeConstants.kShootBottomMotorlimit);
-        m_intakeEncoderShootTop.setVelocityConversionFactor(Constants.IntakeConstants.kShootVelocityConversionFactor); 
+        m_intakeMotorShootTop.setVelocityConversionFactor(Constants.IntakeConstants.kShootVelocityConversionFactor); 
         m_intakeMotorShootBottom.follow(m_intakeMotorShootTop);
 
         m_outtakeMotorSuck.setInverted(Constants.IntakeConstants.kSuckOuttakeInverted);
         m_outtakeMotorSuck.setSmartCurrentLimit(Constants.IntakeConstants.kSuckOuttakeMotorLimit);
-        m_outtakeEncoderSuck.setVelocityConversionFactor(Constants.IntakeConstants.kIntakeVelocityConversionFactor); 
+        m_outtakeMotorSuck.setVelocityConversionFactor(Constants.IntakeConstants.kIntakeVelocityConversionFactor); 
     }
 
     public void periodic() {
@@ -85,9 +87,9 @@ public class Intake extends SubsystemBase {
     }
 
      public void doSendables() { 
-        SmartDashboard.putNumber("Suck Speed (m/s)", m_outtakeEncoderSuck.getVelocity());
-        SmartDashboard.putNumber("Shoot Top Speed (m/s)", m_intakeEncoderShootTop.getVelocity());
-        SmartDashboard.putNumber("Shoot Bottom Speed (m/s)", m_intakeEncoderShootBottom.getVelocity());
+        SmartDashboard.putNumber("Suck Speed (m/s)", m_outtakeMotorSuck.getVelocity());
+        SmartDashboard.putNumber("Shoot Top Speed (m/s)", m_intakeMotorShootTop.getVelocity());
+        SmartDashboard.putNumber("Shoot Bottom Speed (m/s)", m_intakeMotorShootBottom.getVelocity());
         SmartDashboard.putBoolean("Beam Break Hit (t/f)", beamBreakHit());
     }
 }

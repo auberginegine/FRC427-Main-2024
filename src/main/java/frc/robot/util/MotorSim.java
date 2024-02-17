@@ -13,18 +13,26 @@ public class MotorSim {
     float m_SoftLimitR;
     boolean m_SoftLimitFEnabled = false;
     boolean m_SoftLimitREnabled = false;
+    Mode m_Mode;
+    double m_P;
+    double m_I;
+    double m_D;
+    double m_FF;
+    double m_DesiredPosition;
+    
 
 
 
 
 
      public void setCurrentVelocity(double v) {
-        m_CurrentVelocity = v;
+        this.m_CurrentVelocity = v;
     }
 
     public void setCurrentPosition(double x) {
-        m_CurrentPosition = x;
+        this.m_CurrentPosition = x;
     }
+
     public double getPosition() {
         return this.m_CurrentPosition;
     }
@@ -32,18 +40,28 @@ public class MotorSim {
         return this.m_CurrentVelocity;
     }
 
+    public void setDesiredPosition(double wantedPosition) {
+       this.m_DesiredPosition = wantedPosition;
+    }
 
-   public MotorSim(int ID, MotorType type) {
+
+   public MotorSim(int ID, MotorType type, Mode mode) {
     this.m_Id = ID;
+    this.m_Mode = mode;
     
 
    }
 
    public void update(double dt) {
-    if (!SoftLimitHit()) {
+    if (!SoftLimitHit()) { 
     if (this.m_OtherMotor != null) {
         this.m_CurrentPosition = this.m_OtherMotor.m_CurrentPosition;
-    } else this.m_CurrentPosition += dt*m_CurrentVelocity;
+    } else {
+        if (m_Mode == Mode.PID) {
+            double error = m_DesiredPosition-m_CurrentPosition;
+            m_CurrentVelocity = m_P*error;
+        } }
+        this.m_CurrentPosition += dt*m_CurrentVelocity;
    }
 }
 
@@ -51,6 +69,11 @@ public class MotorSim {
   public enum SoftLimitDirection {
     kForward,
     kReverse
+  }
+
+  public enum Mode {
+    MANUAL,
+    PID
   }
 
 
@@ -77,8 +100,31 @@ public void follow(MotorSim leader) {
 public void follow(MotorSim leader, boolean x) {
     this.m_OtherMotor = leader;
 }
+
 public void set(double speed) {
     setCurrentVelocity(speed);
+}
+
+public void setPID(double P, double I, double D) {
+    this.m_P = P;
+    this.m_I = I;
+    this.m_D = D;
+}
+
+public void setP(double P) {
+    this.m_P = P;
+}
+
+public void setI(double I) {
+    this.m_I = I;
+}
+
+public void setD(double D) {
+    this.m_D = D;
+}
+
+public void setFF(double FF) {
+    this.m_FF = FF;
 }
 
 

@@ -18,6 +18,8 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.util.MotorSim;
+import frc.robot.util.MotorSim.Mode;
 
 // represents a single swerve pod on the robot
 public class SwerveModule {
@@ -26,18 +28,18 @@ public class SwerveModule {
     private SwerveModuleState targetState;
     
     // the turn and drive motors of the swerve pod
-    private CANSparkMax turnMotor; 
-    private CANSparkMax driveMotor;
+    private MotorSim turnMotor; 
+    private MotorSim driveMotor;
     
     // PID controllers for each respective motor
     public SwerveTurnPIDController turnPIDController; 
     private SparkPIDController drivePIDController; 
 
     // encoder for the angle of the wheel relative to 0 degrees (forward)
-    private CANcoder absoluteTurnEncoder;
+    //private CANcoder absoluteTurnEncoder;
 
     // encoder for the drive wheel
-    private RelativeEncoder driveEncoder; 
+   // private RelativeEncoder driveMotor; 
 
     // feedforward values of the drive, not necessarily needed
     private SimpleMotorFeedforward driveFeedforward = new SimpleMotorFeedforward(
@@ -60,45 +62,45 @@ public class SwerveModule {
 
         this.name = config.getName(); 
 
-        this.turnMotor = new CANSparkMax(kTurn, MotorType.kBrushless); 
-        this.driveMotor = new CANSparkMax(kDrive, MotorType.kBrushless); 
+        this.turnMotor = new MotorSim(kTurn, MotorType.kBrushless, Mode.MANUAL); 
+        this.driveMotor = new MotorSim(kDrive, MotorType.kBrushless, Mode.MANUAL); 
 
-        this.absoluteTurnEncoder = new CANcoder(kTurnEncoder); 
-        this.driveEncoder = this.driveMotor.getEncoder(); 
+        // this.absoluteTurnEncoder = new CANcoder(kTurnEncoder); 
+       // this.driveMotor = this.driveMotor.getEncoder(); 
 
-        this.turnPIDController = new SwerveTurnPIDController(absoluteTurnEncoder, 0, 0, 0); 
-        this.drivePIDController = this.driveMotor.getPIDController(); 
+      //  this.turnPIDController = new SwerveTurnPIDController(absoluteTurnEncoder, 0, 0, 0); 
+       // this.drivePIDController = this.driveMotor.getPIDController(); 
 
         configureMotors(config.getDriveInverted(), config.getRotateInverted());
         configureEncoders(config.getAbsoluteEncoderDirection(), kOffset);
         configurePIDControllers();
 
         // in case of brownout
-        this.turnMotor.burnFlash(); 
-        this.driveMotor.burnFlash(); 
+        // this.turnMotor.burnFlash(); 
+        // this.driveMotor.burnFlash(); 
     }
 
     // Sets current limits, idle modes, etc. for each motor for maximum performance
     private void configureMotors(boolean driveInverted, boolean rotateInverted) {
         this.driveMotor.setSmartCurrentLimit(Constants.DrivetrainConstants.kDriveCurrentLimit); 
-        this.driveMotor.setIdleMode(IdleMode.kBrake); 
-        this.driveMotor.enableVoltageCompensation(12); 
-        this.driveMotor.setClosedLoopRampRate(Constants.DrivetrainConstants.kDriveRampRate);
-        this.driveMotor.setOpenLoopRampRate(Constants.DrivetrainConstants.kDriveRampRate);
+        // this.driveMotor.setIdleMode(IdleMode.kBrake); 
+        // this.driveMotor.enableVoltageCompensation(12); 
+        // this.driveMotor.setClosedLoopRampRate(Constants.DrivetrainConstants.kDriveRampRate);
+        // this.driveMotor.setOpenLoopRampRate(Constants.DrivetrainConstants.kDriveRampRate);
         this.driveMotor.setInverted(driveInverted);
          
 
         this.turnMotor.setSmartCurrentLimit(Constants.DrivetrainConstants.kTurnCurrentLimit); 
-        this.turnMotor.setIdleMode(IdleMode.kBrake); 
-        this.turnMotor.enableVoltageCompensation(12); 
-        this.turnMotor.setClosedLoopRampRate(Constants.DrivetrainConstants.kTurnRampRate);
-        this.turnMotor.setOpenLoopRampRate(Constants.DrivetrainConstants.kTurnRampRate);
+        // this.turnMotor.setIdleMode(IdleMode.kBrake); 
+        // this.turnMotor.enableVoltageCompensation(12); 
+        // this.turnMotor.setClosedLoopRampRate(Constants.DrivetrainConstants.kTurnRampRate);
+        // this.turnMotor.setOpenLoopRampRate(Constants.DrivetrainConstants.kTurnRampRate);
         this.turnMotor.setInverted(rotateInverted);
     }
 
     public void doSendables() {
-        SmartDashboard.putNumber(name + " Turn Vel (arb)", this.turnMotor.getEncoder().getVelocity());
-        SmartDashboard.putNumber(name + " Drive Vel (m/s)", this.driveEncoder.getVelocity());
+        SmartDashboard.putNumber(name + " Turn Vel (arb)", this.turnMotor.getVelocity());
+        SmartDashboard.putNumber(name + " Drive Vel (m/s)", this.driveMotor.getVelocity());
 
         if (this.getReferenceState() != null) SmartDashboard.putNumber(name + "Commanded Drive Vel (m/s)", this.getReferenceState().speedMetersPerSecond); 
 
@@ -107,15 +109,15 @@ public class SwerveModule {
 
     // sets the conversion factors for the drive encoder based on gear ratios
     private void configureEncoders(SensorDirectionValue direction, double kAbsoluteOffset) {
-        this.driveEncoder.setPositionConversionFactor(Constants.DrivetrainConstants.kMetersPerRot);
-        this.driveEncoder.setVelocityConversionFactor(Constants.DrivetrainConstants.kMetersPerSecondPerRPM); 
+        this.driveMotor.setPositionConversionFactor(Constants.DrivetrainConstants.kMetersPerRot);
+        this.driveMotor.setVelocityConversionFactor(Constants.DrivetrainConstants.kMetersPerSecondPerRPM); 
 
         final MagnetSensorConfigs config = new MagnetSensorConfigs(); 
         config.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf; 
         config.MagnetOffset = kAbsoluteOffset; 
         config.SensorDirection = direction; 
 
-        this.absoluteTurnEncoder.getConfigurator().apply(config); 
+        //this.absoluteTurnEncoder.getConfigurator().apply(config); 
     }
 
     // sets the PID constants for turn & drive
@@ -148,9 +150,9 @@ public class SwerveModule {
      * @param driveType the type of drive to operate with
      */
     public void updateState(SwerveModuleState state, DriveState driveType) {
-        SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " desired speed", state.speedMetersPerSecond); 
-        SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " actual speed", this.driveEncoder.getVelocity()); 
-        SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " diff speed", state.speedMetersPerSecond - this.driveEncoder.getVelocity()); 
+        // SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " desired speed", state.speedMetersPerSecond); 
+        // SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " actual speed", this.driveMotor.getVelocity()); 
+        // SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " diff speed", state.speedMetersPerSecond - this.driveMotor.getVelocity()); 
 
         this.targetState = state; 
 
@@ -171,7 +173,8 @@ public class SwerveModule {
     
     // handle closed loop drive; use SparkMAX's PID controller to go to the specified speed
     private void updateClosedLoopDriveState(double speed) {
-        drivePIDController.setReference(speed, ControlType.kVelocity, 0, driveFeedforward.calculate(speed)); 
+        // drivePIDController.setReference(speed, ControlType.kVelocity, 0, driveFeedforward.calculate(speed)); 
+        driveMotor.set(speed);
     }
 
     /**
@@ -179,23 +182,24 @@ public class SwerveModule {
      * @param turn the desired angle to turn to
      */
     private void updateTurnState(Rotation2d turn) {
-        turnPIDController.setSetpoint(turn.getDegrees()); 
-        turnMotor.set(turnPIDController.calculate());
+        // turnPIDController.setSetpoint(turn.getDegrees()); 
+        // turnMotor.set(turnPIDController.calculate());
+        turnMotor.setCurrentPosition(turn.getDegrees());
     }
 
     // current angle of the swerve pod
     public Rotation2d getAngle() {
-        return Rotation2d.fromRotations(this.absoluteTurnEncoder.getAbsolutePosition().getValueAsDouble()); 
+        return Rotation2d.fromRotations(this.turnMotor.getPosition()); 
     }
 
     // current state (velocity & angle) of the swerve pod
     public SwerveModuleState getCurrentState() {
-        return new SwerveModuleState(this.driveEncoder.getVelocity(), getAngle()); 
+        return new SwerveModuleState(this.driveMotor.getVelocity(), getAngle()); 
     }
 
     // current position (position & angle) of the swerve pod
     public SwerveModulePosition getPosition() {
-        return new SwerveModulePosition(this.driveEncoder.getPosition(), getAngle()); 
+        return new SwerveModulePosition(this.driveMotor.getPosition(), getAngle()); 
     }
 
     // target state (velocity & angle) of the swerve pod
