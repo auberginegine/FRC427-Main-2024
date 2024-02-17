@@ -6,6 +6,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -59,7 +60,10 @@ public class UpdatedShootAnywhere extends Command {
         double angleToTurnArm = Constants.Vision.distanceToArmAngle.apply(distance);
         arm.goToAngle(angleToTurnArm);
         ChassisState speeds = driverController.getDesiredChassisState(); 
+        SmartDashboard.putNumber("sa angle", finalAngle * 180 / Math.PI);
+        System.out.println(currentPose);
         speeds.omegaRadians = finalAngle;
+        speeds.turn = true; 
         drivetrain.swerveDriveFieldRel(speeds);
     }
 

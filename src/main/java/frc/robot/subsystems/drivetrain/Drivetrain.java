@@ -7,6 +7,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -39,6 +40,7 @@ public class Drivetrain extends SubsystemBase {
 
   // initialize swerve position estimator
   private SwerveDrivePoseEstimator odometry; 
+  private double m_Rotation;
 
   // initialize the gyro on the robot
   public AHRS gyro = new AHRS(SPI.Port.kMXP);
@@ -63,19 +65,20 @@ public class Drivetrain extends SubsystemBase {
     this.gyro.zeroYaw();
 
     // create the pose estimator
-    this.odometry = new SwerveDrivePoseEstimator(Constants.DrivetrainConstants.kDriveKinematics, gyro.getRotation2d(), getPositions(), new Pose2d()); 
+    this.odometry = new SwerveDrivePoseEstimator(Constants.DrivetrainConstants.kDriveKinematics, getRotation(), getPositions(), new Pose2d()); 
     
   }
 
   @Override
   public void periodic() {
+    m_Rotation += rotationPerSecond*0.02;
     // update the odometry with the newest rotations, positions of the swerve modules
     SmartDashboard.putNumber("drive yaw", gyro.getYaw());
     SmartDashboard.putNumber("drive x", odometry.getEstimatedPosition().getX());
     SmartDashboard.putNumber("drive y", odometry.getEstimatedPosition().getY());
     SmartDashboard.putNumber("drive omega", odometry.getEstimatedPosition().getRotation().getDegrees());
     
-    this.odometry.update(gyro.getRotation2d(), getPositions());
+    this.odometry.update(Rotation2d.fromRadians(m_Rotation), getPositions());
 
     m_odometryField.setRobotPose(getPose());
 
@@ -119,10 +122,12 @@ public class Drivetrain extends SubsystemBase {
     ));
   }
 
+  private double rotationPerSecond = 0; 
+
   public void swerveDrive(ChassisSpeeds speeds) {
     ChassisSpeeds robotRelative = ChassisSpeeds.fromFieldRelativeSpeeds(
       speeds, 
-      gyro.getRotation2d()
+      getRotation()
     ); 
 
     // correct for drift in the chassis
@@ -134,6 +139,8 @@ public class Drivetrain extends SubsystemBase {
     // ensure all speeds are reachable by the wheel
     SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.DrivetrainConstants.kMaxAttainableModuleSpeedMetersPerSecond);
 
+    rotationPerSecond = correctedSpeeds.omegaRadiansPerSecond; 
+
     swerveDrive(states);
   }
 
@@ -141,6 +148,8 @@ public class Drivetrain extends SubsystemBase {
     SwerveModuleState[] states = Constants.DrivetrainConstants.kDriveKinematics.toSwerveModuleStates(speeds); 
     // ensure all speeds are reachable by the wheel
     SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.DrivetrainConstants.kMaxAttainableModuleSpeedMetersPerSecond);
+    
+    rotationPerSecond = speeds.omegaRadiansPerSecond;
 
     swerveDrive(states);
   }
@@ -174,8 +183,10 @@ public class Drivetrain extends SubsystemBase {
    // double rotSpeed = rotationController.calculate(this.getYaw(), lastTurnedTheta); 
 
     // or to not commit to the angle
-     if (turn || gyro.getRate() > 0.25) lastTurnedTheta = this.getYaw(); 
-     double rotSpeed = rotationController.calculate(this.getYaw(), turn ? thetaDegrees : lastTurnedTheta); 
+     if (turn
+      // || gyro.getRate() > 0.25
+      ) lastTurnedTheta = this.getYaw(); 
+     double rotSpeed = rotationController.calculate(getRotation().getDegrees(), turn ? thetaDegrees : lastTurnedTheta); 
      
 
     rotSpeed = MathUtil.clamp(rotSpeed, -Constants.DrivetrainConstants.kMaxRotationRadPerSecond, Constants.DrivetrainConstants.kMaxRotationRadPerSecond); 
@@ -233,6 +244,11 @@ public class Drivetrain extends SubsystemBase {
       return gyro.getRotation2d().getDegrees();
   }
 
+
+  public Rotation2d getRotation() {
+    return Rotation2d.fromRadians(m_Rotation); 
+  }
+
   // zeros the current heading of the robot
   public void zeroHeading() {
     gyro.zeroYaw();
@@ -240,7 +256,7 @@ public class Drivetrain extends SubsystemBase {
 
   // gets the raw heading of the robot
   public double getYaw() {
-      return -gyro.getYaw(); 
+      return m_Rotation;
   }
 
   // Returns the rate at which the robot is turning in degrees per second.

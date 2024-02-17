@@ -79,7 +79,7 @@ public final class Constants {
     Math.hypot(kTrackWidthMeters / 2.0, kWheelBaseMeters / 2.0); // max rotation of robot
     
     // TODO: tune these
-    public static double kMaxSpeedMetersPerSecond = 2.0; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
+    public static double kMaxSpeedMetersPerSecond = 2.7; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
     public static double kMaxSlowSpeedMetersPerSecond = 1.0; 
     public static final double kMaxAccelerationMetersPerSecondSquared = kMaxSpeedMetersPerSecond / 0.2; // max acceleration of robot (accelerate to max speed in 1 second)
     public static double kMaxRotationRadPerSecond = 3.14; // max rotation speed of the robot
@@ -203,7 +203,7 @@ public final class Constants {
 
 
     // TODO: tune arm 
-    public static final double kP = 0.6;
+    public static final double kP = 2.5;
     public static final double kI = 0;
     public static final double kD = 0;
 
@@ -249,8 +249,8 @@ public final class Constants {
     public static final AprilTagFieldLayout kAprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(); 
     public static final double limelightZHeight = 0; // TODO: Fix this
     public static final double kMaxAccuracyRange = 1000;
-    public static final Pose2d kRedAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
-    public static final Pose2d kBlueAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
+    public static final Pose2d kRedAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
+    public static final Pose2d kBlueAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
     public static final double blueShootRange = 5.87;
     public static final double redShootRange = 10.71;
     public static final double shootAnywhereTimeout = 4;

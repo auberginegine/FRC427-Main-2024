@@ -30,25 +30,26 @@ public class TeleOpCommand extends Command {
 
     @Override
     public void execute() {
-        Constants.DrivetrainConstants.kMaxRotationRadPerSecond = SmartDashboard.getNumber("Rotation Speed", 3.14);
-        Constants.DrivetrainConstants.kMaxSpeedMetersPerSecond = SmartDashboard.getNumber("Linear Speed", 1.0);
+        // Constants.DrivetrainConstants.kMaxRotationRadPerSecond = SmartDashboard.getNumber("Rotation Speed", 3.14);
+        // Constants.DrivetrainConstants.kMaxSpeedMetersPerSecond = SmartDashboard.getNumber("Linear Speed", 1.0);
         // ensure driving does not break if gyro disconnects, will hopefully transition to robot oriented drive
        
-        if (SmartDashboard.getBoolean("snap", true)) {
-            // align forward, align sideways, etc. 
-            ChassisState speeds = m_controller.getDesiredChassisState(); 
-            SmartDashboard.putNumber("x", speeds.vxMetersPerSecond); 
-            SmartDashboard.putNumber("y", speeds.vyMetersPerSecond); 
-            SmartDashboard.putNumber("rotation", speeds.omegaRadians); 
-            m_drivetrain.swerveDriveFieldRel(speeds);
-        } else {
+        // if (SmartDashboard.getBoolean("snap", true)) {
+        //     // align forward, align sideways, etc. 
+        //     ChassisState speeds = m_controller.getDesiredChassisState(); 
+        //     SmartDashboard.putNumber("x", speeds.vxMetersPerSecond); 
+        //     SmartDashboard.putNumber("y", speeds.vyMetersPerSecond); 
+        //     SmartDashboard.putNumber("rotation", speeds.omegaRadians); 
+        //     SmartDashboard.putBoolean("Turn", speeds.turn);
+        //     m_drivetrain.swerveDriveFieldRel(speeds);
+        // } else {
             // go left go right smoothly
             ChassisSpeeds speeds = m_controller.getDesiredChassisSpeeds(); 
             SmartDashboard.putNumber("x", speeds.vxMetersPerSecond); 
             SmartDashboard.putNumber("y", speeds.vyMetersPerSecond); 
             SmartDashboard.putNumber("rotation", speeds.omegaRadiansPerSecond); 
             m_drivetrain.swerveDrive(speeds);
-        }
+        // }
     }
 
 }

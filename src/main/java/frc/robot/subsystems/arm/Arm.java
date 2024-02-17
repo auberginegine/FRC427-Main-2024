@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.MotorSim;
 import frc.robot.util.MotorSim.Mode;
+import frc.robot.util.IOUtils;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
@@ -11,6 +12,12 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  
@@ -44,6 +51,9 @@ public class Arm extends SubsystemBase {
     // private double m_kG = Constants.ArmConstants.kGravityFF;
     // private double m_kS = Constants.ArmConstants.kSpringFF;
 
+    StructPublisher<Pose3d> publisher = NetworkTableInstance.getDefault()
+    .getStructTopic("Arm Pose", Pose3d.struct).publish();
+
     private Arm() {
         setupMotors();
     }
@@ -74,6 +84,12 @@ public class Arm extends SubsystemBase {
         m_armMotorRight.update(0.02);
         m_armMotorLeft.update(0.02);
         doSendables();
+
+        
+    // publisher.accept(new Pose3d(new Translation3d(IOUtils.get("arm x", 0), IOUtils.get("arm y", 0), IOUtils.get("arm z", 0)), new Rotation3d(IOUtils.get("arm roll", 0) * Math.PI / 180, IOUtils.get("arm pitch", 0) * Math.PI / 180, IOUtils.get("arm yaw", 0) * Math.PI / 180)));
+    publisher.accept(new Pose3d(new Translation3d(-0.20447, 0, 0.29), new Rotation3d(90 * Math.PI / 180, getAngle() * Math.PI / 180, 180 * Math.PI / 180)));
+        // SmartDashboard.putNumberArray("Arm Pose", new double[] {0, 0, 0, 0, -25, 0}); 
+        // -0.20447, 0, 0.29, 90, 0, 180 
         
         double impendingVelocity = 0; 
 

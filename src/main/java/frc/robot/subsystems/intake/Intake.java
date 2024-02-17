@@ -79,7 +79,7 @@ public class Intake extends SubsystemBase {
     }
     //beambreak is a scanner that checks if a ring is inside the whole intake
     public boolean beamBreakHit() { 
-        return m_BeamBreak.get();
+        return !m_BeamBreak.get();
     }
     public void stopSuck() {
         m_outtakeMotorSuck.set(0); 

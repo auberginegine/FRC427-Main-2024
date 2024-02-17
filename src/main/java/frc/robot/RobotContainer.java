@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.commands.AutomationCommands;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.Arm.ArmControlState;
 import frc.robot.subsystems.arm.commands.GoToAmp;
@@ -26,6 +27,12 @@ import frc.robot.subsystems.leds.Led;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
 import frc.robot.subsystems.vision.BackVision;
 import frc.robot.subsystems.vision.FrontVision;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.simulation.AddressableLEDSim;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -47,7 +54,7 @@ public class RobotContainer {
   private final Intake intake = Intake.getInstance(); 
 
   // leds!
-  // private final Led led = Led.getInstance(); 
+  private final Led led = Led.getInstance(); 
   // private final AddressableLEDSim sim = new AddressableLEDSim(led.getLED()); 
 
 
@@ -77,6 +84,8 @@ public class RobotContainer {
     autoPicker = new AutoPicker(drivetrain); 
     // Configure the trigger bindings
     configureBindings();
+
+
 
     // driverController.setChassisSpeedsSupplier(drivetrain::getChassisSpeeds); // comment in simulation
     // default command for drivetrain is to calculate speeds from controller and drive the robot
@@ -128,11 +137,11 @@ public class RobotContainer {
   
 
    //  move to setpoints
-  //  driverController.y()
-  //  .whileTrue(AutomationCommands.pathFindToAmpAndScore(arm, intake)); // move to amp & score
+   driverController.y()
+   .whileTrue(AutomationCommands.pathFindToAmpAndScore(arm, intake)); // move to amp & score
 
-  //  driverController.b()
-  //  .whileTrue(AutomationCommands.pathFindToSpeakerAndScore(arm, intake)); // move to speaker & score
+   driverController.b()
+   .whileTrue(AutomationCommands.pathFindToSpeakerAndScore(arm, intake)); // move to speaker & score
 
   //  driverController.x()
   //  .whileTrue(AutomationCommands.pathFindToGamePiece(driverController)); // auto navigate to note
@@ -140,11 +149,11 @@ public class RobotContainer {
     // --- Intake --- 
 
     // outtake
-    // manipulatorController.leftBumper().and(() -> arm.getArmControlState() == ArmControlState.AMP)
-    //   .whileTrue(new OuttakeToAmp(intake).finallyDo(() -> {
-    //     intake.stopSuck(); 
-    //     intake.stopShoot();
-    //   }));
+    manipulatorController.leftBumper().and(() -> arm.getArmControlState() == ArmControlState.AMP)
+      .whileTrue(new OuttakeToAmp(intake).finallyDo(() -> {
+        intake.stopSuck(); 
+        intake.stopShoot();
+      }));
 
       // TODO: see which one is better
       // -- hold a button that revs up and outtakes
@@ -167,11 +176,11 @@ public class RobotContainer {
 
       // intake from ground
    
-      //  manipulatorController.leftTrigger()
-      // .whileTrue(AutomationCommands.updatedShootFromAnywhere(driverController)); 
+       manipulatorController.leftTrigger()
+      .whileTrue(AutomationCommands.updatedShootFromAnywhere(driverController)); 
 
-      // manipulatorController.rightTrigger()
-      // .whileTrue(AutomationCommands.autoIntakeCommand()); // intake from ground auto
+      manipulatorController.rightTrigger()
+      .whileTrue(AutomationCommands.autoIntakeCommand()); // intake from ground auto
 
     // arm setpoints
     manipulatorController.a().onTrue(new GoToTravel(arm));
