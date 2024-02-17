@@ -255,6 +255,7 @@ public final class Constants {
     public static final double redShootRange = 10.71;
     public static final double shootAnywhereTimeout = 4;
     public static final double waitAfterShot = 1;
+    public static final double confidence = 60;
 
     // TODO: tune
     public static final Function<Double, Double> distanceToArmAngle = (dist) -> 0.0; 

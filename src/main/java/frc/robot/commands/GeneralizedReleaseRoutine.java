@@ -60,6 +60,7 @@ public class GeneralizedReleaseRoutine extends Command {
         arm.goToAngle(angleToTurnArm);
         ChassisState speeds = driverController.getDesiredChassisState(); 
         speeds.omegaRadians = finalAngle;
+        speeds.turn = true;
         drivetrain.swerveDriveFieldRel(speeds);
     }
 
