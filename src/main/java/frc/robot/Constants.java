@@ -188,10 +188,17 @@ public final class Constants {
     public static final float kForwardSoftLimit = 100;
     public static final double kReverseSoftLimit = 0; 
 
-    public static final double kPositionConversionFactor = 360;
+    public static final double kAbsPositionConversionFactor = 360;
 
     // velocity = position / 60
-    public static final double kVelocityConversionFactor = 360 / 60.0; 
+    public static final double kAbsVelocityConversionFactor = kAbsPositionConversionFactor / 60.0; 
+
+    public static final double kPositionConversionFactor = 360.0 / (5 * 5 * 4 * 5);
+
+    // velocity = position / 60
+    public static final double kVelocityConversionFactor = kPositionConversionFactor / 60; 
+
+
     public static final double kTolerance = 2;
 
     public static final double kGroundPosition = 0;
