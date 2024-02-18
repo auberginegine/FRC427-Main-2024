@@ -37,7 +37,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 
 public class RobotContainer {
-  // private final AutoPicker autoPicker; 
+  private final AutoPicker autoPicker; 
   // private final SwerveTurnTunerCommand tunerCommand = new SwerveTurnTunerCommand(Constants.DrivetrainConstants.frontLeft);
 
   // drivetrain of the robot
@@ -74,7 +74,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // autoPicker = new AutoPicker(drivetrain); 
+    autoPicker = new AutoPicker(drivetrain); 
     // Configure the trigger bindings
     configureBindings();
 
@@ -204,7 +204,7 @@ public class RobotContainer {
 
   // send any data as needed to the dashboard
   public void doSendables() {
-    // SmartDashboard.putData("Autonomous", autoPicker.getChooser());
+    SmartDashboard.putData("Autonomous", autoPicker.getChooser());
     // SmartDashboard.putBoolean("gyro connected", drivetrain.gyro.isConnected()); 
     // SmartDashboard.putData(patterns);
   }

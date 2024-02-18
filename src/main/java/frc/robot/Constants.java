@@ -283,17 +283,10 @@ public final class Constants {
     public static final class Patterns {
       public static final LEDPattern kDefault = new SolidLEDPattern(LEDs.kDefaultColor);
       public static final LEDPattern kDisabled = new FadeLEDPattern(4, LEDs.kDefaultColor, kGold);
-      public static final LEDPattern kCube = new SolidLEDPattern(Color.kPurple);
-      public static final LEDPattern kCone = new SolidLEDPattern(kGold);
-      public static final LEDPattern kDead = new MorseCodePattern(Color.kRed, kCobaltBlue, "dead");
-      public static final LEDPattern kDeadAlternate = new FadeLEDPattern(1, Color.kRed, Color.kBlack);
-      public static final LEDPattern kBalanceFinished = new RainbowPattern(0.5);
       public static final LEDPattern kAllianceRed = new SolidLEDPattern(Color.kRed);
       public static final LEDPattern kAllianceBlue = new SolidLEDPattern(Color.kBlue);
       public static final LEDPattern kEnabled = new SineLEDPattern(1, kGold, kCobaltBlue, 8);
-      public static final LEDPattern kIdle= new FadeLEDPattern(2, Color.kRed, kGold);
       public static final LEDPattern kMoving = new FadeLEDPattern(1,kGold, Color.kWhite);
-      public static final LEDPattern kFail = new FadeLEDPattern(1,Color.kRed, kGold);
       public static final LEDPattern kIntake = new FadeLEDPattern(1,kCobaltBlue, Color.kGreen);
       public static final LEDPattern kMovingToNote = LEDPattern.kEmpty; // TODO: add a pattern for this
       public static final LEDPattern kShootAnywhere = new SolidLEDPattern(kCobaltBlue);
