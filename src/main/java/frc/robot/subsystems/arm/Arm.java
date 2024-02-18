@@ -64,7 +64,7 @@ public class Arm extends SubsystemBase {
         m_armAbsoluteEncoder.setVelocityConversionFactor(Constants.ArmConstants.kAbsVelocityConversionFactor);
 
         m_armEncoderRight.setPositionConversionFactor(Constants.ArmConstants.kPositionConversionFactor); 
-        m_armEncoderRight.setPositionConversionFactor(Constants.ArmConstants.kVelocityConversionFactor); 
+        m_armEncoderRight.setVelocityConversionFactor(Constants.ArmConstants.kVelocityConversionFactor); 
         
         // position error on which it is tolerable
         m_armPIDController.setTolerance(Constants.ArmConstants.kTolerance);
