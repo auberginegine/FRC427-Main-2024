@@ -24,6 +24,7 @@ import frc.robot.subsystems.leds.patterns.RainbowPattern;
 import frc.robot.subsystems.leds.patterns.SineLEDPattern;
 import frc.robot.subsystems.leds.patterns.SolidLEDPattern;
 import frc.robot.subsystems.leds.patterns.TestColorPattern;
+import frc.robot.util.quad.OrderedPair;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -320,6 +321,39 @@ public final class Constants {
     public static final Pose2d speakerRed3 = new Pose2d(15.83, 4.51, Rotation2d.fromDegrees(-120));
     public static final Pose2d ampBlue = new Pose2d(1.96, 7.75, Rotation2d.fromDegrees(-90));
     public static final Pose2d ampRed = new Pose2d(14.62, 7.75, Rotation2d.fromDegrees(-90));
+  }
+  public static final class AutoHang {
+    public static final OrderedPair blueTopLeft1 = new OrderedPair(2.05, 5.93);
+    public static final OrderedPair blueBottomRight1 = new OrderedPair(5.48, 5.55);
+    public static final OrderedPair blueTopRight1 = new OrderedPair(4.56, 6.77);
+    public static final OrderedPair blueBottomLeft1 = new OrderedPair(3.15, 4.50);
+
+    public static final OrderedPair blueTopLeft2 = new OrderedPair(6.20, 5.50);
+    public static final OrderedPair blueBottomRight2 = new OrderedPair(7.90, 3.33);
+    public static final OrderedPair blueTopRight2 = new OrderedPair(7.90, 5.50);
+    public static final OrderedPair blueBottomLeft2 = new OrderedPair(6.20, 3.33);
+
+
+    public static final OrderedPair blueTopLeft3 = new OrderedPair(3.23, 3.92);
+    public static final OrderedPair blueBottomRight3 = new OrderedPair(4.40, 1.56);
+    public static final OrderedPair blueTopRight3 = new OrderedPair(5.32, 2.66);
+    public static final OrderedPair blueBottomLeft3 = new OrderedPair(2.21, 2.79);
+
+    public static final OrderedPair redTopRight1 = new OrderedPair(14.61, 5.93);
+    public static final OrderedPair redBottomRight1 = new OrderedPair(13.30, 4.30);
+    public static final OrderedPair redTopLeft1 = new OrderedPair(11.99, 6.77);
+    public static final OrderedPair redBottomLeft1 = new OrderedPair(11.22, 5.55);
+
+    public static final OrderedPair redTopLeft2 = new OrderedPair(9.20, 5.31);
+    public static final OrderedPair redBottomRight2 = new OrderedPair(10.70, 2.80);
+    public static final OrderedPair redTopRight2 = new OrderedPair(10.70, 5.31);
+    public static final OrderedPair redBottomLeft2 = new OrderedPair(9.20, 2.80);
+
+
+    public static final OrderedPair redTopLeft3 = new OrderedPair(11.21, 2.55);
+    public static final OrderedPair redBottomRight3 = new OrderedPair(14.26, 2.55);
+    public static final OrderedPair redTopRight3 = new OrderedPair(13.35, 3.66);
+    public static final OrderedPair redBottomLeft3 = new OrderedPair(12.32, 1.22);
   }
   
   
