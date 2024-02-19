@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.commands.AutomationCommands;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.Arm.ArmControlState;
 import frc.robot.subsystems.arm.commands.GoToAmp;
@@ -136,6 +137,9 @@ public class RobotContainer {
 
   //  driverController.x()
   //  .whileTrue(AutomationCommands.pathFindToGamePiece(driverController)); // auto navigate to note
+
+    // driverController.leftBumper()
+    // .whileTrue(AutomationCommands.assistedHang(driverController)); 
 
     // --- Intake --- 
 
