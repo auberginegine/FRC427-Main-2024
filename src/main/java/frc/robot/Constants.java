@@ -10,6 +10,7 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import  edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.util.Color;
@@ -257,13 +258,14 @@ public final class Constants {
     public static final AprilTagFieldLayout kAprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(); 
     public static final double limelightZHeight = 0; // TODO: Fix this
     public static final double kMaxAccuracyRange = 1000;
-    public static final Pose2d kRedAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
-    public static final Pose2d kBlueAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
+    public static final Pose2d kRedAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
+    public static final Pose2d kBlueAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
     public static final double blueShootRange = 5.87;
     public static final double redShootRange = 10.71;
     public static final double shootAnywhereTimeout = 4;
     public static final double waitAfterShot = 1;
     public static final double confidence = 60;
+    public static final Transform3d robotToCamera = new Transform3d();
 
     // TODO: tune
     public static final Function<Double, Double> distanceToArmAngle = (dist) -> 0.0; 
