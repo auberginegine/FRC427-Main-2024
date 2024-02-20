@@ -24,6 +24,7 @@ import frc.robot.subsystems.leds.patterns.RainbowPattern;
 import frc.robot.subsystems.leds.patterns.SineLEDPattern;
 import frc.robot.subsystems.leds.patterns.SolidLEDPattern;
 import frc.robot.subsystems.leds.patterns.TestColorPattern;
+import frc.robot.util.quad.OrderedPair;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -41,10 +42,10 @@ public final class Constants {
   }
   public static class DrivetrainConstants {
     // Swerve IDs
-    public static SwerveModuleConfig frontLeft = new SwerveModuleConfig("FrontLeft", 1, 2, 12, 0.44921875, true, true, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig frontRight = new SwerveModuleConfig("FrontRight", 7, 8, 9, -0.160889, true, true, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig backLeft = new SwerveModuleConfig("BackLeft", 3, 4, 10, 0.216797, true, true, SensorDirectionValue.CounterClockwise_Positive); 
-    public static SwerveModuleConfig backRight = new SwerveModuleConfig("BackRight", 5, 6, 11, 0.167236, true, true, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig frontLeft = new SwerveModuleConfig("FrontLeft", 8, 7, 12, 0.44921875, true, true, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig frontRight = new SwerveModuleConfig("FrontRight", 2, 1, 9, -0.160889, true, true, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig backLeft = new SwerveModuleConfig("BackLeft", 6, 5, 10, 0.216797, true, true, SensorDirectionValue.CounterClockwise_Positive); 
+    public static SwerveModuleConfig backRight = new SwerveModuleConfig("BackRight", 4, 3, 11, 0.167236, true, true, SensorDirectionValue.CounterClockwise_Positive); 
 
 
     // Gearing & Conversions
@@ -95,7 +96,7 @@ public final class Constants {
     public static final double kModuleDrive_P = 0.0006890099939482752; 
     public static final double kModuleDrive_I = 0; 
     public static final double kModuleDrive_D = 0; 
-    public static final double kModuleDrive_FF = 0.2;
+    public static final double kModuleDrive_FF = 0.22;
 
     // found from sysid for one of the turn modules or tune by yourself
     // turn PID values for a swerve module
@@ -177,21 +178,28 @@ public final class Constants {
 
   public class ArmConstants {
     public static final int kLimitSwitchId = 1;
-    public static final int kArmMotorRightId = 14;
-    public static final int kArmMotorLeftId = 13;
+    public static final int kArmMotorRightId = 13;
+    public static final int kArmMotorLeftId = 14;
 
     public static final boolean kRightMotorInverted = false;
-    public static final boolean kLeftMotorInverted = false; 
+    public static final boolean kLeftMotorInverted = true; 
 
     public static final int kMotorCurrentLimit = 40;
     
     public static final float kForwardSoftLimit = 100;
     public static final double kReverseSoftLimit = 0; 
 
-    public static final double kPositionConversionFactor = 360;
+    public static final double kAbsPositionConversionFactor = 360;
 
     // velocity = position / 60
-    public static final double kVelocityConversionFactor = 360 / 60.0; 
+    public static final double kAbsVelocityConversionFactor = kAbsPositionConversionFactor / 60.0; 
+
+    public static final double kPositionConversionFactor = 360.0 / (5 * 5 * 4 * 5);
+
+    // velocity = position / 60
+    public static final double kVelocityConversionFactor = kPositionConversionFactor / 60; 
+
+
     public static final double kTolerance = 2;
 
     public static final double kGroundPosition = 0;
@@ -284,17 +292,10 @@ public final class Constants {
     public static final class Patterns {
       public static final LEDPattern kDefault = new SolidLEDPattern(LEDs.kDefaultColor);
       public static final LEDPattern kDisabled = new FadeLEDPattern(4, LEDs.kDefaultColor, kGold);
-      public static final LEDPattern kCube = new SolidLEDPattern(Color.kPurple);
-      public static final LEDPattern kCone = new SolidLEDPattern(kGold);
-      public static final LEDPattern kDead = new MorseCodePattern(Color.kRed, kCobaltBlue, "dead");
-      public static final LEDPattern kDeadAlternate = new FadeLEDPattern(1, Color.kRed, Color.kBlack);
-      public static final LEDPattern kBalanceFinished = new RainbowPattern(0.5);
       public static final LEDPattern kAllianceRed = new SolidLEDPattern(Color.kRed);
       public static final LEDPattern kAllianceBlue = new SolidLEDPattern(Color.kBlue);
       public static final LEDPattern kEnabled = new SineLEDPattern(1, kGold, kCobaltBlue, 8);
-      public static final LEDPattern kIdle= new FadeLEDPattern(2, Color.kRed, kGold);
       public static final LEDPattern kMoving = new FadeLEDPattern(1,kGold, Color.kWhite);
-      public static final LEDPattern kFail = new FadeLEDPattern(1,Color.kRed, kGold);
       public static final LEDPattern kIntake = new FadeLEDPattern(1,kCobaltBlue, Color.kGreen);
       public static final LEDPattern kMovingToNote = LEDPattern.kEmpty; // TODO: add a pattern for this
       public static final LEDPattern kShootAnywhere = new SolidLEDPattern(kCobaltBlue);
@@ -321,6 +322,39 @@ public final class Constants {
     public static final Pose2d speakerRed3 = new Pose2d(15.83, 4.51, Rotation2d.fromDegrees(-120));
     public static final Pose2d ampBlue = new Pose2d(1.96, 7.75, Rotation2d.fromDegrees(-90));
     public static final Pose2d ampRed = new Pose2d(14.62, 7.75, Rotation2d.fromDegrees(-90));
+  }
+  public static final class AutoHang {
+    public static final OrderedPair blueTopLeft1 = new OrderedPair(2.05, 5.93);
+    public static final OrderedPair blueBottomRight1 = new OrderedPair(5.48, 5.55);
+    public static final OrderedPair blueTopRight1 = new OrderedPair(4.56, 6.77);
+    public static final OrderedPair blueBottomLeft1 = new OrderedPair(3.15, 4.50);
+
+    public static final OrderedPair blueTopLeft2 = new OrderedPair(6.20, 5.50);
+    public static final OrderedPair blueBottomRight2 = new OrderedPair(7.90, 3.33);
+    public static final OrderedPair blueTopRight2 = new OrderedPair(7.90, 5.50);
+    public static final OrderedPair blueBottomLeft2 = new OrderedPair(6.20, 3.33);
+
+
+    public static final OrderedPair blueTopLeft3 = new OrderedPair(3.23, 3.92);
+    public static final OrderedPair blueBottomRight3 = new OrderedPair(4.40, 1.56);
+    public static final OrderedPair blueTopRight3 = new OrderedPair(5.32, 2.66);
+    public static final OrderedPair blueBottomLeft3 = new OrderedPair(2.21, 2.79);
+
+    public static final OrderedPair redTopRight1 = new OrderedPair(14.61, 5.93);
+    public static final OrderedPair redBottomRight1 = new OrderedPair(13.30, 4.30);
+    public static final OrderedPair redTopLeft1 = new OrderedPair(11.99, 6.77);
+    public static final OrderedPair redBottomLeft1 = new OrderedPair(11.22, 5.55);
+
+    public static final OrderedPair redTopLeft2 = new OrderedPair(9.20, 5.31);
+    public static final OrderedPair redBottomRight2 = new OrderedPair(10.70, 2.80);
+    public static final OrderedPair redTopRight2 = new OrderedPair(10.70, 5.31);
+    public static final OrderedPair redBottomLeft2 = new OrderedPair(9.20, 2.80);
+
+
+    public static final OrderedPair redTopLeft3 = new OrderedPair(11.21, 2.55);
+    public static final OrderedPair redBottomRight3 = new OrderedPair(14.26, 2.55);
+    public static final OrderedPair redTopRight3 = new OrderedPair(13.35, 3.66);
+    public static final OrderedPair redBottomLeft3 = new OrderedPair(12.32, 1.22);
   }
   
   
