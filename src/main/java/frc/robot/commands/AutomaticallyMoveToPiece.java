@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TurnBy;
 import frc.robot.subsystems.vision.FrontVision;
+import frc.robot.util.ChassisState;
 import frc.robot.util.DriverController;
 
 public class AutomaticallyMoveToPiece {
@@ -15,10 +16,15 @@ public class AutomaticallyMoveToPiece {
         var result = frontVision.getLatestVisionResult();
         if (!result.hasTargets()) return Commands.none();
         
+        ChassisSpeeds finalSpeeds;
         double angleToTurn = frontVision.getNoteRotation();
+        double actualAngle = angleToTurn + drivetrain.getPose().getRotation().getDegrees();
+        ChassisSpeeds driverInput = driverController.getDesiredChassisSpeeds();
+        ChassisState finalState = new ChassisState(driverInput.vxMetersPerSecond * Math.cos(Math.toRadians(actualAngle)) - driverInput.vyMetersPerSecond * Math.sin(Math.toRadians(actualAngle)), 
+        driverInput.vyMetersPerSecond * Math.sin(Math.toRadians(actualAngle)) + driverInput.vyMetersPerSecond * Math.cos(Math.toRadians(actualAngle)), Math.toRadians(actualAngle), true);
 
         return new ParallelRaceGroup(new TurnBy(drivetrain, angleToTurn).andThen(Commands.run(() -> {
-            drivetrain.swerveDriveRobotCentric(new ChassisSpeeds(driverController.getDesiredChassisSpeeds().vxMetersPerSecond, 0, 0));
+            drivetrain.swerveDriveFieldRel(finalState);
         }, drivetrain)), AutomationCommands.autoIntakeCommand()); // Any processing before turning to that angle
     }
 }

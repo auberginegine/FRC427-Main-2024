@@ -49,8 +49,8 @@ public class GeneralizedHangRoutine extends Command {
         ChassisState speeds = driverController.getDesiredChassisState(); 
         speeds.omegaRadians = Math.toRadians(this.angleToTurn);
         speeds.turn = true;
-        ChassisState finalState = new ChassisState(speeds.vxMetersPerSecond * Math.cos(angleToTurn) - speeds.vyMetersPerSecond * Math.sin(angleToTurn), 
-        speeds.vxMetersPerSecond * Math.sin(angleToTurn) + speeds.vyMetersPerSecond * Math.cos(angleToTurn), speeds.omegaRadians, true);
+        ChassisState finalState = new ChassisState(speeds.vxMetersPerSecond * Math.cos(Math.toRadians(this.angleToTurn)) - speeds.vyMetersPerSecond * Math.sin(Math.toRadians(this.angleToTurn)), 
+        speeds.vxMetersPerSecond * Math.sin(Math.toRadians(this.angleToTurn)) + speeds.vyMetersPerSecond * Math.cos(Math.toRadians(this.angleToTurn)), speeds.omegaRadians, true);
         drivetrain.swerveDriveFieldRel(speeds);
     }
 
