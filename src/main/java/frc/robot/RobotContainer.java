@@ -12,6 +12,7 @@ import frc.robot.subsystems.arm.commands.GoToGround;
 import frc.robot.subsystems.arm.commands.GoToSpeaker;
 import frc.robot.subsystems.arm.commands.GoToTravel;
 import frc.robot.subsystems.arm.commands.SetVelocity;
+import frc.robot.subsystems.arm.commands.TunePIDGoToAngle;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
 import frc.robot.subsystems.hang.Hang;
@@ -38,11 +39,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 
 public class RobotContainer {
-  private final AutoPicker autoPicker; 
+  // private final AutoPicker autoPicker; 
   // private final SwerveTurnTunerCommand tunerCommand = new SwerveTurnTunerCommand(Constants.DrivetrainConstants.frontLeft);
 
   // drivetrain of the robot
-  private final Drivetrain drivetrain = Drivetrain.getInstance();
+  // private final Drivetrain drivetrain = Drivetrain.getInstance();
 
   // intake of the bot
   private final Intake intake = Intake.getInstance(); 
@@ -61,6 +62,8 @@ public class RobotContainer {
   
   // arm of the robot
   private final Arm arm = Arm.getInstance();
+
+  private final TunePIDGoToAngle tunePID = new TunePIDGoToAngle(arm); 
   
   // private SendableChooser<LEDPattern> patterns = new SendableChooser<>();
   
@@ -75,13 +78,13 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    autoPicker = new AutoPicker(drivetrain); 
+    // autoPicker = new AutoPicker(drivetrain); 
     // Configure the trigger bindings
     configureBindings();
 
     // driverController.setChassisSpeedsSupplier(drivetrain::getChassisSpeeds); // comment in simulation
     // default command for drivetrain is to calculate speeds from controller and drive the robot
-    drivetrain.setDefaultCommand(new TeleOpCommand(drivetrain, driverController));
+    // drivetrain.setDefaultCommand(new TeleOpCommand(drivetrain, driverController));
     
     // patterns for LEDS
     // patterns.addOption("Idle", Constants.LEDs.Patterns.kIdle);
@@ -156,18 +159,20 @@ public class RobotContainer {
     //   .whileTrue(new OuttakeToSpeaker(intake));
 
       // -- hold a button to rev up, outtakes after release
-      // manipulatorController.leftBumper().and(() -> arm.getArmControlState() == ArmControlState.SPEAKER)
-      // .whileTrue(new SetShooterSpeed(intake, 1))
-      // .onFalse(
-      //   new SetSuckerIntakeSpeed(intake, 1)
-      //   .andThen(new WaitCommand(0.5))
-      //   .andThen(new SetShooterSpeed(intake, 0))
-      //   .andThen(new SetSuckerIntakeSpeed(intake, 0))
-      // );
+      manipulatorController.rightBumper()
+      // .and(() -> arm.getArmControlState() == ArmControlState.SPEAKER)
+      .whileTrue(new SetShooterSpeed(intake, 1))
+      .onFalse(
+        new SetSuckerIntakeSpeed(intake, 1)
+        .andThen(new WaitCommand(0.5))
+        .andThen(new SetShooterSpeed(intake, 0))
+        .andThen(new SetSuckerIntakeSpeed(intake, 0))
+      );
       
      // intake
-    //  manipulatorController.leftBumper().and(() -> arm.getArmControlState() == ArmControlState.GROUND)
-    //   .whileTrue(new IntakeFromGround(intake));
+     manipulatorController.leftBumper()
+    //  .and(() -> arm.getArmControlState() == ArmControlState.GROUND)
+      .whileTrue(new IntakeFromGround(intake));
 
       // intake from ground
    
@@ -178,10 +183,10 @@ public class RobotContainer {
       // .whileTrue(AutomationCommands.autoIntakeCommand()); // intake from ground auto
 
     // arm setpoints
-    // manipulatorController.a().onTrue(new GoToTravel(arm));
-    // manipulatorController.b().onTrue(new GoToAmp(arm));
-    // manipulatorController.x().onTrue(new GoToSpeaker(arm));
-    // manipulatorController.y().onTrue(new GoToGround(arm));
+    manipulatorController.a().onTrue(new GoToTravel(arm));
+    manipulatorController.b().onTrue(new GoToAmp(arm));
+    manipulatorController.x().onTrue(new GoToSpeaker(arm));
+    manipulatorController.y().onTrue(new GoToGround(arm));
 
 
     // --- Hang ---
@@ -197,18 +202,18 @@ public class RobotContainer {
     // // Stop hang when neither is pressed
     // manipulatorController.povDown().negate().and(manipulatorController.povUp().negate())
     // .onTrue(new SetHangSpeed(hang, 0)); 
-    manipulatorController.a().onTrue(new SetVelocity(arm, 0.4)).onFalse(new SetVelocity(arm, 0)); 
+    // manipulatorController.a().onTrue(new SetVelocity(arm, 0.1)).onFalse(new SetVelocity(arm, 0)); 
     
-    manipulatorController.b().onTrue(new SetVelocity(arm, -0.4)).onFalse(new SetVelocity(arm, 0));
-    manipulatorController.x().onTrue(new SetSuckerIntakeSpeed(intake, -0.5)).onFalse(new SetSuckerIntakeSpeed(intake, 0)); 
-    manipulatorController.y().onTrue(new SetShooterSpeed(intake, 1)).onFalse(new SetShooterSpeed(intake, 0));  
+    // manipulatorController.b().onTrue(new SetVelocity(arm, -0.1)).onFalse(new SetVelocity(arm, 0));
+    // manipulatorController.x().onTrue(new SetSuckerIntakeSpeed(intake, -0.5)).onFalse(new SetSuckerIntakeSpeed(intake, 0)); 
+    // manipulatorController.y().onTrue(new SetShooterSpeed(intake, 1)).onFalse(new SetShooterSpeed(intake, 0));  
 
   }
   
 
   // send any data as needed to the dashboard
   public void doSendables() {
-    SmartDashboard.putData("Autonomous", autoPicker.getChooser());
+    // SmartDashboard.putData("Autonomous", autoPicker.getChooser());
     // SmartDashboard.putBoolean("gyro connected", drivetrain.gyro.isConnected()); 
     // SmartDashboard.putData(patterns);
   }
@@ -217,7 +222,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
       // return null; 
     // return autoPicker.getAuto();
-    return null; 
+    return tunePID; 
     // return tunerCommand;
 
   }

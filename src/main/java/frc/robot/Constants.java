@@ -165,7 +165,7 @@ public final class Constants {
 
     public static final int kBeamBreakId = 0;
 
-    public static final double kSuckerIntakeSpeed = 0.5;
+    public static final double kSuckerIntakeSpeed = 0.2;
 
     public static final double kShootSpeed = 1; 
     public static final double kShootSuckerSpeed = 1; 
@@ -211,7 +211,7 @@ public final class Constants {
 
 
     // TODO: tune arm 
-    public static final double kP = 0;
+    public static final double kP = 0.03;
     public static final double kI = 0;
     public static final double kD = 0;
 
@@ -226,7 +226,7 @@ public final class Constants {
     // Arm mass: 20.755 lbs
     
     public static final double kS = 0; 
-    public static final double kG = 0; // 0.79 V
+    public static final double kG = 0.014; // 0.79 V
     public static final double kV = 0; // 1.95 V*s/rad
     public static final double kA = 0; // 0.06 V*s^2/rad
     
