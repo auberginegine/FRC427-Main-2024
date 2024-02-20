@@ -16,7 +16,6 @@ public class AutomaticallyMoveToPiece {
         var result = frontVision.getLatestVisionResult();
         if (!result.hasTargets()) return Commands.none();
         
-        ChassisSpeeds finalSpeeds;
         double angleToTurn = frontVision.getNoteRotation();
         double actualAngle = angleToTurn + drivetrain.getPose().getRotation().getDegrees();
         ChassisSpeeds driverInput = driverController.getDesiredChassisSpeeds();
