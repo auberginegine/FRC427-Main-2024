@@ -78,7 +78,6 @@ public class Drivetrain extends SubsystemBase {
     this.odometry.update(gyro.getRotation2d(), getPositions());
 
     m_odometryField.setRobotPose(getPose());
-
     SmartDashboard.putData("Robot Odometry Field", m_odometryField);
     SmartDashboard.putData("Robot Vision Field", m_visionField);
     doSendables();
@@ -112,6 +111,25 @@ public class Drivetrain extends SubsystemBase {
       yMetersPerSecond, 
       rotationRadPerSecond
     ));
+  }
+
+  public void swerveDriveRobotCentric(ChassisState state) {
+    
+   // if (turn) lastTurnedTheta = thetaDegrees; 
+    
+    // always make an effort to rotate to the last angle we commanded it to
+
+    // to commit to going to our angle even after stopping pressing
+   // double rotSpeed = rotationController.calculate(this.getYaw(), lastTurnedTheta); 
+
+    // or to not commit to the angle
+    if (state.turn || gyro.getRate() > 0.25) lastTurnedTheta = this.getYaw(); 
+    double rotSpeed = rotationController.calculate(this.getYaw(), state.turn ? Math.toDegrees(state.omegaRadians) : lastTurnedTheta); 
+    
+
+   rotSpeed = MathUtil.clamp(rotSpeed, -Constants.DrivetrainConstants.kMaxRotationRadPerSecond, Constants.DrivetrainConstants.kMaxRotationRadPerSecond); 
+
+   swerveDriveRobotCentric(new ChassisSpeeds(state.vxMetersPerSecond, state.vyMetersPerSecond, rotSpeed));
   }
 
   public void swerveDrive(ChassisSpeeds speeds) {

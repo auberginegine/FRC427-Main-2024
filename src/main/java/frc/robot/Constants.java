@@ -10,6 +10,7 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import  edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.util.Color;
@@ -24,6 +25,7 @@ import frc.robot.subsystems.leds.patterns.RainbowPattern;
 import frc.robot.subsystems.leds.patterns.SineLEDPattern;
 import frc.robot.subsystems.leds.patterns.SolidLEDPattern;
 import frc.robot.subsystems.leds.patterns.TestColorPattern;
+import frc.robot.util.quad.OrderedPair;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -164,7 +166,7 @@ public final class Constants {
 
     public static final int kBeamBreakId = 0;
 
-    public static final double kSuckerIntakeSpeed = 0.5;
+    public static final double kSuckerIntakeSpeed = 0.2;
 
     public static final double kShootSpeed = 1; 
     public static final double kShootSuckerSpeed = 1; 
@@ -188,13 +190,18 @@ public final class Constants {
     public static final float kForwardSoftLimit = 100;
     public static final double kReverseSoftLimit = 0; 
 
-    public static final double kPositionConversionFactor = 360;
-    // velocity = position / 60
-    public static final double kVelocityConversionFactor = 360 / 60.0; 
-    public static final double kRelativePositionConversionFactor = 0;
-    public static final double kRelativeVelocityConversionFactor = 0;
+    public static final double kAbsPositionConversionFactor = 360;
 
-    public static final double kTolerance = 1;
+    // velocity = position / 60
+    public static final double kAbsVelocityConversionFactor = kAbsPositionConversionFactor / 60.0; 
+
+    public static final double kPositionConversionFactor = 360.0 / (5 * 5 * 4 * 5);
+
+    // velocity = position / 60
+    public static final double kVelocityConversionFactor = kPositionConversionFactor / 60; 
+
+
+    public static final double kTolerance = 2;
 
     public static final double kGroundPosition = 0;
     public static final double kTravelPosition = 20;
@@ -205,7 +212,7 @@ public final class Constants {
 
 
     // TODO: tune arm 
-    public static final double kP = 0;
+    public static final double kP = 0.03;
     public static final double kI = 0;
     public static final double kD = 0;
 
@@ -221,7 +228,7 @@ public final class Constants {
     // Arm mass: 18 lbs
     
     public static final double kS = 0; 
-    public static final double kG = 0; // 0.79 V
+    public static final double kG = 0.014; // 0.79 V
     public static final double kV = 0; // 1.95 V*s/rad
     public static final double kA = 0; // 0.06 V*s^2/rad
   
@@ -251,12 +258,14 @@ public final class Constants {
     public static final AprilTagFieldLayout kAprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(); 
     public static final double limelightZHeight = 0; // TODO: Fix this
     public static final double kMaxAccuracyRange = 1000;
-    public static final Pose2d kRedAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
-    public static final Pose2d kBlueAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
+    public static final Pose2d kRedAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
+    public static final Pose2d kBlueAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
     public static final double blueShootRange = 5.87;
     public static final double redShootRange = 10.71;
     public static final double shootAnywhereTimeout = 4;
     public static final double waitAfterShot = 1;
+    public static final double confidence = 60;
+    public static final Transform3d robotToCamera = new Transform3d();
 
     // TODO: tune
     public static final Function<Double, Double> distanceToArmAngle = (dist) -> 0.0; 
@@ -285,17 +294,10 @@ public final class Constants {
     public static final class Patterns {
       public static final LEDPattern kDefault = new SolidLEDPattern(LEDs.kDefaultColor);
       public static final LEDPattern kDisabled = new FadeLEDPattern(4, LEDs.kDefaultColor, kGold);
-      public static final LEDPattern kCube = new SolidLEDPattern(Color.kPurple);
-      public static final LEDPattern kCone = new SolidLEDPattern(kGold);
-      public static final LEDPattern kDead = new MorseCodePattern(Color.kRed, kCobaltBlue, "dead");
-      public static final LEDPattern kDeadAlternate = new FadeLEDPattern(1, Color.kRed, Color.kBlack);
-      public static final LEDPattern kBalanceFinished = new RainbowPattern(0.5);
       public static final LEDPattern kAllianceRed = new SolidLEDPattern(Color.kRed);
       public static final LEDPattern kAllianceBlue = new SolidLEDPattern(Color.kBlue);
       public static final LEDPattern kEnabled = new SineLEDPattern(1, kGold, kCobaltBlue, 8);
-      public static final LEDPattern kIdle= new FadeLEDPattern(2, Color.kRed, kGold);
       public static final LEDPattern kMoving = new FadeLEDPattern(1,kGold, Color.kWhite);
-      public static final LEDPattern kFail = new FadeLEDPattern(1,Color.kRed, kGold);
       public static final LEDPattern kIntake = new FadeLEDPattern(1,kCobaltBlue, Color.kGreen);
       public static final LEDPattern kMovingToNote = LEDPattern.kEmpty; // TODO: add a pattern for this
       public static final LEDPattern kShootAnywhere = new SolidLEDPattern(kCobaltBlue);
@@ -322,6 +324,39 @@ public final class Constants {
     public static final Pose2d speakerRed3 = new Pose2d(15.83, 4.51, Rotation2d.fromDegrees(-120));
     public static final Pose2d ampBlue = new Pose2d(1.96, 7.75, Rotation2d.fromDegrees(-90));
     public static final Pose2d ampRed = new Pose2d(14.62, 7.75, Rotation2d.fromDegrees(-90));
+  }
+  public static final class AutoHang {
+    public static final OrderedPair blueTopLeft1 = new OrderedPair(2.05, 5.93);
+    public static final OrderedPair blueBottomRight1 = new OrderedPair(5.48, 5.55);
+    public static final OrderedPair blueTopRight1 = new OrderedPair(4.56, 6.77);
+    public static final OrderedPair blueBottomLeft1 = new OrderedPair(3.15, 4.50);
+
+    public static final OrderedPair blueTopLeft2 = new OrderedPair(6.20, 5.50);
+    public static final OrderedPair blueBottomRight2 = new OrderedPair(7.90, 3.33);
+    public static final OrderedPair blueTopRight2 = new OrderedPair(7.90, 5.50);
+    public static final OrderedPair blueBottomLeft2 = new OrderedPair(6.20, 3.33);
+
+
+    public static final OrderedPair blueTopLeft3 = new OrderedPair(3.23, 3.92);
+    public static final OrderedPair blueBottomRight3 = new OrderedPair(4.40, 1.56);
+    public static final OrderedPair blueTopRight3 = new OrderedPair(5.32, 2.66);
+    public static final OrderedPair blueBottomLeft3 = new OrderedPair(2.21, 2.79);
+
+    public static final OrderedPair redTopRight1 = new OrderedPair(14.61, 5.93);
+    public static final OrderedPair redBottomRight1 = new OrderedPair(13.30, 4.30);
+    public static final OrderedPair redTopLeft1 = new OrderedPair(11.99, 6.77);
+    public static final OrderedPair redBottomLeft1 = new OrderedPair(11.22, 5.55);
+
+    public static final OrderedPair redTopLeft2 = new OrderedPair(9.20, 5.31);
+    public static final OrderedPair redBottomRight2 = new OrderedPair(10.70, 2.80);
+    public static final OrderedPair redTopRight2 = new OrderedPair(10.70, 5.31);
+    public static final OrderedPair redBottomLeft2 = new OrderedPair(9.20, 2.80);
+
+
+    public static final OrderedPair redTopLeft3 = new OrderedPair(11.21, 2.55);
+    public static final OrderedPair redBottomRight3 = new OrderedPair(14.26, 2.55);
+    public static final OrderedPair redTopRight3 = new OrderedPair(13.35, 3.66);
+    public static final OrderedPair redBottomLeft3 = new OrderedPair(12.32, 1.22);
   }
   
   

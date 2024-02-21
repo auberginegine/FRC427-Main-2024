@@ -66,7 +66,7 @@ public class Intake extends SubsystemBase {
     }
     //so intaking the ring is sucking it
     public void intakeRing(double speed) {
-        m_outtakeMotorSuck.set(-speed);
+        m_outtakeMotorSuck.set(speed);
     }
     //and outtaking the ring is shooting it
     public void outtakeRing(double speed) {
@@ -74,7 +74,7 @@ public class Intake extends SubsystemBase {
     }
     //beambreak is a scanner that checks if a ring is inside the whole intake
     public boolean beamBreakHit() { 
-        return m_BeamBreak.get();
+        return !m_BeamBreak.get();
     }
     public void stopSuck() {
         m_outtakeMotorSuck.set(0); 
