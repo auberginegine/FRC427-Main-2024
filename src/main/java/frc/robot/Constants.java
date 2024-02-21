@@ -250,6 +250,15 @@ public final class Constants {
     public static final float kReverseHangSoftLimit = 0;
 
     public static final double kHangSpeed = 0.25;
+
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+
+    public static final double kHangMaxUp = 10;
+    public static final double kHangInitial = 0;
+
+    public static final double kHangTolerance = 2;
   }
 
   public static class Vision {
@@ -299,7 +308,7 @@ public final class Constants {
       public static final LEDPattern kEnabled = new SineLEDPattern(1, kGold, kCobaltBlue, 8);
       public static final LEDPattern kMoving = new FadeLEDPattern(1,kGold, Color.kWhite);
       public static final LEDPattern kIntake = new FadeLEDPattern(1,kCobaltBlue, Color.kGreen);
-      public static final LEDPattern kMovingToNote = LEDPattern.kEmpty; // TODO: add a pattern for this
+      public static final LEDPattern kMovingToNote = new RainbowPattern(1);
       public static final LEDPattern kShootAnywhere = new SolidLEDPattern(kCobaltBlue);
       public static final LEDPattern kArmMoving = new SolidLEDPattern(Color.kOrange);
       public static final LEDPattern kArmAtAmp = new SolidLEDPattern(Color.kPink);

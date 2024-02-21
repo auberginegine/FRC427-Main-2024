@@ -14,9 +14,8 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
-import frc.robot.subsystems.arm.Arm;
-import frc.robot.subsystems.arm.commands.GoToAngle;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.hang.Hang;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.util.ChassisState;
 import frc.robot.util.DriverController;
@@ -27,22 +26,22 @@ public class GeneralizedHangRoutine extends Command {
     
     public DriverController driverController;
     public Drivetrain drivetrain;
-    public Arm arm;
+    public Hang hang;
     public Intake intake;
     private double angleToTurn; 
 
-    public GeneralizedHangRoutine(DriverController driverController, Drivetrain drivetrain, Arm arm, Intake intake) {
-        this.arm = arm;
+    public GeneralizedHangRoutine(DriverController driverController, Drivetrain drivetrain, Hang hang, Intake intake) {
+        this.hang = hang;
         this.driverController = driverController;
         this.intake = intake;
         this.drivetrain = drivetrain;
 
-        addRequirements(drivetrain, arm, intake); 
+        addRequirements(drivetrain, hang, intake); 
     }
 
     public void initialize() {
         this.angleToTurn = getAngle(drivetrain.getPose()); 
-        arm.goToAngle(90);
+        hang.setPosition(Constants.HangConstants.kHangMaxUp);
     }
 
     public void execute() {
@@ -59,7 +58,7 @@ public class GeneralizedHangRoutine extends Command {
     }
 
     public void end(boolean interrupted) {
-        arm.goToAngle(0); 
+        hang.setPosition(Constants.HangConstants.kHangInitial);
     }
 
 
