@@ -97,11 +97,19 @@ public class AutomationCommands {
     }); 
   }
 
-  public static Command updatedShootFromAnywhere(DriverController controller) {
+  public static Command generalizedReleaseCommand(DriverController controller) {
     return Commands.runOnce(() -> Led.getInstance().isShooting = true).andThen(
-      new UpdatedShootAnywhere(controller, Drivetrain.getInstance(), Arm.getInstance(), Intake.getInstance())
+      new GeneralizedReleaseRoutine(controller, Drivetrain.getInstance(), Arm.getInstance(), Intake.getInstance())
     ).finallyDo(() -> {
       Led.getInstance().isShooting = false; 
     }); 
+  }
+
+  public static Command generalizedHangCommand(DriverController controller) {
+    return Commands.runOnce(() -> Led.getInstance().isHanging = true)
+    .andThen(new GeneralizedHangRoutine(controller, Drivetrain.getInstance(), Arm.getInstance(), Intake.getInstance()))
+    .finallyDo(() -> {
+      Led.getInstance().isHanging = false; 
+    });
   }
 }
