@@ -147,11 +147,11 @@ public class RobotContainer {
     // --- Intake --- 
 
     // outtake
-    // manipulatorController.leftBumper().and(() -> arm.getArmControlState() == ArmControlState.AMP)
-    //   .whileTrue(new OuttakeToAmp(intake).finallyDo(() -> {
-    //     intake.stopSuck(); 
-    //     intake.stopShoot();
-    //   }));
+    manipulatorController.leftBumper().and(() -> arm.getArmControlState() == ArmControlState.AMP)
+      .whileTrue(new OuttakeToAmp(intake).finallyDo(() -> {
+        intake.stopSuck(); 
+        intake.stopShoot();
+      }));
 
       // TODO: see which one is better
       // -- hold a button that revs up and outtakes
@@ -159,8 +159,7 @@ public class RobotContainer {
     //   .whileTrue(new OuttakeToSpeaker(intake));
 
       // -- hold a button to rev up, outtakes after release
-      manipulatorController.rightBumper()
-      // .and(() -> arm.getArmControlState() == ArmControlState.SPEAKER)
+      manipulatorController.leftBumper().and(() -> arm.getArmControlState() == ArmControlState.SPEAKER)
       .whileTrue(new SetShooterSpeed(intake, 1))
       .onFalse(
         new SetSuckerIntakeSpeed(intake, 1)
@@ -170,9 +169,8 @@ public class RobotContainer {
       );
       
      // intake
-     manipulatorController.leftBumper()
-    //  .and(() -> arm.getArmControlState() == ArmControlState.GROUND)
-      .whileTrue(new IntakeFromGround(intake));
+     manipulatorController.leftBumper().and(() -> arm.getArmControlState() == ArmControlState.GROUND)
+    .whileTrue(new IntakeFromGround(intake));
 
       // intake from ground
    
