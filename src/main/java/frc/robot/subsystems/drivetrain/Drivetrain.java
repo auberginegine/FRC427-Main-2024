@@ -25,7 +25,7 @@ import frc.robot.util.SwerveUtils;
 
 public class Drivetrain extends SubsystemBase {
 
-  private static Drivetrain instance = null; //  = new Drivetrain();
+  private static Drivetrain instance = new Drivetrain();
 
     public static Drivetrain getInstance() {
         return instance; 

@@ -105,7 +105,7 @@ public class AutomationCommands {
     }); 
   }
 
-  public static Command assistedHang(DriverController controller) {
+  public static Command generalizedHangCommand(DriverController controller) {
     return Commands.runOnce(() -> Led.getInstance().isHanging = true)
     .andThen(new GeneralizedHangRoutine(controller, Drivetrain.getInstance(), Arm.getInstance(), Intake.getInstance()))
     .finallyDo(() -> {
