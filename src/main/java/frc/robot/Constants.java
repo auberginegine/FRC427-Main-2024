@@ -189,10 +189,12 @@ public final class Constants {
     public static final double kReverseSoftLimit = 0; 
 
     public static final double kPositionConversionFactor = 360;
-
     // velocity = position / 60
     public static final double kVelocityConversionFactor = 360 / 60.0; 
-    public static final double kTolerance = 2;
+    public static final double kRelativePositionConversionFactor = 0;
+    public static final double kRelativeVelocityConversionFactor = 0;
+
+    public static final double kTolerance = 1;
 
     public static final double kGroundPosition = 0;
     public static final double kTravelPosition = 20;
@@ -222,10 +224,7 @@ public final class Constants {
     public static final double kG = 0; // 0.79 V
     public static final double kV = 0; // 1.95 V*s/rad
     public static final double kA = 0; // 0.06 V*s^2/rad
-    public static final double kRelativePositionConversionFactor = 0;
-    public static final double kRelativeVelocityConversionFactor = 0;
-    
-
+  
   }
 
   public static class HangConstants {

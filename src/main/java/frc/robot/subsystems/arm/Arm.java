@@ -58,13 +58,12 @@ public class Arm extends SubsystemBase {
         m_armMotorLeft.setIdleMode(IdleMode.kBrake);
 
         m_armMotorRight.setInverted(Constants.ArmConstants.kRightMotorInverted);
-        m_armMotorLeft.setInverted(Constants.ArmConstants.kLeftMotorInverted);
         
         m_armMotorRight.setSmartCurrentLimit(Constants.ArmConstants.kMotorCurrentLimit);
         m_armMotorLeft.setSmartCurrentLimit(Constants.ArmConstants.kMotorCurrentLimit);
         
         // left arm motor would follow right arm  motor's voltage intake 
-        m_armMotorLeft.follow(m_armMotorRight, true);
+        m_armMotorLeft.follow(m_armMotorRight, Constants.ArmConstants.kLeftMotorInverted);
 
         m_armMotorLeft.burnFlash(); 
         m_armMotorRight.burnFlash();
@@ -79,7 +78,8 @@ public class Arm extends SubsystemBase {
         m_armRelativeEncoder.setPositionConversionFactor(Constants.ArmConstants.kRelativePositionConversionFactor);
         m_armRelativeEncoder.setVelocityConversionFactor(Constants.ArmConstants.kRelativeVelocityConversionFactor);
         
-        m_armRelativeEncoder.setPosition(m_armEncoderRight.getPosition());
+        // in tina we trust
+        // m_armRelativeEncoder.setPosition(m_armEncoderRight.getPosition());
     }
 
     // pid controller config
@@ -155,7 +155,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getAngle() {
-        return m_armRelativeEncoder.getPosition() > 180 ? m_armRelativeEncoder.getPosition() - 360 : m_armRelativeEncoder.getPosition();
+        return m_armEncoderRight.getPosition() > 180 ? m_armEncoderRight.getPosition() - 360 : m_armEncoderRight.getPosition();
     }
 
 
