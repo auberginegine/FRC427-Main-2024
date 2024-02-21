@@ -97,9 +97,9 @@ public class AutomationCommands {
     }); 
   }
 
-  public static Command updatedShootFromAnywhere(DriverController controller) {
+  public static Command generalizedReleaseCommand(DriverController controller) {
     return Commands.runOnce(() -> Led.getInstance().isShooting = true).andThen(
-      new UpdatedShootAnywhere(controller, Drivetrain.getInstance(), Arm.getInstance(), Intake.getInstance())
+      new GeneralizedReleaseRoutine(controller, Drivetrain.getInstance(), Arm.getInstance(), Intake.getInstance())
     ).finallyDo(() -> {
       Led.getInstance().isShooting = false; 
     }); 
