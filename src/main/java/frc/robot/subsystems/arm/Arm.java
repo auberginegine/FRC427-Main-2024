@@ -52,7 +52,7 @@ public class Arm extends SubsystemBase {
     // private double m_kS = Constants.ArmConstants.kSpringFF;
 
     StructPublisher<Pose3d> publisher = NetworkTableInstance.getDefault()
-    .getStructTopic("Arm Pose", Pose3d.struct).publish();
+    .getStructTopic("SmartDashboard/Arm Pose", Pose3d.struct).publish();
 
     private Arm() {
         setupMotors();
@@ -87,8 +87,7 @@ public class Arm extends SubsystemBase {
 
         
     // publisher.accept(new Pose3d(new Translation3d(IOUtils.get("arm x", 0), IOUtils.get("arm y", 0), IOUtils.get("arm z", 0)), new Rotation3d(IOUtils.get("arm roll", 0) * Math.PI / 180, IOUtils.get("arm pitch", 0) * Math.PI / 180, IOUtils.get("arm yaw", 0) * Math.PI / 180)));
-    publisher.accept(new Pose3d(new Translation3d(-0.20447, 0, 0.29), new Rotation3d(90 * Math.PI / 180, getAngle() * Math.PI / 180, 180 * Math.PI / 180)));
-        // SmartDashboard.putNumberArray("Arm Pose", new double[] {0, 0, 0, 0, -25, 0}); 
+    publisher.set(new Pose3d(new Translation3d(-0.20447, 0, 0.29), new Rotation3d(90 * Math.PI / 180, getAngle() * Math.PI / 180, 180 * Math.PI / 180)));
         // -0.20447, 0, 0.29, 90, 0, 180 
         
         double impendingVelocity = 0; 

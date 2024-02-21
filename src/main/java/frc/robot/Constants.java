@@ -354,6 +354,19 @@ public final class Constants {
     public static final Pose2d redTopRight3 = new Pose2d(13.35, 3.66, Rotation2d.fromDegrees(0));
     public static final Pose2d redBottomLeft3 = new Pose2d(12.32, 1.22, Rotation2d.fromDegrees(0));
   }
+
+  public static final class AmpPositions {
+    public static final Pose2d BlueAmpTopLeft = new Pose2d(0.44, 7.41, Rotation2d.fromDegrees(0));
+    public static final Pose2d BlueAmpBottomRight = new Pose2d(5.43, 5.52, Rotation2d.fromDegrees(0));
+    public static final Pose2d RedAmpTopLeft = new Pose2d(11.11, 7.78, Rotation2d.fromDegrees(0));
+    public static final Pose2d RedAmpBottomRight = new Pose2d(16.10, 4.20, Rotation2d.fromDegrees(0));
+  }
+   public static final class SpeakerPositions {
+    public static final Pose2d BlueSpeakerTopLeft = new Pose2d(0.44, 7.41, Rotation2d.fromDegrees(0));
+    public static final Pose2d BlueSpeakerBottomRight = new Pose2d(5.43, 5.52, Rotation2d.fromDegrees(0));
+    public static final Pose2d RedSpeakerTopLeft = new Pose2d(11.11, 7.78, Rotation2d.fromDegrees(0));
+    public static final Pose2d RedSpeakerBottomRight = new Pose2d(16.10, 1.95, Rotation2d.fromDegrees(0));
+  }
   
   
   

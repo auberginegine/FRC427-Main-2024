@@ -14,10 +14,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
+import frc.robot.subsystems.drivetrain.Drivetrain;
 
 public class MoveToAmp {
     public static Pose2d getTargetPose() {
         Optional<Alliance> optAlliance = DriverStation.getAlliance();
+
+        Pose2d drivetrainPose2d = Drivetrain.getInstance().getPose(); 
 
         if (optAlliance.isEmpty()) return null;
 
@@ -27,12 +30,38 @@ public class MoveToAmp {
 
         if (alliance == Alliance.Blue) {
             targetPose = Constants.PathFollower.ampBlue;
+
+            
+            boolean betweenX = drivetrainPose2d.getX() <= 5.45;  
+            {
+               if (betweenX)  {
+                return targetPose;
+            }
+            else {
+                return null;
+            }
+    
+        }
+    
         }
         if (alliance == Alliance.Red) {
             targetPose = Constants.PathFollower.ampRed;
+            
+            boolean betweenX = drivetrainPose2d.getX() >= 11.11;  
+            {
+               if (betweenX)  {
+                return targetPose;
+            }
+            else {
+                return null;
+            }
+    
+        }
         }
 
         return targetPose;
+
+    
 
     }
 

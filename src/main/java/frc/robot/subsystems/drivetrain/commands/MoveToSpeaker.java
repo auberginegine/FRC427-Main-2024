@@ -17,6 +17,7 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 public class MoveToSpeaker {
     public static Pose2d getTargetPose() {
         Optional<Alliance> optAlliance = DriverStation.getAlliance();
+        Pose2d drivetrainPose2d = Drivetrain.getInstance().getPose(); 
 
         if (optAlliance.isEmpty()) return null;
 
@@ -32,6 +33,17 @@ public class MoveToSpeaker {
                 Constants.PathFollower.speakerBlue2,
                 Constants.PathFollower.speakerBlue3
             ));
+
+            boolean betweenX = drivetrainPose2d.getX() <= 5.45;  
+            {
+               if (betweenX)  {
+                return targetPose;
+            }
+            else {
+                return null;
+            }
+    
+        }
         }
         if (alliance == Alliance.Red) {
             targetPose = estPose.nearest(List.of(
@@ -39,6 +51,19 @@ public class MoveToSpeaker {
                 Constants.PathFollower.speakerRed2,
                 Constants.PathFollower.speakerRed3
             ));
+
+            boolean betweenX = drivetrainPose2d.getX() >= 11.11;  
+            {
+            if (betweenX)  {
+                return targetPose;
+            }
+            else {
+                return null;
+            }
+
+            // also can use: return betweenX ? targetPose : null;
+    
+        }
         }
 
         return targetPose;
