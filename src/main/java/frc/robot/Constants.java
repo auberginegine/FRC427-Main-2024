@@ -81,10 +81,10 @@ public final class Constants {
     Math.hypot(kTrackWidthMeters / 2.0, kWheelBaseMeters / 2.0); // max rotation of robot
     
     // TODO: tune these
-    public static double kMaxSpeedMetersPerSecond = 2.0; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
+    public static double kMaxSpeedMetersPerSecond = 2.6; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
     public static double kMaxSlowSpeedMetersPerSecond = 1.0; 
     public static final double kMaxAccelerationMetersPerSecondSquared = kMaxSpeedMetersPerSecond / 0.2; // max acceleration of robot (accelerate to max speed in 1 second)
-    public static double kMaxRotationRadPerSecond = 3.14; // max rotation speed of the robot
+    public static double kMaxRotationRadPerSecond = 3.00; // max rotation speed of the robot
     public static final double kMaxSlowRotationRadPerSecond = Math.PI / 2; 
     public static final double kMaxRotationAccelerationRadPerSecondSquared = kMaxRotationRadPerSecond / 0.2; // max angular acceleration of robot
 
@@ -106,11 +106,11 @@ public final class Constants {
     public static final double kModuleTurn_D = 0.00032; 
 
     // turn in place PID for the whole robot
-    public static final double kTurn_P = 0.054; 
+    public static final double kTurn_P = 0.064; 
     public static final double kTurn_I = 0; 
     public static final double kTurn_D = 0.001; 
     public static final double kTurn_FF = 0; 
-    public static final double kTurnErrorThreshold = 2.0; 
+    public static final double kTurnErrorThreshold = 3.0; 
     public static final double kTurnVelocityThreshold = 0; 
 
     // TODO: tune these but it should be fine
@@ -164,16 +164,16 @@ public final class Constants {
     public static final double kShootVelocityConversionFactor = 1; 
     public static final double kIntakeVelocityConversionFactor = 1; 
 
-    public static final int kBeamBreakId = 0;
+    public static final int kBeamBreakId = 2;
 
-    public static final double kSuckerIntakeSpeed = 0.2;
+    public static final double kSuckerIntakeSpeed = 0.4;
 
     public static final double kShootSpeed = 1; 
     public static final double kShootSuckerSpeed = 1; 
-    public static final double kShootRevTime = 0.5; 
+    public static final double kShootRevTime = 1; 
     public static final double kShootWaitTime = 0.5; 
 
-    public static final double kAmpOuttakeSpeed = 0.5;
+    public static final double kAmpOuttakeSpeed = 0.3;
     public static final int kSuckerManualSpeed = 0; 
   }
 
