@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.683878224899308,
-        "y": 2.396949956807182
+        "x": 7.601579513935969,
+        "y": 2.417524634548016
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.272384670082623,
-        "y": 2.263214551491759
+        "x": 7.190085959119284,
+        "y": 2.283789229232593
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Middle Note 4"
     },
     {
       "anchor": {
