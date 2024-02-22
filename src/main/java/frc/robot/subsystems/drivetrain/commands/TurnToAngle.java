@@ -54,7 +54,7 @@ public class TurnToAngle extends Command {
             // );
 
             // calculate the output angular velocity to run the robot at 
-            double output = pidController.calculate(drivetrain.getYaw(), setpoint); 
+            double output = pidController.calculate(drivetrain.getRotation().getDegrees(), setpoint); 
 
             // clamp the output so the robot doesn't run TOO fast
             output = MathUtil.clamp(output, -maxOutput, maxOutput); 
@@ -67,7 +67,7 @@ public class TurnToAngle extends Command {
             SmartDashboard.putNumber("angle velo", pidController.getVelocityError()); 
 
             // drive robot with the desired output
-            drivetrain.swerveDrive(0, 0, output);
+            drivetrain.swerveDrive(0, 0, output, false);
         }
     
         @Override

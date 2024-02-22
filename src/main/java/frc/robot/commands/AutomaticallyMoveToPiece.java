@@ -23,7 +23,7 @@ public class AutomaticallyMoveToPiece {
         driverInput.vyMetersPerSecond * Math.sin(Math.toRadians(actualAngle)) + driverInput.vyMetersPerSecond * Math.cos(Math.toRadians(actualAngle)), Math.toRadians(actualAngle), true);
 
         return new ParallelRaceGroup(new TurnBy(drivetrain, angleToTurn).andThen(Commands.run(() -> {
-            drivetrain.swerveDriveFieldRel(finalState);
+            drivetrain.swerveDriveFieldRel(finalState, false);
         }, drivetrain)), AutomationCommands.autoIntakeCommand()); // Any processing before turning to that angle
     }
 }

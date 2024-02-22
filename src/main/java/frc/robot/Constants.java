@@ -81,7 +81,7 @@ public final class Constants {
     Math.hypot(kTrackWidthMeters / 2.0, kWheelBaseMeters / 2.0); // max rotation of robot
     
     // TODO: tune these
-    public static double kMaxSpeedMetersPerSecond = 2.6; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
+    public static double kMaxSpeedMetersPerSecond = 1.0; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
     public static double kMaxSlowSpeedMetersPerSecond = 1.0; 
     public static final double kMaxAccelerationMetersPerSecondSquared = kMaxSpeedMetersPerSecond / 0.2; // max acceleration of robot (accelerate to max speed in 1 second)
     public static double kMaxRotationRadPerSecond = 3.00; // max rotation speed of the robot
@@ -131,7 +131,7 @@ public final class Constants {
     // translational PID of robot for trajectory use
     public static final double kDrive_P = 2.25; 
     public static final double kDrive_I = 0; 
-    public static final double kDrive_D = 0;
+    public static final double kDrive_D = 0.0001;
 
     // angular PID (same as turn pid)
     public static final double kOmega_P = 4; 

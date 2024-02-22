@@ -40,14 +40,14 @@ public class TeleOpCommand extends Command {
             SmartDashboard.putNumber("x", speeds.vxMetersPerSecond); 
             SmartDashboard.putNumber("y", speeds.vyMetersPerSecond); 
             SmartDashboard.putNumber("rotation", speeds.omegaRadians); 
-            m_drivetrain.swerveDriveFieldRel(speeds);
+            m_drivetrain.swerveDriveFieldRel(speeds, true);
         } else {
             // go left go right smoothly
             ChassisSpeeds speeds = m_controller.getDesiredChassisSpeeds(); 
             SmartDashboard.putNumber("x", speeds.vxMetersPerSecond); 
             SmartDashboard.putNumber("y", speeds.vyMetersPerSecond); 
             SmartDashboard.putNumber("rotation", speeds.omegaRadiansPerSecond); 
-            m_drivetrain.swerveDrive(speeds);
+            m_drivetrain.swerveDrive(speeds, true);
         }
     }
 
