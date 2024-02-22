@@ -85,6 +85,9 @@ public class GeneralizedReleaseRoutine extends Command {
         } else {
             SetSuckerIntakeSpeed suckerSpeed = new SetSuckerIntakeSpeed(intake, 1);
             Command command = Commands.sequence(
+                Commands.run(() -> intake.intakeRing(-0.075), intake)
+            .until(() -> !intake.beamBreakHit())
+            .finallyDo(() -> intake.intakeRing(0)),
                 suckerSpeed, 
                 new WaitCommand(Constants.Vision.waitAfterShot), 
                 new SetSuckerIntakeSpeed(intake, 0), 

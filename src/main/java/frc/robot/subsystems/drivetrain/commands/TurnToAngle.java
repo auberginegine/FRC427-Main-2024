@@ -71,7 +71,9 @@ public class TurnToAngle extends Command {
         }
     
         @Override
-        public void end(boolean interrupted) {}
+        public void end(boolean interrupted) {
+            drivetrain.swerveDrive(0, 0, 0, false);
+        }
     
         @Override
         public boolean isFinished() {

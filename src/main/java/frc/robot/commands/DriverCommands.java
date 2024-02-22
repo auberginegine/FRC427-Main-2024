@@ -60,6 +60,9 @@ public class DriverCommands {
         return Commands.sequence(
             turnToAngle, 
             new GoToAngle(arm, angle),
+            Commands.run(() -> intake.intakeRing(-0.1), intake)
+            .until(() -> !intake.beamBreakHit())
+            .finallyDo(() -> intake.intakeRing(0)),
             OuttakeToSpeaker.outtakeToSpeaker(intake)
         );
     }, Set.of(drivetrain, arm, intake)); 

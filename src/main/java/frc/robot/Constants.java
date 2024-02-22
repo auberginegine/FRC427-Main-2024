@@ -110,7 +110,7 @@ public final class Constants {
     public static final double kTurn_I = 0; 
     public static final double kTurn_D = 0.001; 
     public static final double kTurn_FF = 0; 
-    public static final double kTurnErrorThreshold = 3.0; 
+    public static final double kTurnErrorThreshold = 5.0; 
     public static final double kTurnVelocityThreshold = 0; 
 
     // TODO: tune these but it should be fine
@@ -166,11 +166,11 @@ public final class Constants {
 
     public static final int kBeamBreakId = 2;
 
-    public static final double kSuckerIntakeSpeed = 0.4;
+    public static final double kSuckerIntakeSpeed = 0.6;
 
     public static final double kShootSpeed = 1; 
     public static final double kShootSuckerSpeed = 1; 
-    public static final double kShootRevTime = 1; 
+    public static final double kShootRevTime = 2; 
     public static final double kShootWaitTime = 0.5; 
 
     public static final double kAmpOuttakeSpeed = 0.3;
@@ -277,7 +277,7 @@ public final class Constants {
     public static final Transform3d robotToCamera = new Transform3d();
 
     // TODO: tune
-    public static final Function<Double, Double> distanceToArmAngle = (dist) -> 0.0; 
+    public static final Function<Double, Double> distanceToArmAngle = (dist) -> 5.82663 * Math.atan(3.94527 * dist - 7.66052) + 24.8349; 
 
     static {
       kAprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);

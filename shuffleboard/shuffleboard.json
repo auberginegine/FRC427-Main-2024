@@ -1380,7 +1380,7 @@
         "vgap": 16.0,
         "titleType": 0,
         "tiles": {
-          "3,1": {
+          "2,1": {
             "size": [
               1,
               1
@@ -1393,7 +1393,7 @@
               "_showGlyph": false
             }
           },
-          "4,1": {
+          "3,1": {
             "size": [
               1,
               1
@@ -1426,8 +1426,8 @@
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Angular kP",
-              "_title": "SmartDashboard/Angular kP",
+              "_source0": "network_table:///SmartDashboard/setpoint",
+              "_title": "SmartDashboard/setpoint",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -1440,20 +1440,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/error",
-              "_title": "/SmartDashboard/error",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "5,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Angular kD",
-              "_title": "SmartDashboard/Angular kD",
+              "_title": "SmartDashboard/error",
               "_glyph": 148,
               "_showGlyph": false
             }

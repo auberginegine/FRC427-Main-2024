@@ -104,6 +104,7 @@ public class RobotContainer {
     // --- Driver ---
 
     driverController.a().onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
+    driverController.x().whileTrue(AutomationCommands.generalizedReleaseCommand(driverController));
 
     driverController.rightTrigger()
       .onTrue(new InstantCommand(() -> driverController.setSlowMode(Mode.SLOW)))
