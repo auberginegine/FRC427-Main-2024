@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 
 import edu.wpi.first.math.MathUtil;
@@ -78,6 +79,7 @@ public class Arm extends SubsystemBase {
         m_armRelativeEncoder.setPositionConversionFactor(Constants.ArmConstants.kRelativePositionConversionFactor); 
         m_armRelativeEncoder.setVelocityConversionFactor(Constants.ArmConstants.kRelativeVelocityConversionFactor); 
         
+        m_armMotorRight.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 20);
         // in tina we trust
         // m_armRelativeEncoder.setPosition(m_armEncoderRight.getPosition());
     }
