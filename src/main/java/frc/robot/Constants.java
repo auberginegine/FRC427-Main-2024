@@ -191,14 +191,13 @@ public final class Constants {
     public static final double kReverseSoftLimit = 0; 
 
     public static final double kAbsPositionConversionFactor = 360;
-
     // velocity = position / 60
     public static final double kAbsVelocityConversionFactor = kAbsPositionConversionFactor / 60.0; 
 
-    public static final double kPositionConversionFactor = 360.0 / (5 * 5 * 4 * 5);
 
+    public static final double kRelativePositionConversionFactor = 360.0 / (5 * 5 * 4 * 5);
     // velocity = position / 60
-    public static final double kVelocityConversionFactor = kPositionConversionFactor / 60; 
+    public static final double kRelativeVelocityConversionFactor = kRelativePositionConversionFactor / 60; 
 
 
     public static final double kTolerance = 2;
@@ -215,11 +214,6 @@ public final class Constants {
     public static final double kP = 0.03;
     public static final double kI = 0;
     public static final double kD = 0;
-
-    // custom feedforward
-    // https://www.desmos.com/calculator/3mcdsjeubz
-    // public static final double kGravityFF = 0;
-    // public static final double kSpringFF = 0;
 
      
     // calculate using reca.lc
