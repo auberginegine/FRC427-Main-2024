@@ -322,37 +322,37 @@ public final class Constants {
     public static final Pose2d ampRed = new Pose2d(14.62, 7.75, Rotation2d.fromDegrees(-90));
   }
   public static final class AutoHang {
-    public static final Pose2d blueTopLeft1 = new Pose2d(2.05, 5.93, Rotation2d.fromDegrees(0));
-    public static final Pose2d blueBottomRight1 = new Pose2d(5.48, 5.55, Rotation2d.fromDegrees(0));
-    public static final Pose2d blueTopRight1 = new Pose2d(4.56, 6.77, Rotation2d.fromDegrees(0));
-    public static final Pose2d blueBottomLeft1 = new Pose2d(3.15, 4.50, Rotation2d.fromDegrees(0));
+    public static final Pose2d blueTopLeft1 = new Pose2d(1.50, 6.20, Rotation2d.fromDegrees(0)); 
+    public static final Pose2d blueBottomRight1 = new Pose2d(5.40, 5.00, Rotation2d.fromDegrees(0));
+    public static final Pose2d blueTopRight1 = new Pose2d(5.68, 7.81, Rotation2d.fromDegrees(0)); 
+    public static final Pose2d blueBottomLeft1 = new Pose2d(2.78, 4.09, Rotation2d.fromDegrees(0));
 
-    public static final Pose2d blueTopLeft2 = new Pose2d(6.20, 5.50, Rotation2d.fromDegrees(0));
-    public static final Pose2d blueBottomRight2 = new Pose2d(7.90, 3.33, Rotation2d.fromDegrees(0));
-    public static final Pose2d blueTopRight2 = new Pose2d(7.90, 5.50, Rotation2d.fromDegrees(0));
-    public static final Pose2d blueBottomLeft2 = new Pose2d(6.20, 3.33, Rotation2d.fromDegrees(0));
-
-
-    public static final Pose2d blueTopLeft3 = new Pose2d(3.23, 3.92, Rotation2d.fromDegrees(0));
-    public static final Pose2d blueBottomRight3 = new Pose2d(4.40, 1.56, Rotation2d.fromDegrees(0));
-    public static final Pose2d blueTopRight3 = new Pose2d(5.32, 2.66, Rotation2d.fromDegrees(0));
-    public static final Pose2d blueBottomLeft3 = new Pose2d(2.21, 2.79, Rotation2d.fromDegrees(0));
-
-    public static final Pose2d redTopRight1 = new Pose2d(14.61, 5.93, Rotation2d.fromDegrees(0));
-    public static final Pose2d redBottomRight1 = new Pose2d(13.30, 4.30, Rotation2d.fromDegrees(0));
-    public static final Pose2d redTopLeft1 = new Pose2d(11.99, 6.77, Rotation2d.fromDegrees(0));
-    public static final Pose2d redBottomLeft1 = new Pose2d(11.22, 5.55, Rotation2d.fromDegrees(0));
-
-    public static final Pose2d redTopLeft2 = new Pose2d(9.20, 5.31, Rotation2d.fromDegrees(0));
-    public static final Pose2d redBottomRight2 = new Pose2d(10.70, 2.80, Rotation2d.fromDegrees(0));
-    public static final Pose2d redTopRight2 = new Pose2d(10.70, 5.31, Rotation2d.fromDegrees(0));
-    public static final Pose2d redBottomLeft2 = new Pose2d(9.20, 2.80, Rotation2d.fromDegrees(0));
+    public static final Pose2d blueTopLeft2 = new Pose2d(5.69, 7.82, Rotation2d.fromDegrees(0)); 
+    public static final Pose2d blueBottomRight2 = new Pose2d(7.90, 0.42, Rotation2d.fromDegrees(0));
+    public static final Pose2d blueTopRight2 = new Pose2d(7.90, 7.82, Rotation2d.fromDegrees(0)); 
+    public static final Pose2d blueBottomLeft2 = new Pose2d(6.30, 0.44, Rotation2d.fromDegrees(0)); 
 
 
-    public static final Pose2d redTopLeft3 = new Pose2d(11.21, 2.55, Rotation2d.fromDegrees(0));
-    public static final Pose2d redBottomRight3 = new Pose2d(14.26, 2.55, Rotation2d.fromDegrees(0));
-    public static final Pose2d redTopRight3 = new Pose2d(13.35, 3.66, Rotation2d.fromDegrees(0));
-    public static final Pose2d redBottomLeft3 = new Pose2d(12.32, 1.22, Rotation2d.fromDegrees(0));
+    public static final Pose2d blueTopLeft3 = new Pose2d(0.46, 4.08, Rotation2d.fromDegrees(0)); 
+    public static final Pose2d blueBottomRight3 = new Pose2d(6.29, 0.44, Rotation2d.fromDegrees(0)); 
+    public static final Pose2d blueTopRight3 = new Pose2d(4.82, 3.48, Rotation2d.fromDegrees(0));  
+    public static final Pose2d blueBottomLeft3 = new Pose2d(0.47, 2.00, Rotation2d.fromDegrees(0)); 
+
+    public static final Pose2d redTopRight1 = new Pose2d(16.09, 7.78, Rotation2d.fromDegrees(0)); 
+    public static final Pose2d redBottomRight1 = new Pose2d(16.09, 4.34, Rotation2d.fromDegrees(0));
+    public static final Pose2d redTopLeft1 = new Pose2d(10.84, 7.78, Rotation2d.fromDegrees(0));
+    public static final Pose2d redBottomLeft1 = new Pose2d(11.65, 4.34, Rotation2d.fromDegrees(0));
+
+    public static final Pose2d redTopLeft2 = new Pose2d(8.71, 7.78, Rotation2d.fromDegrees(0));
+    public static final Pose2d redBottomRight2 = new Pose2d(10.83, 0.44, Rotation2d.fromDegrees(0));
+    public static final Pose2d redTopRight2 = new Pose2d(10.83, 7.78, Rotation2d.fromDegrees(0));
+    public static final Pose2d redBottomLeft2 = new Pose2d(8.71, 0.44, Rotation2d.fromDegrees(0));
+
+
+    public static final Pose2d redTopLeft3 = new Pose2d(11.65, 4.00, Rotation2d.fromDegrees(0));
+    public static final Pose2d redBottomRight3 = new Pose2d(16.08, 1.43, Rotation2d.fromDegrees(0));
+    public static final Pose2d redTopRight3 = new Pose2d(16.08, 4.33, Rotation2d.fromDegrees(0));
+    public static final Pose2d redBottomLeft3 = new Pose2d(10.84, 0.44, Rotation2d.fromDegrees(0));
   }
 
   public static final class AmpPositions {
