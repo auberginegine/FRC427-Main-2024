@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7193498096269378,
-        "y": 6.6250462325486055
+        "x": 1.3057281252407118,
+        "y": 5.503726295673142
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.8326925895281327,
-        "y": 6.916875585833224
+        "x": 5.667559806297557,
+        "y": 7.098263820587792
       },
       "isLocked": false,
-      "linkedName": "Speaker 1"
+      "linkedName": "Speaker 2"
     },
     {
       "anchor": {
-        "x": 7.673590886028891,
-        "y": 7.417171325570721
+        "x": 7.611866852806388,
+        "y": 5.797086096541862
       },
       "prevControl": {
-        "x": 7.030364053244944,
-        "y": 7.493521906950214
+        "x": 6.665431676728016,
+        "y": 5.668323717599817
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Middle Note 1"
+      "linkedName": "Middle Note 2"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.4,
       "command": {
         "type": "parallel",
         "data": {
@@ -58,12 +58,12 @@
   "goalEndState": {
     "velocity": 0,
     "rotation": 0,
-    "rotateFast": true
+    "rotateFast": false
   },
   "reversed": false,
   "folder": "Speaker Middle",
   "previewStartingState": {
-    "rotation": 60.0,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true
