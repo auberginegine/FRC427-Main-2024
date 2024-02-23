@@ -30,8 +30,8 @@ public class TeleOpCommand extends Command {
 
     @Override
     public void execute() {
-        Constants.DrivetrainConstants.kMaxRotationRadPerSecond = SmartDashboard.getNumber("Rotation Speed", 3.14);
-        Constants.DrivetrainConstants.kMaxSpeedMetersPerSecond = SmartDashboard.getNumber("Linear Speed", 1.0);
+        // Constants.DrivetrainConstants.kMaxRotationRadPerSecond = SmartDashboard.getNumber("Rotation Speed", 3.14);
+        // Constants.DrivetrainConstants.kMaxSpeedMetersPerSecond = SmartDashboard.getNumber("Linear Speed", 1.0);
         // ensure driving does not break if gyro disconnects, will hopefully transition to robot oriented drive
        
         if (SmartDashboard.getBoolean("snap", true)) {
@@ -40,14 +40,14 @@ public class TeleOpCommand extends Command {
             SmartDashboard.putNumber("x", speeds.vxMetersPerSecond); 
             SmartDashboard.putNumber("y", speeds.vyMetersPerSecond); 
             SmartDashboard.putNumber("rotation", speeds.omegaRadians); 
-            m_drivetrain.swerveDriveFieldRel(speeds);
+            m_drivetrain.swerveDriveFieldRel(speeds, true);
         } else {
             // go left go right smoothly
             ChassisSpeeds speeds = m_controller.getDesiredChassisSpeeds(); 
             SmartDashboard.putNumber("x", speeds.vxMetersPerSecond); 
             SmartDashboard.putNumber("y", speeds.vyMetersPerSecond); 
             SmartDashboard.putNumber("rotation", speeds.omegaRadiansPerSecond); 
-            m_drivetrain.swerveDrive(speeds);
+            m_drivetrain.swerveDrive(speeds, true);
         }
     }
 

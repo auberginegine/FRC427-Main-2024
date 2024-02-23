@@ -35,7 +35,7 @@ public class Arm extends SubsystemBase {
 
     private AbsoluteEncoder m_armAbsoluteEncoder = m_armMotorRight.getAbsoluteEncoder(Type.kDutyCycle);
 
-    private RelativeEncoder m_armEncoderRight = m_armMotorRight.getEncoder();
+    // private RelativeEncoder m_armEncoderRight = m_armMotorRight.getEncoder();
     
     private PIDController m_armPIDController = new PIDController(Constants.ArmConstants.kP, Constants.ArmConstants.kI, Constants.ArmConstants.kD);
     
@@ -63,8 +63,8 @@ public class Arm extends SubsystemBase {
         m_armAbsoluteEncoder.setPositionConversionFactor(Constants.ArmConstants.kAbsPositionConversionFactor);
         m_armAbsoluteEncoder.setVelocityConversionFactor(Constants.ArmConstants.kAbsVelocityConversionFactor);
 
-        m_armEncoderRight.setPositionConversionFactor(Constants.ArmConstants.kPositionConversionFactor); 
-        m_armEncoderRight.setVelocityConversionFactor(Constants.ArmConstants.kVelocityConversionFactor); 
+        // m_armEncoderRight.setPositionConversionFactor(Constants.ArmConstants.kPositionConversionFactor); 
+        // m_armEncoderRight.setVelocityConversionFactor(Constants.ArmConstants.kVelocityConversionFactor); 
         
         // position error on which it is tolerable
         m_armPIDController.setTolerance(Constants.ArmConstants.kTolerance);
@@ -74,12 +74,12 @@ public class Arm extends SubsystemBase {
 
         m_armMotorLeft.burnFlash(); 
         m_armMotorRight.burnFlash();
-        zeroEncoder(); 
+        // zeroEncoder(); 
     }
 
-    public void zeroEncoder() {
-        m_armEncoderRight.setPosition(m_armAbsoluteEncoder.getPosition()); 
-    }
+    // public void zeroEncoder() {
+    //     m_armEncoderRight.setPosition(m_armAbsoluteEncoder.getPosition()); 
+    // }
 
     public void periodic() {
         doSendables();
@@ -147,7 +147,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getAngle() {
-        return Math.toDegrees(MathUtil.angleModulus(Math.toRadians(m_armEncoderRight.getPosition())));
+        return Math.toDegrees(MathUtil.angleModulus(Math.toRadians(m_armAbsoluteEncoder.getPosition())));
     }
 
 

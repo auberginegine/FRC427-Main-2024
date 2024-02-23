@@ -2,6 +2,7 @@ package frc.robot.subsystems.drivetrain.commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.Drivetrain;
@@ -53,24 +54,26 @@ public class TurnToAngle extends Command {
             // );
 
             // calculate the output angular velocity to run the robot at 
-            double output = pidController.calculate(drivetrain.getYaw(), setpoint); 
+            double output = pidController.calculate(drivetrain.getRotation().getDegrees(), setpoint); 
 
             // clamp the output so the robot doesn't run TOO fast
             output = MathUtil.clamp(output, -maxOutput, maxOutput); 
 
             // DEBUG: output the current setpoint, error, etc. to the dashboard
-            // SmartDashboard.putNumber("setpoint", setpoint); 
-            // SmartDashboard.putNumber("error", pidController.getPositionError()); 
-            // SmartDashboard.putNumber("", output); 
-            // SmartDashboard.putNumber("output", output); 
-            // SmartDashboard.putNumber("angle velo", pidController.getVelocityError()); 
+            SmartDashboard.putNumber("setpoint", setpoint); 
+            SmartDashboard.putNumber("error", pidController.getPositionError()); 
+            SmartDashboard.putNumber("", output); 
+            SmartDashboard.putNumber("output", output); 
+            SmartDashboard.putNumber("angle velo", pidController.getVelocityError()); 
 
             // drive robot with the desired output
-            drivetrain.swerveDrive(0, 0, output);
+            drivetrain.swerveDrive(0, 0, output, false);
         }
     
         @Override
-        public void end(boolean interrupted) {}
+        public void end(boolean interrupted) {
+            drivetrain.swerveDrive(0, 0, 0, false);
+        }
     
         @Override
         public boolean isFinished() {

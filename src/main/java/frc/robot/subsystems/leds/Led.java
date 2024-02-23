@@ -16,7 +16,7 @@ import frc.robot.subsystems.leds.patterns.LEDPattern;
 
 public class Led extends SubsystemBase {
     
-    private static Led instance = null; //new Led();
+    private static Led instance = new Led();
 
     public static Led getInstance() {
         return instance; 
