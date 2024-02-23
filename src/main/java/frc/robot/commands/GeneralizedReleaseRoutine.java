@@ -38,6 +38,8 @@ public class GeneralizedReleaseRoutine extends Command {
         addRequirements(drivetrain, arm, intake);
     }
 
+    // gets alliance color
+    // revs shooter wheels
     public void initialize() {
         timer.reset();
         timer.start();
@@ -52,6 +54,9 @@ public class GeneralizedReleaseRoutine extends Command {
         }
     }
 
+    // gets the driver pose
+    // rotates the robot to the angle to face the speaker & turns the arm to the angle 
+    // sets the driver speed to robot controller input
     public void execute() {
         Pose2d currentPose = drivetrain.getPose();
         double finalAngle = Math.atan2(currentPose.getY() - targetPose.getY(),  currentPose.getX() - targetPose.getX());
@@ -64,10 +69,15 @@ public class GeneralizedReleaseRoutine extends Command {
         drivetrain.swerveDriveFieldRel(speeds);
     }
 
+    // sees if has gone over time
     public boolean isFinished() {
         return timer.get() > Constants.Vision.shootAnywhereTimeout || optAlliance.isEmpty() || targetPose == null;
     }
 
+    // sees if the robot is in shooting range
+    // goes to the arm angle
+    // revs and shoots
+    // moves the arm to travel position in the end
     public void end(boolean interrupted) {
         timer.stop();
         boolean isInRange = false;
