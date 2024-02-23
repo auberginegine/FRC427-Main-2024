@@ -35,13 +35,13 @@ public class GeneralizedReleaseRoutine extends Command {
         this.drivetrain = drivetrain;
         this.driverController = driverController;
 
-        addRequirements(drivetrain, arm, intake);
+        addRequirements(drivetrain, arm);
     }
 
     public void initialize() {
         timer.reset();
         timer.start();
-        intake.outtakeRing(Constants.IntakeConstants.kShootSuckerSpeed);
+        CommandScheduler.getInstance().schedule(SetShooterSpeed.revAndIndex(intake, Constants.IntakeConstants.kShootSpeed));
         this.optAlliance = DriverStation.getAlliance();
         Alliance alliance = optAlliance.get();
         if (alliance == DriverStation.Alliance.Blue) {
@@ -85,15 +85,11 @@ public class GeneralizedReleaseRoutine extends Command {
         } else {
             SetSuckerIntakeSpeed suckerSpeed = new SetSuckerIntakeSpeed(intake, 1);
             Command command = Commands.sequence(
-                Commands.run(() -> intake.intakeRing(-0.075), intake)
-            .until(() -> !intake.beamBreakHit())
-            .finallyDo(() -> intake.intakeRing(0)),
                 suckerSpeed, 
                 new WaitCommand(Constants.Vision.waitAfterShot), 
                 new SetSuckerIntakeSpeed(intake, 0), 
                 new SetShooterSpeed(intake, 0)
             ).finallyDo(() -> {
-                System.out.println("arm travel");
                 arm.goToAngle(Constants.ArmConstants.kTravelPosition);
             }); 
             CommandScheduler.getInstance().schedule(command);

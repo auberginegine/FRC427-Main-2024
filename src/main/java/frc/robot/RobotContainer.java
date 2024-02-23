@@ -36,6 +36,7 @@ import edu.wpi.first.wpilibj.simulation.AddressableLEDSim;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -145,7 +146,7 @@ public class RobotContainer {
 
       // -- hold a button to rev up, outtakes after release
       manipulatorController.leftBumper().and(() -> arm.getArmControlState() == ArmControlState.SPEAKER)
-      .whileTrue(new SetShooterSpeed(intake, 1))
+      .whileTrue(SetShooterSpeed.revAndIndex(intake, 1))
       .onFalse(
         new SetSuckerIntakeSpeed(intake, 1)
         .andThen(new WaitCommand(0.5))
@@ -193,7 +194,7 @@ public class RobotContainer {
     
     // manipulatorController.b().onTrue(new SetVelocity(arm, -0.1)).onFalse(new SetVelocity(arm, 0));
     // manipulatorController.x().onTrue(new SetSuckerIntakeSpeed(intake, -0.5)).onFalse(new SetSuckerIntakeSpeed(intake, 0)); 
-    // manipulatorController.y().onTrue(new SetShooterSpeed(intake, 1)).onFalse(new SetShooterSpeed(intake, 0));  
+    // manipulatorController.y().onTrue(SetShooterSpeed.revAndIndex(intake, 1)).onFalse(new SetShooterSpeed(intake, 0));  
 
   }
   
