@@ -26,7 +26,7 @@ public class AutomaticallyMoveToPiece {
                 driverInput.vxMetersPerSecond * Math.cos(Math.toRadians(actualAngle)) - driverInput.vyMetersPerSecond * Math.sin(Math.toRadians(actualAngle)), 
                 driverInput.vxMetersPerSecond * Math.sin(Math.toRadians(actualAngle)) + driverInput.vyMetersPerSecond * Math.cos(Math.toRadians(actualAngle)), 
                 Math.toRadians(actualAngle), true
-                ), false);
+                ), false, false);
         }, drivetrain), AutomationCommands.autoIntakeCommand()); // Any processing before turning to that angle
     }
 }

@@ -79,7 +79,7 @@ public final class Constants {
     public static final double kMaxAttainableRotationRadPerSecond = kMaxAttainableModuleSpeedMetersPerSecond /
     Math.hypot(kTrackWidthMeters / 2.0, kWheelBaseMeters / 2.0); // max rotation of robot
     
-    public static double kMaxSpeedMetersPerSecond = 1.0; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
+    public static double kMaxSpeedMetersPerSecond = 4; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
     public static double kMaxSlowSpeedMetersPerSecond = 1.0; 
     public static final double kMaxAccelerationMetersPerSecondSquared = kMaxSpeedMetersPerSecond / 0.2; // max acceleration of robot (accelerate to max speed in 1 second)
     public static double kMaxRotationRadPerSecond = 3.00; // max rotation speed of the robot
@@ -161,13 +161,13 @@ public final class Constants {
     public static final double kShootVelocityConversionFactor = 1; 
     public static final double kIntakeVelocityConversionFactor = 1; 
 
-    public static final int kBeamBreakId = 2;
+    public static final int kBeamBreakId = 3;
 
-    public static final double kSuckerIntakeSpeed = 0.6;
+    public static final double kSuckerIntakeSpeed = 1;
 
     public static final double kShootSpeed = 1; 
     public static final double kShootSuckerSpeed = 1; 
-    public static final double kShootRevTime = 2; 
+    public static final double kShootRevTime = 1; 
     public static final double kShootWaitTime = 0.5; 
 
     public static final double kAmpOuttakeSpeed = 0.3;
@@ -261,12 +261,12 @@ public final class Constants {
     public static final Pose2d kBlueAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
     public static final double blueShootRange = 5.87;
     public static final double redShootRange = 10.71;
-    public static final double shootAnywhereTimeout = 4;
+    public static final double shootAnywhereTimeout = 7;
     public static final double waitAfterShot = 1;
     public static final double confidence = 60;
     public static final Transform3d robotToCamera = new Transform3d();
 
-    public static final Function<Double, Double> distanceToArmAngle = (dist) -> 5.82663 * Math.atan(3.94527 * dist - 7.66052) + 24.8349; 
+    public static final Function<Double, Double> distanceToArmAngle = (dist) -> 5.82663 * Math.atan(3.94527 * dist - 7.66052) + 24.8349 + 3.22; 
 
     static {
       kAprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);

@@ -22,6 +22,12 @@ import frc.robot.util.DriverController;
 import frc.robot.util.DriverController.Mode;
 import frc.robot.subsystems.leds.Led;
 import frc.robot.subsystems.vision.Vision_old;
+
+import java.util.Optional;
+
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -76,11 +82,20 @@ public class RobotContainer {
   private void configureBindings() {
     // --- Driver ---
 
-    // driverController.a().onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
+    driverController.a().onTrue(new InstantCommand(() -> {
+      Optional<Alliance> alliance = DriverStation.getAlliance(); 
 
-    driverController.rightTrigger()
+      if (alliance.isEmpty()) return; 
+
+
+      drivetrain.setHeading(Rotation2d.fromDegrees(alliance.get() == Alliance.Red ? 180 : 0)); 
+    }));
+
+    driverController.rightBumper()
       .onTrue(new InstantCommand(() -> driverController.setSlowMode(Mode.SLOW)))
       .onFalse(new InstantCommand(() -> driverController.setSlowMode(Mode.NORMAL))); 
+
+      driverController.y().whileTrue(AutomationCommands.shootFromAnywhere()); 
 
 
    //  move to setpoints
@@ -93,8 +108,8 @@ public class RobotContainer {
   //  driverController.x()
   //  .whileTrue(AutomationCommands.pathFindToGamePiece(driverController)); // auto navigate to note
 
-    driverController.leftBumper()
-    .whileTrue(AutomationCommands.generalizedHangCommand(driverController)); 
+    // driverController.leftBumper()
+    // .whileTrue(AutomationCommands.generalizedHangCommand(driverController)); 
 
     // --- Intake --- 
 

@@ -187,7 +187,7 @@ public class Drivetrain extends SubsystemBase {
     lastTurnedTheta = this.getRotation().getDegrees(); 
   }
 
-  public void swerveDriveFieldRel(double xMetersPerSecond, double yMetersPerSecond, double thetaDegrees, boolean turn, boolean flipField) {
+  public void swerveDriveFieldRel(double xMetersPerSecond, double yMetersPerSecond, double thetaDegrees, boolean turn, boolean flipField, boolean flipRotationField) {
     
    // if (turn) lastTurnedTheta = thetaDegrees; 
     
@@ -197,6 +197,16 @@ public class Drivetrain extends SubsystemBase {
    // double rotSpeed = rotationController.calculate(this.getYaw(), lastTurnedTheta); 
 
     // or to not commit to the angle
+
+    
+    Optional<Alliance> optAlliance = DriverStation.getAlliance(); 
+
+    if (optAlliance.isEmpty()) return; 
+
+
+    SmartDashboard.putBoolean("flip field", flipRotationField);
+
+    if (flipRotationField && optAlliance.get() == Alliance.Red) thetaDegrees += 180; 
      if (turn || gyro.getRate() > 0.25) lastTurnedTheta = this.getRotation().getDegrees(); 
      double rotSpeed = rotationController.calculate(this.getRotation().getDegrees(), turn ? thetaDegrees : lastTurnedTheta); 
      
@@ -206,8 +216,8 @@ public class Drivetrain extends SubsystemBase {
     swerveDrive(xMetersPerSecond, yMetersPerSecond, rotSpeed, flipField);
   }
 
-  public void swerveDriveFieldRel(ChassisState state, boolean flipField) {
-    swerveDriveFieldRel(state.vxMetersPerSecond, state.vyMetersPerSecond, Math.toDegrees(state.omegaRadians), state.turn, flipField);
+  public void swerveDriveFieldRel(ChassisState state, boolean flipField, boolean flipRotationField) {
+    swerveDriveFieldRel(state.vxMetersPerSecond, state.vyMetersPerSecond, Math.toDegrees(state.omegaRadians), state.turn, flipField, flipRotationField);
   }
 
   // command the swerve modules to the intended states
