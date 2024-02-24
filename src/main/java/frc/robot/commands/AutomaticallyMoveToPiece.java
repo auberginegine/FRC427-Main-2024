@@ -17,9 +17,11 @@ public class AutomaticallyMoveToPiece {
         
         double angleToTurn = frontVision.getNoteRotation();
         double actualAngle = angleToTurn + drivetrain.getPose().getRotation().getDegrees();
-        ChassisSpeeds driverInput = driverController.getDesiredChassisSpeeds();
 
         return new ParallelRaceGroup(Commands.run(() -> {
+
+            ChassisSpeeds driverInput = driverController.getDesiredChassisSpeeds();
+
             drivetrain.swerveDriveFieldRel(new ChassisState(
                 driverInput.vxMetersPerSecond * Math.cos(Math.toRadians(actualAngle)) - driverInput.vyMetersPerSecond * Math.sin(Math.toRadians(actualAngle)), 
                 driverInput.vxMetersPerSecond * Math.sin(Math.toRadians(actualAngle)) + driverInput.vyMetersPerSecond * Math.cos(Math.toRadians(actualAngle)), 

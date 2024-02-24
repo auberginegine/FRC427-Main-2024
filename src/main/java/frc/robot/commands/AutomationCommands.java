@@ -79,7 +79,7 @@ public class AutomationCommands {
       Led.getInstance().isMovingToNote = true; 
     }).andThen(Commands.defer(
         () -> AutomaticallyMoveToPiece.automaticallyMoveToPiece(controller, Drivetrain.getInstance(), FrontVision.getInstance()), 
-        Set.of(Drivetrain.getInstance(), FrontVision.getInstance())
+        Set.of(Drivetrain.getInstance())
       )
     ).finallyDo(() -> {
       Led.getInstance().isMovingToNote = false; 
