@@ -30,7 +30,7 @@ public class AutomationCommands {
         new IntakeFromGround(Intake.getInstance()),
         new GoToGround(Arm.getInstance())
       )).finallyDo(() -> {
-        //Reset arm to travel and reset Leds
+        // Reset arm to travel and reset Leds
         Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
         Led.getInstance().isIntaking = false;
     });
@@ -58,18 +58,18 @@ public class AutomationCommands {
   }
 
   //Create pathFindToSpeakerAndScore Command
-  public static Command pathFindToSpeakerAndScore(Arm arm, Intake intake) {
-    return pathFindToSpeaker().alongWith(new GoToSpeaker(arm)).andThen(OuttakeToSpeaker.outtakeToSpeaker(intake)).finallyDo(() -> {
+  public static Command pathFindToSpeakerAndScore() {
+    return pathFindToSpeaker().alongWith(new GoToSpeaker(Arm.getInstance())).andThen(OuttakeToSpeaker.outtakeToSpeaker(Intake.getInstance())).finallyDo(() -> {
       Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
     }); 
   }
   //Create pathFindToAmpAnndScore Command
-  public static Command pathFindToAmpAndScore(Arm arm, Intake intake) {
+  public static Command pathFindToAmpAndScore() {
     //Run pathFindToAmp
-    return pathFindToAmp().alongWith(new GoToAmp(arm)).andThen(new OuttakeToAmp(intake)).finallyDo(() -> {
+    return pathFindToAmp().alongWith(new GoToAmp(Arm.getInstance())).andThen(new OuttakeToAmp(Intake.getInstance())).finallyDo(() -> {
       //When done, arm goes to travel position
-      intake.stopShoot();
-      intake.stopSuck();
+      Intake.getInstance().stopShoot();
+      Intake.getInstance().stopSuck();
       Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
     });
   }
@@ -108,7 +108,7 @@ public class AutomationCommands {
 
   public static Command generalizedHangCommand(DriverController controller) {
     return Commands.runOnce(() -> Led.getInstance().isHanging = true)
-    .andThen(new GeneralizedHangRoutine(controller, Drivetrain.getInstance(), Hang.getInstance(), Intake.getInstance()))
+    .andThen(new GeneralizedHangRoutine(controller, Drivetrain.getInstance(), Hang.getInstance()))
     .finallyDo(() -> {
       Led.getInstance().isHanging = false; 
     });

@@ -1,22 +1,14 @@
 package frc.robot.commands;
 
-import org.opencv.features2d.FlannBasedMatcher;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.util.Optional;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.hang.Hang;
-import frc.robot.subsystems.intake.Intake;
 import frc.robot.util.ChassisState;
 import frc.robot.util.DriverController;
 import frc.robot.util.quad.OrderedPair;
@@ -27,16 +19,14 @@ public class GeneralizedHangRoutine extends Command {
     public DriverController driverController;
     public Drivetrain drivetrain;
     public Hang hang;
-    public Intake intake;
     private double angleToTurn; 
 
-    public GeneralizedHangRoutine(DriverController driverController, Drivetrain drivetrain, Hang hang, Intake intake) {
+    public GeneralizedHangRoutine(DriverController driverController, Drivetrain drivetrain, Hang hang) {
         this.hang = hang;
         this.driverController = driverController;
-        this.intake = intake;
         this.drivetrain = drivetrain;
 
-        addRequirements(drivetrain, hang, intake); 
+        addRequirements(drivetrain, hang); 
     }
 
     public void initialize() {
@@ -48,9 +38,10 @@ public class GeneralizedHangRoutine extends Command {
         ChassisState speeds = driverController.getDesiredChassisState(); 
         speeds.omegaRadians = Math.toRadians(this.angleToTurn);
         speeds.turn = true;
-        ChassisState finalState = new ChassisState(speeds.vxMetersPerSecond * Math.cos(Math.toRadians(this.angleToTurn)) - speeds.vyMetersPerSecond * Math.sin(Math.toRadians(this.angleToTurn)), 
-        speeds.vxMetersPerSecond * Math.sin(Math.toRadians(this.angleToTurn)) + speeds.vyMetersPerSecond * Math.cos(Math.toRadians(this.angleToTurn)), speeds.omegaRadians, true);
-        drivetrain.swerveDriveFieldRel(speeds, false);
+        ChassisState finalState = new ChassisState(
+            speeds.vxMetersPerSecond * Math.cos(Math.toRadians(this.angleToTurn)) - speeds.vyMetersPerSecond * Math.sin(Math.toRadians(this.angleToTurn)), 
+            speeds.vxMetersPerSecond * Math.sin(Math.toRadians(this.angleToTurn)) + speeds.vyMetersPerSecond * Math.cos(Math.toRadians(this.angleToTurn)), speeds.omegaRadians, true);
+        drivetrain.swerveDriveFieldRel(finalState, false);
     }
 
     public boolean isFinished() {

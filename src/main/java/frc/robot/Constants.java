@@ -20,7 +20,6 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.apriltag.AprilTagFields;
 import frc.robot.subsystems.leds.patterns.FadeLEDPattern;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
-import frc.robot.subsystems.leds.patterns.MorseCodePattern;
 import frc.robot.subsystems.leds.patterns.RainbowPattern;
 import frc.robot.subsystems.leds.patterns.SineLEDPattern;
 import frc.robot.subsystems.leds.patterns.SolidLEDPattern;
@@ -80,7 +79,6 @@ public final class Constants {
     public static final double kMaxAttainableRotationRadPerSecond = kMaxAttainableModuleSpeedMetersPerSecond /
     Math.hypot(kTrackWidthMeters / 2.0, kWheelBaseMeters / 2.0); // max rotation of robot
     
-    // TODO: tune these
     public static double kMaxSpeedMetersPerSecond = 1.0; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
     public static double kMaxSlowSpeedMetersPerSecond = 1.0; 
     public static final double kMaxAccelerationMetersPerSecondSquared = kMaxSpeedMetersPerSecond / 0.2; // max acceleration of robot (accelerate to max speed in 1 second)
@@ -113,7 +111,6 @@ public final class Constants {
     public static final double kTurnErrorThreshold = 5.0; 
     public static final double kTurnVelocityThreshold = 0; 
 
-    // TODO: tune these but it should be fine
     // current limits for each motor
     public static final int kDriveCurrentLimit = 40; 
     public static final double kDriveRampRate = 0.25; 
@@ -210,7 +207,6 @@ public final class Constants {
     public static final double kTravelSpeed = 0.5;
 
 
-    // TODO: tune arm 
     public static final double kP = 0.03;
     public static final double kI = 0;
     public static final double kD = 0;
@@ -259,7 +255,7 @@ public final class Constants {
     public static final double kTranslationStdDevCoefficient = 0.35;
     public static final double kRotationStdDevCoefficient = 1;
     public static final AprilTagFieldLayout kAprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(); 
-    public static final double limelightZHeight = 0; // TODO: Fix this
+    public static final double limelightZHeight = 0; 
     public static final double kMaxAccuracyRange = 1000;
     public static final Pose2d kRedAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
     public static final Pose2d kBlueAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
@@ -270,7 +266,6 @@ public final class Constants {
     public static final double confidence = 60;
     public static final Transform3d robotToCamera = new Transform3d();
 
-    // TODO: tune
     public static final Function<Double, Double> distanceToArmAngle = (dist) -> 5.82663 * Math.atan(3.94527 * dist - 7.66052) + 24.8349; 
 
     static {
