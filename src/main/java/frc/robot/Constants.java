@@ -278,6 +278,11 @@ public final class Constants {
   }
 
   public static class GeneralizedReleaseConstants {
+    public static final Pose2d kRedAllianceSpeaker1 = new Pose2d(16.5, 4.97, new Rotation2d());
+    public static final Pose2d kRedAllianceSpeaker2 = new Pose2d(16.5, 6.13, new Rotation2d());
+    public static final Pose2d kBlueAllianceSpeaker1 = new Pose2d(0, 4.97, new Rotation2d());
+    public static final Pose2d kBlueAllianceSpeaker2 = new Pose2d(0, 6.13, new Rotation2d());
+
     public static final Pose2d kRedAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
     public static final Pose2d kBlueAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
 

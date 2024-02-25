@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
+import frc.robot.commands.ShootAnywhere.ShootAnywhereResult;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.intake.Intake;
@@ -26,8 +27,7 @@ public class GeneralizedReleaseRoutine extends Command {
     public Intake intake;
     public DriverController driverController;
     public Optional<Alliance> optAlliance;
-    public Timer timer = new Timer(); 
-    public Pose2d targetPose; 
+    public Timer timer = new Timer();
 
     public GeneralizedReleaseRoutine(DriverController driverController, Drivetrain drivetrain, Arm arm, Intake intake) {
         this.arm = arm;
@@ -45,13 +45,6 @@ public class GeneralizedReleaseRoutine extends Command {
         timer.start();
         CommandScheduler.getInstance().schedule(SetShooterSpeed.revAndIndex(intake, Constants.IntakeConstants.kShootSpeed));
         this.optAlliance = DriverStation.getAlliance();
-        Alliance alliance = optAlliance.get();
-        if (alliance == DriverStation.Alliance.Blue) {
-            targetPose = Constants.GeneralizedReleaseConstants.kBlueAllianceSpeaker;
-        }
-        else if (alliance == DriverStation.Alliance.Red) {
-            targetPose = Constants.GeneralizedReleaseConstants.kRedAllianceSpeaker;
-        }
     }
 
     // gets the driver pose
@@ -59,19 +52,17 @@ public class GeneralizedReleaseRoutine extends Command {
     // sets the driver speed to robot controller input
     public void execute() {
         Pose2d currentPose = drivetrain.getPose();
-        double finalAngle = Math.atan2(currentPose.getY() - targetPose.getY(),  currentPose.getX() - targetPose.getX());
-        double distance = Math.hypot(currentPose.getY() - targetPose.getY(), currentPose.getX() - targetPose.getX());
-        double angleToTurnArm = Constants.GeneralizedReleaseConstants.distanceToArmAngle.apply(distance);
-        arm.goToAngle(angleToTurnArm);
+        ShootAnywhereResult results = ShootAnywhere.getShootValues(currentPose); 
+        arm.goToAngle(results.getArmAngleDeg());
         ChassisState speeds = driverController.getDesiredChassisState(); 
-        speeds.omegaRadians = finalAngle;
+        speeds.omegaRadians = Math.toRadians(results.getDriveAngleDeg());
         speeds.turn = true;
         drivetrain.swerveDriveFieldRel(speeds, true, false);
     }
 
     // sees if has gone over time
     public boolean isFinished() {
-        return timer.get() > Constants.GeneralizedReleaseConstants.shootAnywhereTimeout || optAlliance.isEmpty() || targetPose == null;
+        return timer.get() > Constants.GeneralizedReleaseConstants.shootAnywhereTimeout || optAlliance.isEmpty();
     }
 
     // sees if the robot is in shooting range
