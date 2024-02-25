@@ -31,4 +31,5 @@ public class OrderedPair {
         }
         return (this.y - this.x * slope);
     }
+
 }
