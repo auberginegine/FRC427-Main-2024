@@ -267,8 +267,11 @@ public final class Constants {
 
     public static final double confidence = 60;
     public static final Transform3d robotToCamera = new Transform3d();
- 
-
+    public static final OrderedPair kBlueAllianceLeftSpeakerCoordinate = new OrderedPair(0, 0);
+    public static final OrderedPair kBlueAllianceRightSpeakerCoordinate = new OrderedPair(0, 0);
+    public static final OrderedPair kRedAllianceLeftSpeakerCoordinate = new OrderedPair(0, 0);
+    public static final OrderedPair kRedAllianceRightSpeakerCoordinate = new OrderedPair(0, 0);
+    
     static {
       kAprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
     }
