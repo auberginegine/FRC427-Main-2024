@@ -63,6 +63,7 @@ public class Drivetrain extends SubsystemBase {
   private Drivetrain() {
 
     this.rotationController.enableContinuousInput(-180, 180); 
+    this.rotationController.setTolerance(Constants.DrivetrainConstants.kTurnErrorThreshold);
 
     // zero yaw when drivetrain first starts up
     this.gyro.zeroYaw();
@@ -183,6 +184,8 @@ public class Drivetrain extends SubsystemBase {
   }
   private double lastTurnedTheta = 0; 
 
+  private double lastTargetAngleTheta = 0; 
+
   public void resetLastTurnedTheta() {
     lastTurnedTheta = this.getRotation().getDegrees(); 
   }
@@ -209,6 +212,7 @@ public class Drivetrain extends SubsystemBase {
     if (flipRotationField && optAlliance.get() == Alliance.Red) thetaDegrees += 180; 
      if (turn || gyro.getRate() > 0.25) lastTurnedTheta = this.getRotation().getDegrees(); 
      double rotSpeed = rotationController.calculate(this.getRotation().getDegrees(), turn ? thetaDegrees : lastTurnedTheta); 
+     this.lastTargetAngleTheta = turn ? thetaDegrees : lastTurnedTheta; 
      
 
     rotSpeed = MathUtil.clamp(rotSpeed, -Constants.DrivetrainConstants.kMaxRotationRadPerSecond, Constants.DrivetrainConstants.kMaxRotationRadPerSecond); 
@@ -263,6 +267,10 @@ public class Drivetrain extends SubsystemBase {
 
   public Rotation2d getRotation() {
     return this.getPose().getRotation();
+  }
+
+  public boolean atTargetAngle() {
+    return this.rotationController.atSetpoint(); 
   }
 
   // zeros the current heading of the robot

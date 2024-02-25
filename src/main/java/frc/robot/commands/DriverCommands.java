@@ -3,6 +3,8 @@ package frc.robot.commands;
 import java.util.Optional;
 import java.util.Set;
 
+import com.ctre.phoenix.CANifier.LEDChannel;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -19,6 +21,7 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TurnToAngle;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.OuttakeToSpeaker;
+import frc.robot.subsystems.leds.Led;
 import frc.robot.util.IOUtils;
 
 public class DriverCommands {
@@ -28,6 +31,17 @@ public class DriverCommands {
     }).andThen(new WaitCommand(timeSeconds)).andThen(() -> { 
         controller.setRumble(RumbleType.kBothRumble, 0);
     });  
+  }
+
+  public static Command indicateBeamBreak(GenericHID controller) {
+    return Commands.parallel(
+      Commands.runOnce(() -> {
+      Led.getInstance().beamHit = true; 
+      }), 
+      vibrateController(controller, 0.5)
+    )
+    .andThen(new WaitCommand(3))
+    .finallyDo(() -> Led.getInstance().beamHit = false); 
   }
 
   public static Command tuneShooting(Drivetrain drivetrain, Arm arm, Intake intake) {
@@ -43,10 +57,10 @@ public class DriverCommands {
 
         Alliance alliance = optAlliance.get();
         if (alliance == DriverStation.Alliance.Blue) {
-            targetPose = Constants.Vision.kBlueAllianceSpeaker;
+            targetPose = Constants.GeneralizedReleaseConstants.kBlueAllianceSpeaker;
         }
         else if (alliance == DriverStation.Alliance.Red) {
-            targetPose = Constants.Vision.kRedAllianceSpeaker;
+            targetPose = Constants.GeneralizedReleaseConstants.kRedAllianceSpeaker;
         }
         if (targetPose == null) return Commands.none();
 

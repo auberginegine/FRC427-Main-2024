@@ -26,10 +26,10 @@ public class ShootWithAngle {
 
         Alliance alliance = optAlliance.get();
         if (alliance == DriverStation.Alliance.Blue) {
-            targetPose = Constants.Vision.kBlueAllianceSpeaker;
+            targetPose = Constants.GeneralizedReleaseConstants.kBlueAllianceSpeaker;
         }
         else if (alliance == DriverStation.Alliance.Red) {
-            targetPose = Constants.Vision.kRedAllianceSpeaker;
+            targetPose = Constants.GeneralizedReleaseConstants.kRedAllianceSpeaker;
         }
         if (targetPose == null) return Commands.none();
 

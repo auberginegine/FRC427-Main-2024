@@ -47,10 +47,10 @@ public class GeneralizedReleaseRoutine extends Command {
         this.optAlliance = DriverStation.getAlliance();
         Alliance alliance = optAlliance.get();
         if (alliance == DriverStation.Alliance.Blue) {
-            targetPose = Constants.Vision.kBlueAllianceSpeaker;
+            targetPose = Constants.GeneralizedReleaseConstants.kBlueAllianceSpeaker;
         }
         else if (alliance == DriverStation.Alliance.Red) {
-            targetPose = Constants.Vision.kRedAllianceSpeaker;
+            targetPose = Constants.GeneralizedReleaseConstants.kRedAllianceSpeaker;
         }
     }
 
@@ -61,7 +61,7 @@ public class GeneralizedReleaseRoutine extends Command {
         Pose2d currentPose = drivetrain.getPose();
         double finalAngle = Math.atan2(currentPose.getY() - targetPose.getY(),  currentPose.getX() - targetPose.getX());
         double distance = Math.hypot(currentPose.getY() - targetPose.getY(), currentPose.getX() - targetPose.getX());
-        double angleToTurnArm = Constants.Vision.distanceToArmAngle.apply(distance);
+        double angleToTurnArm = Constants.GeneralizedReleaseConstants.distanceToArmAngle.apply(distance);
         arm.goToAngle(angleToTurnArm);
         ChassisState speeds = driverController.getDesiredChassisState(); 
         speeds.omegaRadians = finalAngle;
@@ -71,7 +71,7 @@ public class GeneralizedReleaseRoutine extends Command {
 
     // sees if has gone over time
     public boolean isFinished() {
-        return timer.get() > Constants.Vision.shootAnywhereTimeout || optAlliance.isEmpty() || targetPose == null;
+        return timer.get() > Constants.GeneralizedReleaseConstants.shootAnywhereTimeout || optAlliance.isEmpty() || targetPose == null;
     }
 
     // sees if the robot is in shooting range
@@ -79,13 +79,14 @@ public class GeneralizedReleaseRoutine extends Command {
     // revs and shoots
     // moves the arm to travel position in the end
     public void end(boolean interrupted) {
+
         timer.stop();
         boolean isInRange = false;
         if (this.optAlliance.get() == DriverStation.Alliance.Blue) {
-            isInRange = drivetrain.getPose().getX() <= Constants.Vision.blueShootRange;
+            isInRange = drivetrain.getPose().getX() <= Constants.GeneralizedReleaseConstants.blueShootRange;
         }
         else if (this.optAlliance.get() == DriverStation.Alliance.Red) {
-            isInRange = drivetrain.getPose().getX() >= Constants.Vision.redShootRange;
+            isInRange = drivetrain.getPose().getX() >= Constants.GeneralizedReleaseConstants.redShootRange;
         }
 
         if (!isInRange || !interrupted) {
@@ -96,7 +97,7 @@ public class GeneralizedReleaseRoutine extends Command {
             SetSuckerIntakeSpeed suckerSpeed = new SetSuckerIntakeSpeed(intake, 1);
             Command command = Commands.sequence(
                 suckerSpeed, 
-                new WaitCommand(Constants.Vision.waitAfterShot), 
+                new WaitCommand(Constants.GeneralizedReleaseConstants.waitAfterShot), 
                 new SetSuckerIntakeSpeed(intake, 0), 
                 new SetShooterSpeed(intake, 0)
             ).finallyDo(() -> {

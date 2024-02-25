@@ -5,8 +5,10 @@
 package frc.robot;
 
 import java.util.function.Function;
+import java.util.function.BooleanSupplier; 
 
 import com.ctre.phoenix6.signals.SensorDirectionValue;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -14,15 +16,20 @@ import  edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.SwerveModuleConfig;
+import frc.robot.subsystems.intake.Intake;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.apriltag.AprilTagFields;
+import frc.robot.subsystems.leds.patterns.ConditionalPattern;
 import frc.robot.subsystems.leds.patterns.FadeLEDPattern;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
 import frc.robot.subsystems.leds.patterns.RainbowPattern;
 import frc.robot.subsystems.leds.patterns.SineLEDPattern;
 import frc.robot.subsystems.leds.patterns.SolidLEDPattern;
+import frc.robot.subsystems.leds.patterns.StrobePattern;
 import frc.robot.subsystems.leds.patterns.TestColorPattern;
 import frc.robot.util.quad.OrderedPair;
 
@@ -257,21 +264,29 @@ public final class Constants {
     public static final AprilTagFieldLayout kAprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(); 
     public static final double limelightZHeight = 0; 
     public static final double kMaxAccuracyRange = 1000;
-    public static final Pose2d kRedAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
-    public static final Pose2d kBlueAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
-    public static final double blueShootRange = 5.87;
-    public static final double redShootRange = 10.71;
-    public static final double shootAnywhereTimeout = 7;
-    public static final double waitAfterShot = 1;
+
     public static final double confidence = 60;
     public static final Transform3d robotToCamera = new Transform3d();
-
-    public static final Function<Double, Double> distanceToArmAngle = (dist) -> 5.82663 * Math.atan(3.94527 * dist - 7.66052) + 24.8349 + 3.22; 
+ 
 
     static {
       kAprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
     }
   }
+
+  public static class GeneralizedReleaseConstants {
+    public static final Pose2d kRedAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
+    public static final Pose2d kBlueAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
+
+    public static final double blueShootRange = 5.87;
+    public static final double redShootRange = 10.71;
+    public static final double shootAnywhereTimeout = 7;
+    public static final double waitAfterShot = 0.5;
+    
+    public static final Function<Double, Double> distanceToArmAngle = (dist) -> 5.82663 * Math.atan(3.94527 * dist - 7.66052) + 24.8349 + 3.22;
+    public static final BooleanSupplier readyToShoot = () -> Intake.getInstance().atDesiredShootSpeed() && Drivetrain.getInstance().atTargetAngle() && Arm.getInstance().isAtAngle(); 
+  }
+
   public static final class LEDs {
     public static final Color kDefaultColor = Color.kDarkBlue;
     public static final Color kCobaltBlue = new Color("#0047AB");
@@ -298,7 +313,7 @@ public final class Constants {
       public static final LEDPattern kMoving = new FadeLEDPattern(1,kGold, Color.kWhite);
       public static final LEDPattern kIntake = new FadeLEDPattern(1,kCobaltBlue, Color.kGreen);
       public static final LEDPattern kMovingToNote = new RainbowPattern(1);
-      public static final LEDPattern kShootAnywhere = new SolidLEDPattern(kCobaltBlue);
+      public static final LEDPattern kShootAnywhere = new ConditionalPattern(new SolidLEDPattern(Color.kRed)).addCondition(Constants.GeneralizedReleaseConstants.readyToShoot::getAsBoolean, new SolidLEDPattern(Color.kGreen));
       public static final LEDPattern kArmMoving = new SolidLEDPattern(Color.kOrange);
       public static final LEDPattern kArmAtAmp = new SolidLEDPattern(Color.kPink);
       public static final LEDPattern kArmAtSpeaker = new SolidLEDPattern(kGold);
@@ -307,7 +322,7 @@ public final class Constants {
       // public static final LEDPattern kShootSpeaker = new SolidLEDPattern(Color.kBlue);
       public static final LEDPattern kArmCustom = new SolidLEDPattern(Color.kSeaGreen);
       public static final LEDPattern kHangActive = new SineLEDPattern(2, Color.kPurple, Color.kBlack, 5);
-      public static final LEDPattern kBeamHit = new SolidLEDPattern(Color.kGreen, 3);
+      public static final LEDPattern kBeamHit = new StrobePattern(Color.kWhite, 0.5);
       public static final LEDPattern kAuto = new FadeLEDPattern(1, Color.kPurple, Color.kBlack);
       public static final LEDPattern kTestColor = new TestColorPattern();
     }
@@ -357,6 +372,12 @@ public final class Constants {
     public static final OrderedPair redBottomLeft3 = new OrderedPair(12.32, 1.22);
   }
   
-  
+  public static class Source {
+    public static final OrderedPair redSourceTL = new OrderedPair(0, 2.2); 
+    public static final OrderedPair redSourceBR = new OrderedPair(3.27, 0); 
+
+    public static final OrderedPair blueSourceTL = new OrderedPair(13.23, 2.2); 
+    public static final OrderedPair blueSourceBR = new OrderedPair(16.5, 0); 
+  }
   
 }

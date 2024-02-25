@@ -7,7 +7,9 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
+import frc.robot.commands.DriverCommands;
 
  /*
   * Notes about how Intake works
@@ -43,6 +45,7 @@ public class Intake extends SubsystemBase {
     
     private Intake() {
         setupMotors();
+
     }
     public void setupMotors() {
         // sets limits for all the motors and has the bottom shoot motor, follow the top
@@ -82,6 +85,12 @@ public class Intake extends SubsystemBase {
     
     public void stopShoot() {
         m_intakeMotorShootTop.set(0);
+    }
+
+
+    // TODO: make this
+    public boolean atDesiredShootSpeed() {
+        return false; 
     }
 
      public void doSendables() { 

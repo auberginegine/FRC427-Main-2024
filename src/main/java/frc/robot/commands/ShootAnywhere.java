@@ -33,17 +33,17 @@ public class ShootAnywhere {
 
         Alliance alliance = optAlliance.get();
         if (alliance == DriverStation.Alliance.Blue) {
-            targetPose = Constants.Vision.kBlueAllianceSpeaker;
+            targetPose = Constants.GeneralizedReleaseConstants.kBlueAllianceSpeaker;
         }
         else if (alliance == DriverStation.Alliance.Red) {
-            targetPose = Constants.Vision.kRedAllianceSpeaker;
+            targetPose = Constants.GeneralizedReleaseConstants.kRedAllianceSpeaker;
         }
         if (targetPose == null) return Commands.none();
 
         double finalAngle = Math.atan2(currentPose.getY() - targetPose.getY(),  currentPose.getX() - targetPose.getX());
         double distance = Math.hypot(currentPose.getY() - targetPose.getY(), currentPose.getX() - targetPose.getX()); 
         TurnToAngle turnToAngle = new TurnToAngle(drivetrain, Math.toDegrees(finalAngle));
-        double angleToTurnArm = Constants.Vision.distanceToArmAngle.apply(distance);
+        double angleToTurnArm = Constants.GeneralizedReleaseConstants.distanceToArmAngle.apply(distance);
         GoToAngle goToAngle = new GoToAngle(arm, angleToTurnArm);
         Command outtake = OuttakeToSpeaker.outtakeToSpeaker(intake);
         SmartDashboard.putNumber("Shoot Anywhere Arm Angle", angleToTurnArm); 

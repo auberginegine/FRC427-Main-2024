@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.commands.AutomationCommands;
+import frc.robot.commands.DriverCommands;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.Arm.ArmControlState;
 import frc.robot.subsystems.arm.commands.GoToAmp;
@@ -33,6 +34,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 
 public class RobotContainer {
@@ -73,10 +75,15 @@ public class RobotContainer {
     autoPicker = new AutoPicker(drivetrain); 
     // Configure the trigger bindings
     configureBindings();
+    configureLedBindings();
 
     // driverController.setChassisSpeedsSupplier(drivetrain::getChassisSpeeds); // comment in simulation
     // default command for drivetrain is to calculate speeds from controller and drive the robot
     drivetrain.setDefaultCommand(new TeleOpCommand(drivetrain, driverController));
+  }
+
+  private void configureLedBindings() {
+        new Trigger(this.intake::beamBreakHit).onTrue(DriverCommands.indicateBeamBreak(this.driverController.getHID())); 
   }
 
   private void configureBindings() {
