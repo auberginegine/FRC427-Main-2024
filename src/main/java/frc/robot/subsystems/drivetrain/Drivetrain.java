@@ -184,8 +184,6 @@ public class Drivetrain extends SubsystemBase {
   }
   private double lastTurnedTheta = 0; 
 
-  private double lastTargetAngleTheta = 0; 
-
   public void resetLastTurnedTheta() {
     lastTurnedTheta = this.getRotation().getDegrees(); 
   }
@@ -212,7 +210,6 @@ public class Drivetrain extends SubsystemBase {
     if (flipRotationField && optAlliance.get() == Alliance.Red) thetaDegrees += 180; 
      if (turn || gyro.getRate() > 0.25) lastTurnedTheta = this.getRotation().getDegrees(); 
      double rotSpeed = rotationController.calculate(this.getRotation().getDegrees(), turn ? thetaDegrees : lastTurnedTheta); 
-     this.lastTargetAngleTheta = turn ? thetaDegrees : lastTurnedTheta; 
      
 
     rotSpeed = MathUtil.clamp(rotSpeed, -Constants.DrivetrainConstants.kMaxRotationRadPerSecond, Constants.DrivetrainConstants.kMaxRotationRadPerSecond); 

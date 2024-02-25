@@ -7,8 +7,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Constants;
+import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.robot.subsystems.hang.Hang;
 import frc.robot.util.ChassisState;
 import frc.robot.util.DriverController;
 import frc.robot.util.quad.OrderedPair;
@@ -18,10 +18,10 @@ public class GeneralizedHangRoutine extends Command {
     
     public DriverController driverController;
     public Drivetrain drivetrain;
-    public Hang hang;
+    public Arm hang;
     private double angleToTurn; 
 
-    public GeneralizedHangRoutine(DriverController driverController, Drivetrain drivetrain, Hang hang) {
+    public GeneralizedHangRoutine(DriverController driverController, Drivetrain drivetrain, Arm hang) {
         this.hang = hang;
         this.driverController = driverController;
         this.drivetrain = drivetrain;
@@ -31,7 +31,7 @@ public class GeneralizedHangRoutine extends Command {
 
     public void initialize() {
         this.angleToTurn = getAngle(drivetrain.getPose()); 
-        hang.setPosition(Constants.HangConstants.kHangMaxUp);
+        hang.goToAngle(90);
     }
 
     public void execute() {
@@ -49,7 +49,7 @@ public class GeneralizedHangRoutine extends Command {
     }
 
     public void end(boolean interrupted) {
-        hang.setPosition(Constants.HangConstants.kHangInitial);
+        hang.goToAngle(0);
     }
 
 

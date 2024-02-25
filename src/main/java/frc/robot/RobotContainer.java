@@ -66,25 +66,21 @@ public class RobotContainer {
 
   // controller for the driver
   private final DriverController driverController =
-      new DriverController(0);
+      DriverController.getInstance(); 
 
-  private final CommandXboxController manipulatorController = new CommandXboxController(1); 
+  private final CommandXboxController manipulatorController = new CommandXboxController(Constants.OperatorConstants.kManipulatorControllerPort); 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     autoPicker = new AutoPicker(drivetrain); 
     // Configure the trigger bindings
     configureBindings();
-    configureLedBindings();
 
     // driverController.setChassisSpeedsSupplier(drivetrain::getChassisSpeeds); // comment in simulation
     // default command for drivetrain is to calculate speeds from controller and drive the robot
     drivetrain.setDefaultCommand(new TeleOpCommand(drivetrain, driverController));
   }
 
-  private void configureLedBindings() {
-        new Trigger(this.intake::beamBreakHit).onTrue(DriverCommands.indicateBeamBreak(this.driverController.getHID())); 
-  }
 
   private void configureBindings() {
     // --- Driver ---

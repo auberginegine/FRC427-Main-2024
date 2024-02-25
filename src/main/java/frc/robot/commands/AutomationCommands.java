@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import java.lang.invoke.ConstantBootstraps;
 import java.util.Set;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -13,7 +12,6 @@ import frc.robot.subsystems.arm.commands.GoToSpeaker;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.MoveToAmp;
 import frc.robot.subsystems.drivetrain.commands.MoveToSpeaker;
-import frc.robot.subsystems.hang.Hang;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.IntakeFromGround;
 import frc.robot.subsystems.intake.commands.OuttakeToAmp;
@@ -113,7 +111,7 @@ public class AutomationCommands {
 
   public static Command generalizedHangCommand(DriverController controller) {
     return Commands.runOnce(() -> Led.getInstance().isHanging = true)
-    .andThen(new GeneralizedHangRoutine(controller, Drivetrain.getInstance(), Hang.getInstance()))
+    .andThen(new GeneralizedHangRoutine(controller, Drivetrain.getInstance(), Arm.getInstance()))
     .finallyDo(() -> {
       Led.getInstance().isHanging = false; 
     });

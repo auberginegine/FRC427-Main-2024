@@ -145,7 +145,6 @@ public class Led extends SubsystemBase {
         if (this.isMovingToNote) decidedHangPattern = Constants.LEDs.Patterns.kMovingToNote; 
         if (this.isHanging) decidedHangPattern = Constants.LEDs.Patterns.kHangActive;
         if (this.beamHit) decidedHangPattern = Constants.LEDs.Patterns.kBeamHit; 
-        if (Intake.getInstance().beamBreakHit()) decidedHangPattern = Constants.LEDs.Patterns.kBeamHit;
         setArmPattern(decidedArmPattern);
         setHangPattern(decidedHangPattern);
 

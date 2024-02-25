@@ -45,12 +45,12 @@ public class ShootAnywhere {
         TurnToAngle turnToAngle = new TurnToAngle(drivetrain, Math.toDegrees(finalAngle));
         double angleToTurnArm = Constants.GeneralizedReleaseConstants.distanceToArmAngle.apply(distance);
         GoToAngle goToAngle = new GoToAngle(arm, angleToTurnArm);
-        Command outtake = OuttakeToSpeaker.outtakeToSpeaker(intake);
+        // Command outtake = OuttakeToSpeaker.outtakeToSpeaker(intake);
+        Command rev = OuttakeToSpeaker.revAndIndex(intake); 
+        Command shoot = OuttakeToSpeaker.shoot(intake, 0.5); 
         SmartDashboard.putNumber("Shoot Anywhere Arm Angle", angleToTurnArm); 
         SmartDashboard.putNumber("Shoot Anywhere Distance", distance); 
-        System.out.println("turning to angle, " + finalAngle);
-        // return Commands.none(); 
-        return Commands.sequence(Commands.parallel(turnToAngle, goToAngle), outtake)
+        return Commands.sequence(Commands.parallel(turnToAngle, goToAngle, rev), shoot)
         .finallyDo(() -> {
             arm.goToAngle(Constants.ArmConstants.kTravelPosition);
         });

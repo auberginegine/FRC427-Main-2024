@@ -3,8 +3,6 @@ package frc.robot.commands;
 import java.util.Optional;
 import java.util.Set;
 
-import com.ctre.phoenix.CANifier.LEDChannel;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -34,9 +32,10 @@ public class DriverCommands {
   }
 
   public static Command indicateBeamBreak(GenericHID controller) {
+    if (DriverStation.isAutonomous()) return Commands.none();
     return Commands.parallel(
       Commands.runOnce(() -> {
-      Led.getInstance().beamHit = true; 
+        Led.getInstance().beamHit = true; 
       }), 
       vibrateController(controller, 0.5)
     )
@@ -74,10 +73,8 @@ public class DriverCommands {
         return Commands.sequence(
             turnToAngle, 
             new GoToAngle(arm, angle),
-            Commands.run(() -> intake.intakeRing(-0.1), intake)
-            .until(() -> !intake.beamBreakHit())
-            .finallyDo(() -> intake.intakeRing(0)),
-            OuttakeToSpeaker.outtakeToSpeaker(intake)
+            OuttakeToSpeaker.revAndIndex(intake),
+            OuttakeToSpeaker.shoot(intake)
         );
     }, Set.of(drivetrain, arm, intake)); 
   }

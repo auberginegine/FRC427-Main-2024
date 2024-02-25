@@ -3,10 +3,7 @@ package frc.robot.subsystems.drivetrain.commands;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import com.pathplanner.lib.util.GeometryUtil;
-
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,7 +13,6 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.util.ChassisState;
 import frc.robot.util.DriverController;
 import frc.robot.util.GeometryUtils;
-import frc.robot.util.IOUtils;
 
 public class TeleOpCommand extends Command {
     
