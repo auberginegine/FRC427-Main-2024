@@ -16,6 +16,7 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TurnToAngle;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.OuttakeToSpeaker;
+import frc.robot.util.GeometryUtils;
 import frc.robot.util.quad.AngleBisector;
 import frc.robot.util.quad.OrderedPair;
 
@@ -34,12 +35,12 @@ public class ShootAnywhereWithBisector {
 
         Alliance alliance = optAlliance.get();
         if (alliance == DriverStation.Alliance.Blue) {
-            AngleBisector angleBisector = new AngleBisector(new OrderedPair(currentPose.getX(), currentPose.getY()), Constants.Vision.kBlueAllianceLeftSpeakerCoordinate, Constants.Vision.kBlueAllianceRightSpeakerCoordinate);
-            targetPose = new Pose2d(angleBisector.getTargetPair().getX(), angleBisector.getTargetPair().getY(), new Rotation2d());
+            OrderedPair angleBisector = GeometryUtils.getBisector(new OrderedPair(currentPose.getX(), currentPose.getY()), Constants.Vision.kBlueAllianceLeftSpeakerCoordinate, Constants.Vision.kBlueAllianceRightSpeakerCoordinate);
+            targetPose = new Pose2d(angleBisector.getX(), angleBisector.getY(), new Rotation2d());
         }
         else if (alliance == DriverStation.Alliance.Red) {
-            AngleBisector angleBisector = new AngleBisector(new OrderedPair(currentPose.getX(), currentPose.getY()), Constants.Vision.kRedAllianceLeftSpeakerCoordinate, Constants.Vision.kRedAllianceRightSpeakerCoordinate);
-            targetPose = new Pose2d(angleBisector.getTargetPair().getX(), angleBisector.getTargetPair().getY(), new Rotation2d());        }
+            OrderedPair angleBisector = GeometryUtils.getBisector(new OrderedPair(currentPose.getX(), currentPose.getY()), Constants.Vision.kRedAllianceLeftSpeakerCoordinate, Constants.Vision.kRedAllianceRightSpeakerCoordinate);
+            targetPose = new Pose2d(angleBisector.getX(), angleBisector.getY(), new Rotation2d());        }
         if (targetPose == null) return Commands.none();
 
         double finalAngle = Math.atan2(currentPose.getY() - targetPose.getY(),  currentPose.getX() - targetPose.getX());
