@@ -12,6 +12,7 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import  edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -291,8 +292,13 @@ public final class Constants {
     public static final double shootAnywhereTimeout = 7;
     public static final double waitAfterShot = 0.5;
     
-    public static final Function<Double, Double> distanceToArmAngle = (dist) -> 5.82663 * Math.atan(3.94527 * dist - 7.66052) + 24.8349 + 3.22;
+    public static final Function<Double, Double> distanceToArmAngle = (dist) -> 5.82663 * Math.atan(3.94527 * dist - 7.66052) + 24.8349 + 3.22; // interpolationMap.get(dist); 
     public static final BooleanSupplier readyToShoot = () -> Intake.getInstance().atDesiredShootSpeed() && Drivetrain.getInstance().atTargetAngle() && Arm.getInstance().isAtAngle(); 
+
+    public static final InterpolatingDoubleTreeMap interpolationMap = new InterpolatingDoubleTreeMap(); 
+    static {
+      // interpolationMap.put(0, 0); 
+    }
   }
 
   public static final class LEDs {
