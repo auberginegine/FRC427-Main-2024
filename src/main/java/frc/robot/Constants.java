@@ -319,11 +319,11 @@ public final class Constants {
     public static final int kLed1Start = 0; 
     public static final int kLed1End = 10; 
     public static final int kLed2Start = 10; 
-    public static final int kLed2End = 20;
-    public static final int kLed3Start = 20;
-    public static final int kLed3End = 30;
-    public static final int kLed4Start = 30;
-    public static final int kLed4End = 40;
+    public static final int kLed2End = 18;
+    public static final int kLed3Start = 18;
+    public static final int kLed3End = 20;
+    public static final int kLed4Start = 20;
+    public static final int kLed4End = 38;
 
     public static final class Patterns {
       public static final LEDPattern kDefault = new SolidLEDPattern(LEDs.kDefaultColor);
@@ -335,10 +335,10 @@ public final class Constants {
       public static final LEDPattern kIntake = new FadeLEDPattern(1,kCobaltBlue, Color.kGreen);
       public static final LEDPattern kMovingToNote = new RainbowPattern(1);
       public static final LEDPattern kShootAnywhere = new ConditionalPattern(new SolidLEDPattern(Color.kRed)).addCondition(Constants.GeneralizedReleaseConstants.readyToShoot::getAsBoolean, new SolidLEDPattern(Color.kGreen));
-      public static final LEDPattern kArmMoving = new SolidLEDPattern(Color.kOrange);
-      public static final LEDPattern kArmAtAmp = new SolidLEDPattern(Color.kPink);
-      public static final LEDPattern kArmAtSpeaker = new SolidLEDPattern(kGold);
-      public static final LEDPattern kArmAtGround = new SolidLEDPattern(Color.kDarkGreen);
+      public static final LEDPattern kArmMoving = new SolidLEDPattern(Color.kLightBlue);
+      public static final LEDPattern kArmAtAmp = new SolidLEDPattern(Color.kSkyBlue);
+      public static final LEDPattern kArmAtSpeaker = new SolidLEDPattern(Color.kBlue);
+      public static final LEDPattern kArmAtGround = new SolidLEDPattern(Color.kDarkBlue);
       // public static final LEDPattern kShootAmp = new SolidLEDPattern(Color.kBlue);
       // public static final LEDPattern kShootSpeaker = new SolidLEDPattern(Color.kBlue);
       public static final LEDPattern kArmCustom = new SolidLEDPattern(Color.kSeaGreen);

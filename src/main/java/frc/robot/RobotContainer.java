@@ -12,6 +12,7 @@ import frc.robot.subsystems.arm.commands.GoToAmp;
 import frc.robot.subsystems.arm.commands.GoToGround;
 import frc.robot.subsystems.arm.commands.GoToSpeaker;
 import frc.robot.subsystems.arm.commands.GoToTravel;
+import frc.robot.subsystems.arm.commands.SetVelocity;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
 import frc.robot.subsystems.intake.Intake;
@@ -98,7 +99,7 @@ public class RobotContainer {
       .onTrue(new InstantCommand(() -> driverController.setSlowMode(Mode.SLOW)))
       .onFalse(new InstantCommand(() -> driverController.setSlowMode(Mode.NORMAL))); 
 
-      driverController.y().whileTrue(AutomationCommands.shootFromAnywhere()); 
+      // driverController.y().whileTrue(AutomationCommands.shootFromAnywhere()); 
 
 
    //  move to setpoints
@@ -153,10 +154,10 @@ public class RobotContainer {
       .whileTrue(AutomationCommands.generalizedReleaseCommand(driverController));
 
     // arm setpoints
-    manipulatorController.a().onTrue(new GoToGround(arm));
-    manipulatorController.b().onTrue(new GoToTravel(arm));
-    manipulatorController.x().onTrue(new GoToSpeaker(arm));
-    manipulatorController.y().onTrue(new GoToAmp(arm));
+    // manipulatorController.a().onTrue(new GoToGround(arm));
+    // manipulatorController.b().onTrue(new GoToTravel(arm));
+    // manipulatorController.x().onTrue(new GoToSpeaker(arm));
+    // manipulatorController.y().onTrue(new GoToAmp(arm));
 
 
     // --- Hang ---
@@ -176,9 +177,8 @@ public class RobotContainer {
 
 
     // TESTING
-    // manipulatorController.a().onTrue(new SetVelocity(arm, 0.1)).onFalse(new SetVelocity(arm, 0)); 
-    
-    // manipulatorController.b().onTrue(new SetVelocity(arm, -0.1)).onFalse(new SetVelocity(arm, 0));
+    driverController.y().onTrue(new SetVelocity(arm, 0.4)).onFalse(new SetVelocity(arm, 0)); 
+    driverController.x().onTrue(new SetVelocity(arm, -0.4)).onFalse(new SetVelocity(arm, 0));
     // manipulatorController.x().onTrue(new SetSuckerIntakeSpeed(intake, -0.5)).onFalse(new SetSuckerIntakeSpeed(intake, 0)); 
     // manipulatorController.y().onTrue(SetShooterSpeed.revAndIndex(intake, 1)).onFalse(new SetShooterSpeed(intake, 0));  
 
