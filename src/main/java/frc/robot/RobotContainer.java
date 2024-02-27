@@ -102,6 +102,8 @@ public class RobotContainer {
       .onTrue(new InstantCommand(() -> driverController.setSlowMode(Mode.SLOW)))
       .onFalse(new InstantCommand(() -> driverController.setSlowMode(Mode.NORMAL))); 
 
+    driverController.y().onTrue(new SetSuckerIntakeSpeed(intake, -0.5)).onFalse(new SetSuckerIntakeSpeed(intake, 0)); 
+
       // TODO: tune
       // driverController.y().whileTrue(DriverCommands.tuneShooting(drivetrain, arm, intake)); 
 

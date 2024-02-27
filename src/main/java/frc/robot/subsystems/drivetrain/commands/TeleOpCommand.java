@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -54,7 +55,7 @@ public class TeleOpCommand extends Command {
         // Constants.DrivetrainConstants.kMaxSpeedMetersPerSecond = SmartDashboard.getNumber("Linear Speed", 1.0);
         // ensure driving does not break if gyro disconnects, will hopefully transition to robot oriented drive
        
-        // if (SmartDashboard.getBoolean("snap", true)) {
+        if (SmartDashboard.getBoolean("snap", true)) {
         //     // align forward, align sideways, etc. 
             ChassisState speeds = m_controller.getDesiredChassisState(); 
             boolean isTurning = speeds.turn; 
@@ -87,14 +88,14 @@ public class TeleOpCommand extends Command {
             SmartDashboard.putBoolean("Turn", speeds.turn);
             SmartDashboard.putString("Field State", fieldState.name()); 
             m_drivetrain.swerveDriveFieldRel(speeds, true, true);
-        // } else {
+        } else {
             // go left go right smoothly
-            // ChassisSpeeds speeds = m_controller.getDesiredChassisSpeeds(); 
-            // SmartDashboard.putNumber("x", speeds.vxMetersPerSecond); 
-            // SmartDashboard.putNumber("y", speeds.vyMetersPerSecond); 
-            // SmartDashboard.putNumber("rotation", speeds.omegaRadiansPerSecond); 
-            // m_drivetrain.swerveDrive(speeds, true);
-        // }
+            ChassisSpeeds speeds = m_controller.getDesiredChassisSpeeds(); 
+            SmartDashboard.putNumber("x", speeds.vxMetersPerSecond); 
+            SmartDashboard.putNumber("y", speeds.vyMetersPerSecond); 
+            SmartDashboard.putNumber("rotation", speeds.omegaRadiansPerSecond); 
+            m_drivetrain.swerveDrive(speeds, true);
+        }
     }
 
     private void updateFieldState(Alliance alliance) {

@@ -90,7 +90,7 @@ public final class Constants {
     public static double kMaxSpeedMetersPerSecond = 4; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
     public static double kMaxSlowSpeedMetersPerSecond = 1.0; 
     public static final double kMaxAccelerationMetersPerSecondSquared = kMaxSpeedMetersPerSecond / 0.2; // max acceleration of robot (accelerate to max speed in 1 second)
-    public static double kMaxRotationRadPerSecond = 3.00; // max rotation speed of the robot
+    public static double kMaxRotationRadPerSecond = 6.28; // 3.00; // max rotation speed of the robot
     public static final double kMaxSlowRotationRadPerSecond = Math.PI / 2; 
     public static final double kMaxRotationAccelerationRadPerSecondSquared = kMaxRotationRadPerSecond / 0.2; // max angular acceleration of robot
 
