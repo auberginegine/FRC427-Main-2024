@@ -29,7 +29,7 @@ public class Intake extends SubsystemBase {
     }
 
     // desire speed
-    private double m_desireSpeed = 0.0;
+    private double m_desireSpeed;
     
     // establishes the motors for shooter and sucker. Also establishes the beambreak.
     CANSparkMax m_intakeMotorShootTop = new CANSparkMax(Constants.IntakeConstants.kIntakeMotorShootTopId, MotorType.kBrushless);
@@ -78,6 +78,7 @@ public class Intake extends SubsystemBase {
 
     public void periodic() {
         // code inside here will run repeatedly while the robot is on
+        m_intakePidController.setReference(m_desireSpeed, CANSparkBase.ControlType.kVelocity);
         doSendables();
     }
     //so intaking the ring is sucking it
@@ -88,7 +89,7 @@ public class Intake extends SubsystemBase {
     public void outtakeRing(double speed) {
         // m_intakeMotorShootTop.set(speed);
         this.m_desireSpeed = speed;
-        m_intakePidController.setReference(speed, CANSparkBase.ControlType.kVelocity);
+        
     }
     //beambreak is a scanner that checks if a ring is inside the whole intake
     public boolean beamBreakHit() { 
