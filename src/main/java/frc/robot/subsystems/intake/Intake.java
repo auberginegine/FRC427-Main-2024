@@ -1,7 +1,9 @@
 package frc.robot.subsystems.intake;
 
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -25,6 +27,9 @@ public class Intake extends SubsystemBase {
     public static Intake getInstance() {
         return instance; 
     }
+
+    // desire speed
+    private double m_desireSpeed;
     
     // establishes the motors for shooter and sucker. Also establishes the beambreak.
     CANSparkMax m_intakeMotorShootTop = new CANSparkMax(Constants.IntakeConstants.kIntakeMotorShootTopId, MotorType.kBrushless);
@@ -36,6 +41,8 @@ public class Intake extends SubsystemBase {
     CANSparkMax m_outtakeMotorSuck = new CANSparkMax(Constants.IntakeConstants.kOuttakeMotorSuckId, MotorType.kBrushless);
     RelativeEncoder m_outtakeEncoderSuck = m_outtakeMotorSuck.getEncoder();
 
+    SparkPIDController m_intakePidController = m_intakeMotorShootTop.getPIDController();
+
 
     // beambreak checks for if theres a note in the intake
     DigitalInput m_BeamBreak = new DigitalInput(Constants.IntakeConstants.kBeamBreakId); 
@@ -43,6 +50,7 @@ public class Intake extends SubsystemBase {
     
     private Intake() {
         setupMotors();
+        setupControllers();
 
     }
     public void setupMotors() {
@@ -61,8 +69,16 @@ public class Intake extends SubsystemBase {
         m_outtakeEncoderSuck.setVelocityConversionFactor(Constants.IntakeConstants.kIntakeVelocityConversionFactor); 
     }
 
+    public void setupControllers() {
+        m_intakePidController.setP(Constants.IntakeConstants.kP);
+        m_intakePidController.setI(Constants.IntakeConstants.kI);
+        m_intakePidController.setD(Constants.IntakeConstants.kD);
+        m_intakePidController.setFF(Constants.IntakeConstants.kFF);
+    }
+
     public void periodic() {
         // code inside here will run repeatedly while the robot is on
+        m_intakePidController.setReference(m_desireSpeed, CANSparkBase.ControlType.kVelocity);
         doSendables();
     }
     //so intaking the ring is sucking it
@@ -71,7 +87,9 @@ public class Intake extends SubsystemBase {
     }
     //and outtaking the ring is shooting it
     public void outtakeRing(double speed) {
-        m_intakeMotorShootTop.set(speed);
+        // m_intakeMotorShootTop.set(speed);
+        this.m_desireSpeed = speed;
+        
     }
     //beambreak is a scanner that checks if a ring is inside the whole intake
     public boolean beamBreakHit() { 
@@ -82,19 +100,19 @@ public class Intake extends SubsystemBase {
     }
     
     public void stopShoot() {
-        m_intakeMotorShootTop.set(0);
+        // m_intakeMotorShootTop.set(0);
+        outtakeRing(0);
     }
 
-
-    // TODO: make this
     public boolean atDesiredShootSpeed() {
-        return false; 
+        return (Math.abs(m_intakeEncoderShootTop.getVelocity() - m_desireSpeed) <= Constants.IntakeConstants.kTolerance); 
     }
 
      public void doSendables() { 
         SmartDashboard.putNumber("Suck Speed (m/s)", m_outtakeEncoderSuck.getVelocity());
         SmartDashboard.putNumber("Shoot Top Speed (m/s)", m_intakeEncoderShootTop.getVelocity());
         SmartDashboard.putNumber("Shoot Bottom Speed (m/s)", m_intakeEncoderShootBottom.getVelocity());
+        SmartDashboard.putBoolean("Shoot At Desired Speed", atDesiredShootSpeed()); 
         SmartDashboard.putBoolean("Beam Break Hit (t/f)", beamBreakHit());
     }
 }

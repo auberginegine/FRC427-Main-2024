@@ -40,7 +40,11 @@ public class OuttakeToSpeaker extends SequentialCommandGroup {
     }
 
     public static Command revAndIndex(Intake intake) {
-        return SetShooterSpeed.revAndIndex(intake, Constants.IntakeConstants.kShootSpeed); 
+        return revAndIndex(intake, Constants.IntakeConstants.kShootSpeed); 
+    }
+
+    public static Command revAndIndex(Intake intake, double shootSpeed) {
+        return SetShooterSpeed.revAndIndex(intake, shootSpeed); 
     }
 
     public static Command shoot(Intake intake) {
