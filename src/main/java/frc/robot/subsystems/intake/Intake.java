@@ -2,7 +2,6 @@ package frc.robot.subsystems.intake;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -44,6 +43,7 @@ public class Intake extends SubsystemBase {
     
     private Intake() {
         setupMotors();
+
     }
     public void setupMotors() {
         // sets limits for all the motors and has the bottom shoot motor, follow the top
@@ -83,6 +83,12 @@ public class Intake extends SubsystemBase {
     
     public void stopShoot() {
         m_intakeMotorShootTop.set(0);
+    }
+
+
+    // TODO: make this
+    public boolean atDesiredShootSpeed() {
+        return false; 
     }
 
      public void doSendables() { 

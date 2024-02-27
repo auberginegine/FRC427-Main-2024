@@ -38,4 +38,21 @@ public class OuttakeToSpeaker extends SequentialCommandGroup {
             intake.stopSuck();
         }); 
     }
+
+    public static Command revAndIndex(Intake intake) {
+        return SetShooterSpeed.revAndIndex(intake, Constants.IntakeConstants.kShootSpeed); 
+    }
+
+    public static Command shoot(Intake intake) {
+        return shoot(intake, Constants.GeneralizedReleaseConstants.waitAfterShot); 
+    }
+
+    public static Command shoot(Intake intake, double waitTime) {
+        return new SetSuckerIntakeSpeed(intake, Constants.IntakeConstants.kShootSuckerSpeed)
+        .andThen(new WaitCommand(waitTime))
+        .finallyDo(() -> {
+            intake.stopShoot();
+            intake.stopSuck();
+        }); 
+    }
 }

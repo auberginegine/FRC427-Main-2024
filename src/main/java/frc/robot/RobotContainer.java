@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import frc.robot.commands.GeneralizedHangRoutine;
 import frc.robot.commands.AutomationCommands;
 import frc.robot.commands.DriverCommands;
 import frc.robot.subsystems.arm.Arm;
@@ -14,12 +13,8 @@ import frc.robot.subsystems.arm.commands.GoToGround;
 import frc.robot.subsystems.arm.commands.GoToSpeaker;
 import frc.robot.subsystems.arm.commands.GoToTravel;
 import frc.robot.subsystems.arm.commands.SetVelocity;
-import frc.robot.subsystems.arm.commands.TunePIDGoToAngle;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
-import frc.robot.subsystems.drivetrain.commands.TurnToAngle;
-import frc.robot.subsystems.hang.Hang;
-import frc.robot.subsystems.hang.commands.SetHangSpeed;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.IntakeFromGround;
 import frc.robot.subsystems.intake.commands.OuttakeToAmp;
@@ -28,15 +23,15 @@ import frc.robot.subsystems.intake.commands.SetSuckerIntakeSpeed;
 import frc.robot.util.DriverController;
 import frc.robot.util.DriverController.Mode;
 import frc.robot.subsystems.leds.Led;
-import frc.robot.subsystems.leds.patterns.LEDPattern;
-import frc.robot.subsystems.vision.BackVision;
-import frc.robot.subsystems.vision.FrontVision;
 import frc.robot.subsystems.vision.Vision_old;
-import edu.wpi.first.wpilibj.simulation.AddressableLEDSim;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
+import java.util.Optional;
+
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -58,7 +53,6 @@ public class RobotContainer {
   private final Led led = Led.getInstance(); 
   // private final AddressableLEDSim sim = new AddressableLEDSim(led.getLED()); 
 
-
   // limelight subsystem of robot
   // private final BackVision backVision = BackVision.getInstance();
   // private final FrontVision frontVision = FrontVision.getInstance(); 
@@ -68,16 +62,14 @@ public class RobotContainer {
   
   // arm of the robot
   private final Arm arm = Arm.getInstance();
-
-  private final TunePIDGoToAngle tunePID = new TunePIDGoToAngle(arm); 
   
   // private SendableChooser<LEDPattern> patterns = new SendableChooser<>();
 
   // controller for the driver
   private final DriverController driverController =
-      new DriverController(0);
+      DriverController.getInstance(); 
 
-  private final CommandXboxController manipulatorController = new CommandXboxController(1); 
+  private final CommandXboxController manipulatorController = new CommandXboxController(Constants.OperatorConstants.kManipulatorControllerPort); 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -89,33 +81,26 @@ public class RobotContainer {
     // default command for drivetrain is to calculate speeds from controller and drive the robot
     drivetrain.setDefaultCommand(new TeleOpCommand(drivetrain, driverController));
   }
-  
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
+
 
   private void configureBindings() {
-
     // --- Driver ---
 
-    driverController.a().onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
-    driverController.x().whileTrue(AutomationCommands.generalizedReleaseCommand(driverController));
+    driverController.a().onTrue(new InstantCommand(() -> {
+      Optional<Alliance> alliance = DriverStation.getAlliance(); 
 
-    driverController.rightTrigger()
+      if (alliance.isEmpty()) return; 
+
+
+      drivetrain.setHeading(Rotation2d.fromDegrees(alliance.get() == Alliance.Red ? 180 : 0)); 
+    }));
+
+    driverController.rightBumper()
       .onTrue(new InstantCommand(() -> driverController.setSlowMode(Mode.SLOW)))
       .onFalse(new InstantCommand(() -> driverController.setSlowMode(Mode.NORMAL))); 
 
-      driverController.b()
-      // .whileTrue(new TurnToAngle(drivetrain, 0)); 
-      .whileTrue(DriverCommands.tuneShooting(drivetrain, arm, intake));
+      // driverController.y().whileTrue(AutomationCommands.shootFromAnywhere()); 
 
-  
 
    //  move to setpoints
   //  driverController.y()
@@ -165,12 +150,14 @@ public class RobotContainer {
 
       driverController.rightTrigger()
       .whileTrue(AutomationCommands.autoIntakeCommand()); // intake from ground auto
+      driverController.leftTrigger()
+      .whileTrue(AutomationCommands.generalizedReleaseCommand(driverController));
 
     // arm setpoints
-    manipulatorController.a().onTrue(new GoToGround(arm));
-    manipulatorController.b().onTrue(new GoToTravel(arm));
-    manipulatorController.x().onTrue(new GoToSpeaker(arm));
-    manipulatorController.y().onTrue(new GoToAmp(arm));
+    // manipulatorController.a().onTrue(new GoToGround(arm));
+    // manipulatorController.b().onTrue(new GoToTravel(arm));
+    // manipulatorController.x().onTrue(new GoToSpeaker(arm));
+    // manipulatorController.y().onTrue(new GoToAmp(arm));
 
 
     // --- Hang ---
@@ -190,9 +177,8 @@ public class RobotContainer {
 
 
     // TESTING
-    // manipulatorController.a().onTrue(new SetVelocity(arm, 0.1)).onFalse(new SetVelocity(arm, 0)); 
-    
-    // manipulatorController.b().onTrue(new SetVelocity(arm, -0.1)).onFalse(new SetVelocity(arm, 0));
+    driverController.y().onTrue(new SetVelocity(arm, 0.4)).onFalse(new SetVelocity(arm, 0)); 
+    driverController.x().onTrue(new SetVelocity(arm, -0.4)).onFalse(new SetVelocity(arm, 0));
     // manipulatorController.x().onTrue(new SetSuckerIntakeSpeed(intake, -0.5)).onFalse(new SetSuckerIntakeSpeed(intake, 0)); 
     // manipulatorController.y().onTrue(SetShooterSpeed.revAndIndex(intake, 1)).onFalse(new SetShooterSpeed(intake, 0));  
 

@@ -1,12 +1,10 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.robot.subsystems.drivetrain.commands.TurnBy;
 import frc.robot.subsystems.vision.FrontVision;
 import frc.robot.util.ChassisState;
 import frc.robot.util.DriverController;
@@ -19,14 +17,16 @@ public class AutomaticallyMoveToPiece {
         
         double angleToTurn = frontVision.getNoteRotation();
         double actualAngle = angleToTurn + drivetrain.getPose().getRotation().getDegrees();
-        ChassisSpeeds driverInput = driverController.getDesiredChassisSpeeds();
 
-        return new ParallelRaceGroup(new TurnBy(drivetrain, angleToTurn).andThen(Commands.run(() -> {
+        return new ParallelRaceGroup(Commands.run(() -> {
+
+            ChassisSpeeds driverInput = driverController.getDesiredChassisSpeeds();
+
             drivetrain.swerveDriveFieldRel(new ChassisState(
                 driverInput.vxMetersPerSecond * Math.cos(Math.toRadians(actualAngle)) - driverInput.vyMetersPerSecond * Math.sin(Math.toRadians(actualAngle)), 
-                driverInput.vyMetersPerSecond * Math.sin(Math.toRadians(actualAngle)) + driverInput.vyMetersPerSecond * Math.cos(Math.toRadians(actualAngle)), 
+                driverInput.vxMetersPerSecond * Math.sin(Math.toRadians(actualAngle)) + driverInput.vyMetersPerSecond * Math.cos(Math.toRadians(actualAngle)), 
                 Math.toRadians(actualAngle), true
-                ), false);
-        }, drivetrain)), AutomationCommands.autoIntakeCommand()); // Any processing before turning to that angle
+                ), false, false);
+        }, drivetrain), AutomationCommands.autoIntakeCommand()); // Any processing before turning to that angle
     }
 }
