@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import java.util.Set;
 
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -49,9 +50,15 @@ public class DriverCommands {
         return Commands.sequence(
             turnToAngle, 
             new GoToAngle(arm, angle),
-            OuttakeToSpeaker.revAndIndex(intake),
+            Commands.runOnce(() -> {
+              drivetrain.swerveDrive(new ChassisSpeeds(), false);
+            }),
+            OuttakeToSpeaker.revAndIndex(intake).withTimeout(5),
             OuttakeToSpeaker.shoot(intake)
-        );
+        ).finallyDo(() -> {
+          intake.stopShoot();
+          intake.stopSuck(); 
+        });
     }, Set.of(drivetrain, arm, intake)); 
   }
 }

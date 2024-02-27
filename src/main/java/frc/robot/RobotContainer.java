@@ -143,9 +143,8 @@ public class RobotContainer {
       driverController.rightTrigger()
       .whileTrue(AutomationCommands.autoIntakeCommand()); // intake from ground auto
 
-      // TODO: test
-      // driverController.rightTrigger()
-      // .whileTrue(AutomationCommands.pathFindToGamePiece(driverController)); 
+      driverController.b()
+      .whileTrue(AutomationCommands.pathFindToGamePiece(driverController)); 
 
       driverController.leftTrigger()
       .whileTrue(AutomationCommands.generalizedReleaseCommand(driverController));

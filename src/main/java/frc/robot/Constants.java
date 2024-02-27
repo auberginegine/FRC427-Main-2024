@@ -90,7 +90,7 @@ public final class Constants {
     public static double kMaxSpeedMetersPerSecond = 1; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
     public static double kMaxSlowSpeedMetersPerSecond = 1.0; 
     public static final double kMaxAccelerationMetersPerSecondSquared = kMaxSpeedMetersPerSecond / 0.2; // max acceleration of robot (accelerate to max speed in 1 second)
-    public static double kMaxRotationRadPerSecond = 6.28; // 3.00; // max rotation speed of the robot
+    public static double kMaxRotationRadPerSecond = 3.00; // 3.00; // max rotation speed of the robot
     public static final double kMaxSlowRotationRadPerSecond = Math.PI / 2; 
     public static final double kMaxRotationAccelerationRadPerSecondSquared = kMaxRotationRadPerSecond / 0.2; // max angular acceleration of robot
 
@@ -174,18 +174,18 @@ public final class Constants {
     public static final double kSuckerIntakeSpeed = 1;
 
     public static final double kShootSpeed = 5600; 
-    public static final double kShootSuckerSpeed = 1; 
+    public static final double kShootSuckerSpeed = 0.75; 
     public static final double kShootRevTime = 1; 
     public static final double kShootWaitTime = 0.5; 
 
     public static final double kAmpOuttakeSpeed = 0.3;
     public static final int kSuckerManualSpeed = 0;
 
-    public static final double kP = 0.0003;
+    public static final double kP = 0.0005;
     public static final double kI = 0;
     public static final double kD = 0;
-    public static final double kFF = 0.000195;
-    public static final double kTolerance = 50; 
+    public static final double kFF = 0.000215;
+    public static final double kTolerance = 100; 
  
   }
 
@@ -298,13 +298,23 @@ public final class Constants {
     public static final double redShootRange = 10.71;
     public static final double shootAnywhereTimeout = 7;
     public static final double waitAfterShot = 0.5;
+
     
-    public static final Function<Double, Double> distanceToArmAngle = (dist) -> 5.82663 * Math.atan(3.94527 * dist - 7.66052) + 24.8349 + 3.22; // interpolationMap.get(dist); 
+    public static final InterpolatingDoubleTreeMap interpolationMap = new InterpolatingDoubleTreeMap(); 
+    
+    public static final Function<Double, Double> distanceToArmAngle = (dist) -> interpolationMap.get(dist); 
+    // 5.82663 * Math.atan(3.94527 * dist - 7.66052) + 24.8349; 
     public static final BooleanSupplier readyToShoot = () -> Intake.getInstance().atDesiredShootSpeed() && Drivetrain.getInstance().atTargetAngle() && Arm.getInstance().isAtAngle(); 
 
-    public static final InterpolatingDoubleTreeMap interpolationMap = new InterpolatingDoubleTreeMap(); 
     static {
       // interpolationMap.put(0, 0); 
+      // interpolationMap.put(dist, angle);
+      interpolationMap.put(1.37154,20.0);
+      interpolationMap.put(2.0046,28.0);
+      interpolationMap.put(2.37813, 34.0);
+      interpolationMap.put(2.9402, 36.0);
+      interpolationMap.put(3.8638, 40.0);
+      interpolationMap.put(3.5022, 39.0);
     }
   }
 
