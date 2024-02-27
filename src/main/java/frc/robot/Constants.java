@@ -179,7 +179,14 @@ public final class Constants {
     public static final double kShootWaitTime = 0.5; 
 
     public static final double kAmpOuttakeSpeed = 0.3;
-    public static final int kSuckerManualSpeed = 0; 
+    public static final int kSuckerManualSpeed = 0;
+
+    public static final double kP = 0.0003;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kFF = 0.000195;
+    public static final double kTolerance = 10; 
+ 
   }
 
   public class ArmConstants {
