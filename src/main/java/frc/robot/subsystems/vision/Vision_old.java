@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class Vision_old extends SubsystemBase {
 
     
-    private static Vision_old instance; //  = new Vision_old(Drivetrain.getInstance());
+    private static Vision_old instance = new Vision_old(Drivetrain.getInstance());
 
     public static Vision_old getInstance() {
         return instance; 

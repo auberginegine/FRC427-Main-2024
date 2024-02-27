@@ -104,8 +104,6 @@ public class Intake extends SubsystemBase {
         outtakeRing(0);
     }
 
-
-    // TODO: make this
     public boolean atDesiredShootSpeed() {
         return (Math.abs(m_intakeEncoderShootTop.getVelocity() - m_desireSpeed) <= Constants.IntakeConstants.kTolerance); 
     }
@@ -114,6 +112,7 @@ public class Intake extends SubsystemBase {
         SmartDashboard.putNumber("Suck Speed (m/s)", m_outtakeEncoderSuck.getVelocity());
         SmartDashboard.putNumber("Shoot Top Speed (m/s)", m_intakeEncoderShootTop.getVelocity());
         SmartDashboard.putNumber("Shoot Bottom Speed (m/s)", m_intakeEncoderShootBottom.getVelocity());
+        SmartDashboard.putBoolean("Shoot At Desired Speed", atDesiredShootSpeed()); 
         SmartDashboard.putBoolean("Beam Break Hit (t/f)", beamBreakHit());
     }
 }

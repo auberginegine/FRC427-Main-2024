@@ -8,15 +8,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.commands.ShootAnywhere.ShootAnywhereResult;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.commands.OuttakeToSpeaker;
 import frc.robot.subsystems.intake.commands.SetShooterSpeed;
-import frc.robot.subsystems.intake.commands.SetSuckerIntakeSpeed;
 import frc.robot.util.ChassisState;
 import frc.robot.util.DriverController;
 
@@ -85,13 +83,7 @@ public class GeneralizedReleaseRoutine extends Command {
             arm.goToAngle(Constants.ArmConstants.kTravelPosition);
             CommandScheduler.getInstance().schedule(DriverCommands.vibrateController(driverController.getHID(), 1));
         } else {
-            SetSuckerIntakeSpeed suckerSpeed = new SetSuckerIntakeSpeed(intake, 1);
-            Command command = Commands.sequence(
-                suckerSpeed, 
-                new WaitCommand(Constants.GeneralizedReleaseConstants.waitAfterShot), 
-                new SetSuckerIntakeSpeed(intake, 0), 
-                new SetShooterSpeed(intake, 0)
-            ).finallyDo(() -> {
+            Command command = OuttakeToSpeaker.shoot(intake).finallyDo(() -> {
                 arm.goToAngle(Constants.ArmConstants.kTravelPosition);
             }); 
             CommandScheduler.getInstance().schedule(command);

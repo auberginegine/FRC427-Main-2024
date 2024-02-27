@@ -11,6 +11,13 @@ import frc.robot.util.DriverController;
 
 public class AutomaticallyMoveToPiece {
 
+    public static Command waitForVision(FrontVision frontVision) {
+        return Commands.waitUntil(() -> {
+            var result = frontVision.getLatestVisionResult();
+            return result.hasTargets(); 
+        }); 
+    }
+
     public static Command automaticallyMoveToPiece(DriverController driverController, Drivetrain drivetrain, FrontVision frontVision) {
         var result = frontVision.getLatestVisionResult();
         if (!result.hasTargets()) return Commands.none();

@@ -80,7 +80,9 @@ public class AutomationCommands {
   public static Command pathFindToGamePiece(DriverController controller) {
     return Commands.runOnce(() -> {
       Led.getInstance().isMovingToNote = true; 
-    }).andThen(Commands.defer(
+    })
+    // .andThen(AutomaticallyMoveToPiece.waitForVision(FrontVision.getInstance())) // maybe??
+    .andThen(Commands.defer(
         () -> AutomaticallyMoveToPiece.automaticallyMoveToPiece(controller, Drivetrain.getInstance(), FrontVision.getInstance()), 
         Set.of(Drivetrain.getInstance())
       )
