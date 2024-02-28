@@ -19,7 +19,7 @@ public class AutomaticallyMoveToPiece {
     }
 
     public static Command automaticallyMoveToPiece(DriverController driverController, Drivetrain drivetrain, FrontVision frontVision) {
-        var result = frontVision.getLatestVisionResult();
+        var result = frontVision.getLastSuccessfulResult();
         if (!result.hasTargets()) return Commands.none();
         
         double angleToTurn = - frontVision.getNoteRotation();

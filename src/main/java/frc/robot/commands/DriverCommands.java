@@ -36,7 +36,7 @@ public class DriverCommands {
       }), 
       vibrateController(controller, 0.5)
     )
-    .andThen(new WaitCommand(3))
+    .andThen(new WaitCommand(0.75))
     .finallyDo(() -> Led.getInstance().beamHit = false); 
   }
 

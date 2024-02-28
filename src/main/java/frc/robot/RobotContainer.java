@@ -35,6 +35,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -102,7 +103,11 @@ public class RobotContainer {
       .onTrue(new InstantCommand(() -> driverController.setSlowMode(Mode.SLOW)))
       .onFalse(new InstantCommand(() -> driverController.setSlowMode(Mode.NORMAL))); 
 
-    driverController.y().onTrue(new SetSuckerIntakeSpeed(intake, -0.5)).onFalse(new SetSuckerIntakeSpeed(intake, 0)); 
+      manipulatorController.rightTrigger().onTrue(Commands.runOnce(() -> {
+        intake.intakeRing(-0.2);
+      })).onFalse(Commands.runOnce(() -> {
+        intake.stopSuck();
+      }));
 
       // TODO: tune
       // driverController.y().whileTrue(DriverCommands.tuneShooting(drivetrain, arm, intake)); 
@@ -143,7 +148,7 @@ public class RobotContainer {
       driverController.rightTrigger()
       .whileTrue(AutomationCommands.autoIntakeCommand()); // intake from ground auto
 
-      driverController.b()
+      driverController.x()
       .whileTrue(AutomationCommands.pathFindToGamePiece(driverController)); 
 
       driverController.leftTrigger()

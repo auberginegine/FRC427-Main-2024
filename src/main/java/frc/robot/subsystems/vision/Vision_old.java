@@ -80,9 +80,9 @@ public class Vision_old extends SubsystemBase {
         SmartDashboard.putNumber("LimelightTargetY", limelightTargetY);
         // SmartDashboard.putNumber("LimelightDistanceToTarget", getDistanceToAprilTag());
         SmartDashboard.putNumber("LimelightNearestAprilTag", getClosestAprilTagID());
-        if (getAprilTagPos(getClosestAprilTagID()) != null) SmartDashboard.putNumber("LimelightNearestAprilTagPositionX", getAprilTagPos(getClosestAprilTagID()).getX());
-        if (getAprilTagPos(getClosestAprilTagID()) != null) SmartDashboard.putNumber("LimelightNearestAprilTagPositionY", getAprilTagPos(getClosestAprilTagID()).getY());
-        if (getAprilTagPos(getClosestAprilTagID()) != null) SmartDashboard.putNumber("LimelightNearestAprilTagPositionZ", getAprilTagPos(getClosestAprilTagID()).getZ());
+        // if (getAprilTagPos(getClosestAprilTagID()) != null) SmartDashboard.putNumber("LimelightNearestAprilTagPositionX", getAprilTagPos(getClosestAprilTagID()).getX());
+        // if (getAprilTagPos(getClosestAprilTagID()) != null) SmartDashboard.putNumber("LimelightNearestAprilTagPositionY", getAprilTagPos(getClosestAprilTagID()).getY());
+        // if (getAprilTagPos(getClosestAprilTagID()) != null) SmartDashboard.putNumber("LimelightNearestAprilTagPositionZ", getAprilTagPos(getClosestAprilTagID()).getZ());
 
         if (getAprilTagPos(getClosestAprilTagID()) != null) addVisionFromDrivetrain();
     }

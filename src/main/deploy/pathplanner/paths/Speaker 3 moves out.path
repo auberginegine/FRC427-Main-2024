@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.9576577541780673,
-        "y": 7.75214365594608
+        "x": 0.6884877930157377,
+        "y": 4.4852797475010595
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9479310996585324,
-        "y": 7.771596964994878
+        "x": 0.9179210766487971,
+        "y": 4.304281158977503
       },
       "isLocked": false,
-      "linkedName": "Amp 1"
+      "linkedName": "Speaker 3"
     },
     {
       "anchor": {
-        "x": 2.5577104734808596,
-        "y": 6.992770607832326
+        "x": 1.3171869760109631,
+        "y": 4.060826342293255
       },
       "prevControl": {
-        "x": 2.576507389847328,
-        "y": 6.973775101594868
+        "x": 1.1224231226635653,
+        "y": 4.206899232303804
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Note 1"
+      "linkedName": "speaker 3 move out"
     }
   ],
   "rotationTargets": [],
@@ -33,17 +33,20 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxAcceleration": 1.5,
     "maxAngularVelocity": 120.0,
     "maxAngularAcceleration": 120.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -45.0,
+    "rotation": -40.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Amp Note",
-  "previewStartingState": null,
-  "useDefaultConstraints": true
+  "folder": "Speaker Misc",
+  "previewStartingState": {
+    "rotation": -60.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
 }
