@@ -181,11 +181,11 @@ public final class Constants {
     public static final double kAmpOuttakeSpeed = 0.3;
     public static final int kSuckerManualSpeed = 0;
 
-    public static final double kP = 0.0005;
+    public static final double kP = 0.0003;
     public static final double kI = 0;
     public static final double kD = 0;
     public static final double kFF = 0.000215;
-    public static final double kTolerance = 100; 
+    public static final double kTolerance = 200; 
  
   }
 
@@ -313,8 +313,8 @@ public final class Constants {
       interpolationMap.put(2.0046,28.0);
       interpolationMap.put(2.37813, 34.0);
       interpolationMap.put(2.9402, 36.0);
-      interpolationMap.put(3.8638, 40.0);
       interpolationMap.put(3.5022, 39.0);
+      interpolationMap.put(3.8638, 40.0);
     }
   }
 
