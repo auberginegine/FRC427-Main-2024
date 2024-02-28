@@ -1,24 +1,41 @@
 package frc.robot.commands;
 
-import org.photonvision.PhotonCamera;
-import org.photonvision.targeting.PhotonTrackedTarget;
-
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.subsystems.arm.Arm;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.vision.FrontVision;
+import frc.robot.util.ChassisState;
+import frc.robot.util.DriverController;
 
 public class AutomaticallyMoveToPiece {
-    private PhotonCamera camera = new PhotonCamera("photonvision");
 
-    public Command automaticallyMoveToPiece(Drivetrain drivetrain, Arm arm) {
-        var result = camera.getLatestResult();
-        if (!result.hasTargets()) {
-            return Commands.none();
-        }
-        PhotonTrackedTarget target = result.getBestTarget();
-        double angleToTurn = target.getYaw();
+    public static Command waitForVision(FrontVision frontVision) {
+        return Commands.waitUntil(() -> {
+            var result = frontVision.getLatestVisionResult();
+            return result.hasTargets(); 
+        }); 
+    }
 
-        return Commands.none(); 
+    public static Command automaticallyMoveToPiece(DriverController driverController, Drivetrain drivetrain, FrontVision frontVision) {
+        var result = frontVision.getLatestVisionResult();
+        if (!result.hasTargets()) return Commands.none();
+        
+        double angleToTurn = - frontVision.getNoteRotation();
+        double actualAngle = angleToTurn + drivetrain.getPose().getRotation().getDegrees();
+
+        return new ParallelRaceGroup(Commands.run(() -> {
+
+            ChassisSpeeds driverInput = driverController.getDesiredChassisSpeeds();
+
+            driverInput.vyMetersPerSecond = 0; 
+
+            drivetrain.swerveDriveFieldRel(new ChassisState(
+                driverInput.vxMetersPerSecond * Math.cos(Math.toRadians(actualAngle)) - driverInput.vyMetersPerSecond * Math.sin(Math.toRadians(actualAngle)), 
+                driverInput.vxMetersPerSecond * Math.sin(Math.toRadians(actualAngle)) + driverInput.vyMetersPerSecond * Math.cos(Math.toRadians(actualAngle)), 
+                Math.toRadians(actualAngle), true
+                ), false, false);
+        }, drivetrain), AutomationCommands.autoIntakeCommand()); // Any processing before turning to that angle
     }
 }

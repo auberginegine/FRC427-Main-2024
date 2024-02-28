@@ -4,13 +4,13 @@ import java.util.List;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.hang.Hang;
-import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.arm.Arm.ArmControlState;
 import frc.robot.subsystems.leds.patterns.LEDPattern;
-
-import edu.wpi.first.wpilibj.Timer;
 
 
 public class Led extends SubsystemBase {
@@ -33,9 +33,11 @@ public class Led extends SubsystemBase {
     public boolean isMovingToSpeaker = false; 
     public boolean isShooting = false; 
     public boolean isIntaking = false; 
+    public boolean isMovingToNote = false; 
     public boolean beamHit = false;
     public boolean autoBegin = false;
     public boolean autoEnd = false; 
+    public boolean isHanging = false; 
     //public boolean isShootingToAmp = false;
     //public boolean isShootingToSpeaker = false;
 
@@ -122,27 +124,28 @@ public class Led extends SubsystemBase {
     @Override
     public void periodic() {
 
-        // LEDPattern decidedArmPattern = LEDPattern.kEmpty; 
-        // LEDPattern decidedHangPattern = LEDPattern.kEmpty;
+        LEDPattern decidedArmPattern = LEDPattern.kEmpty; 
+        LEDPattern decidedHangPattern = LEDPattern.kEmpty;
 
-       // lower priorities
-        // if (DriverStation.isEnabled()) decidedArmPattern = Constants.LEDs.Patterns.kEnabled; 
-        // if (DriverStation.isDisabled()) decidedArmPattern = Constants.LEDs.Patterns.kDisabled; 
-        // if (DriverStation.isAutonomousEnabled()) decidedArmPattern = Constants.LEDs.Patterns.kAuto;
+    //    lower priorities
+        if (DriverStation.isEnabled()) decidedArmPattern = Constants.LEDs.Patterns.kEnabled; 
+        if (DriverStation.isDisabled()) decidedArmPattern = Constants.LEDs.Patterns.kDisabled; 
+        if (DriverStation.isAutonomousEnabled()) decidedArmPattern = Constants.LEDs.Patterns.kAuto;
        
-         // if (Arm.getInstance().getArmControlState() == ArmControlState.TRAVEL) decidedHangPattern = Constants.LEDs.Patterns.kArmMoving;
-        // if (Arm.getInstance().getArmControlState() == ArmControlState.AMP) decidedHangPattern = Constants.LEDs.Patterns.kArmAtAmp;
-        // if (Arm.getInstance().getArmControlState() == ArmControlState.SPEAKER) decidedHangPattern = Constants.LEDs.Patterns.kArmAtSpeaker;
-        // if (Arm.getInstance().getArmControlState() == ArmControlState.GROUND) decidedHangPattern = Constants.LEDs.Patterns.kArmAtGround;
-        // if (Arm.getInstance().getArmControlState() == ArmControlState.CUSTOM) decidedHangPattern = Constants.LEDs.Patterns.kArmCustom;
+         if (Arm.getInstance().getArmControlState() == ArmControlState.TRAVEL) decidedHangPattern = Constants.LEDs.Patterns.kArmMoving;
+        if (Arm.getInstance().getArmControlState() == ArmControlState.AMP) decidedHangPattern = Constants.LEDs.Patterns.kArmAtAmp;
+        if (Arm.getInstance().getArmControlState() == ArmControlState.SPEAKER) decidedHangPattern = Constants.LEDs.Patterns.kArmAtSpeaker;
+        if (Arm.getInstance().getArmControlState() == ArmControlState.GROUND) decidedHangPattern = Constants.LEDs.Patterns.kArmAtGround;
+        if (Arm.getInstance().getArmControlState() == ArmControlState.CUSTOM) decidedHangPattern = Constants.LEDs.Patterns.kArmCustom;
 
-        // if (this.isMovingToAmp || this.isMovingToSpeaker) decidedHangPattern = Constants.LEDs.Patterns.kMoving;
-        // if (this.isShooting) decidedHangPattern = Constants.LEDs.Patterns.kShootAnywhere;
-        // if (this.isIntaking) decidedHangPattern = Constants.LEDs.Patterns.kIntake;
-        // if (Hang.getInstance().getHangPosition() > 0.5) decidedHangPattern = Constants.LEDs.Patterns.kHangActive;
-        // if (Intake.getInstance().beamBreakHit()) decidedHangPattern = Constants.LEDs.Patterns.kBeamHit;
-        // setArmPattern(decidedArmPattern);
-        // setHangPattern(decidedHangPattern);
+        if (this.isMovingToAmp || this.isMovingToSpeaker) decidedHangPattern = Constants.LEDs.Patterns.kMoving;
+        if (this.isShooting) decidedHangPattern = Constants.LEDs.Patterns.kShootAnywhere;
+        if (this.isIntaking) decidedHangPattern = Constants.LEDs.Patterns.kIntake;
+        if (this.isMovingToNote) decidedHangPattern = Constants.LEDs.Patterns.kMovingToNote; 
+        if (this.isHanging) decidedHangPattern = Constants.LEDs.Patterns.kHangActive;
+        if (this.beamHit) decidedHangPattern = Constants.LEDs.Patterns.kBeamHit; 
+        setArmPattern(decidedArmPattern);
+        setHangPattern(decidedHangPattern);
 
 
         //Constantly updates leds with respect to time
@@ -159,5 +162,12 @@ public class Led extends SubsystemBase {
     //Method to getLED
     public AddressableLED getLED() {
         return this.m_Led;
+    }
+
+    public void doSendables() {
+        SmartDashboard.putBoolean("Moving To Amp", this.isMovingToAmp);
+        SmartDashboard.putBoolean("Moving To Speaker", this.isMovingToSpeaker);
+        SmartDashboard.putBoolean("Is Shooting", this.isShooting);
+        SmartDashboard.putBoolean("Is Intaking", this.isIntaking);
     }
 }

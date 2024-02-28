@@ -52,12 +52,6 @@
           "data": {
             "name": "ShootSpeaker"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Test Auto 1 meter"
-          }
         }
       ]
     }

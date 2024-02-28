@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 2.7779158761164506,
-        "y": 5.190456691708164
+        "x": 2.3202208207500647,
+        "y": 5.297576811049233
       },
       "prevControl": {
-        "x": 2.4075716767814352,
-        "y": 5.16988201396733
+        "x": 1.9498766214150494,
+        "y": 5.277002133308399
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.65,
+      "waypointRelativePos": 0.3,
       "command": {
         "type": "parallel",
         "data": {
@@ -50,8 +50,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 1.5,
-    "maxAcceleration": 1.5,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 120.0,
     "maxAngularAcceleration": 120.0
   },
