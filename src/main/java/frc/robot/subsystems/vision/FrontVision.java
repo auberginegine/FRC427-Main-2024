@@ -19,14 +19,19 @@ public class FrontVision extends SubsystemBase {
     }
 
     public void periodic() {
+        SmartDashboard.putBoolean("Front Camera is Connected", this.camera.isConnected()); 
+
+        if (!this.camera.isConnected()) return; 
+
         try {
-        this.latestResult = this.camera.getLatestResult();
+            this.latestResult = this.camera.getLatestResult();
         } catch (Exception err) {
             return;
         }
 
         if (this.latestResult.hasTargets()) lastSuccessfulResult = latestResult; 
 
+        
         SmartDashboard.putNumber("Target Yaw",getNoteRotation());
     }
 

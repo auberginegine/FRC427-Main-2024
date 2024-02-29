@@ -44,6 +44,12 @@
         {
           "type": "named",
           "data": {
+            "name": "MoveToNext"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "ShootAnywhere"
           }
         },
@@ -51,6 +57,12 @@
           "type": "path",
           "data": {
             "pathName": "Note 2 to Note 1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "MoveToNext"
           }
         },
         {

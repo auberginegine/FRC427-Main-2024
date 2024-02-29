@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.SwerveModule.DriveState;
@@ -86,6 +88,9 @@ public class Drivetrain extends SubsystemBase {
     m_odometryField.setRobotPose(getPose());
     SmartDashboard.putData("Robot Odometry Field", m_odometryField);
     SmartDashboard.putData("Robot Vision Field", m_visionField);
+
+    updateModules();
+
     doSendables();
   }
 
@@ -230,6 +235,13 @@ public class Drivetrain extends SubsystemBase {
       this.backRight.updateState(states[3], driveState);
   }
 
+  public void updateModules() {
+    this.frontLeft.commandState();
+    this.frontRight.commandState();
+    this.backLeft.commandState();
+    this.backRight.commandState();
+  }
+
   // returns the positions of all the swerve modules
   public SwerveModulePosition[] getPositions() {
     return new SwerveModulePosition[] {
@@ -305,5 +317,11 @@ public class Drivetrain extends SubsystemBase {
     odometry.addVisionMeasurement(pose3d.toPose2d(), timestamp, stdDevs);
 
     m_visionField.setRobotPose(pose3d.toPose2d());
+  }
+
+  public Command zeroDrivetrain() {
+    return Commands.runOnce(() -> {
+      this.swerveDrive(0, 0, 0, false);
+    }, this); 
   }
 }

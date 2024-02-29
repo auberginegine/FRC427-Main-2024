@@ -33,10 +33,10 @@ public class ShootAnywhere {
         TurnToAngle turnToAngle = new TurnToAngle(drivetrain, res.getDriveAngleDeg());
         GoToAngle goToAngle = new GoToAngle(arm, res.getArmAngleDeg());
         // Command outtake = OuttakeToSpeaker.outtakeToSpeaker(intake);
-        Command rev = OuttakeToSpeaker.revAndIndex(intake); 
+        Command rev = OuttakeToSpeaker.revAndIndex(intake).withTimeout(1.5); 
         Command shoot = OuttakeToSpeaker.shoot(intake, 0.5); 
 
-        return Commands.sequence(Commands.parallel(turnToAngle, goToAngle, rev), shoot)
+        return Commands.sequence(drivetrain.zeroDrivetrain(), Commands.parallel(turnToAngle, goToAngle, rev), drivetrain.zeroDrivetrain(), shoot)
         .finallyDo(() -> {
             arm.goToAngle(Constants.ArmConstants.kTravelPosition);
         });
