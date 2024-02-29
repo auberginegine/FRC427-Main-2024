@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.056270140976302,
-        "y": 5.797086096541862
+        "x": 2.461681613805452,
+        "y": 5.211322262872771
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.634569660116764,
-        "y": 6.151828644509419
+        "x": 2.5836882618569326,
+        "y": 5.691748071743701
       },
       "isLocked": false,
-      "linkedName": "Middle Note 2"
+      "linkedName": "Note 2"
     },
     {
       "anchor": {
-        "x": 4.823998018923357,
-        "y": 6.090104611286917
+        "x": 3.15,
+        "y": 6.53
       },
       "prevControl": {
-        "x": 5.667559806297558,
-        "y": 6.491310827233183
+        "x": 3.103156653816874,
+        "y": 5.628265585974823
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Note 1 Side"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.55,
+      "waypointRelativePos": 0.15,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "GoToSpeaker"
+                "name": "IntakeGround"
               }
             }
           ]
@@ -50,18 +50,18 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 2.5,
-    "maxAngularVelocity": 360.0,
-    "maxAngularAcceleration": 300.0
+    "maxVelocity": 2.5,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 240.0,
+    "maxAngularAcceleration": 240.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
-    "rotateFast": false
+    "rotation": 90.0,
+    "rotateFast": true
   },
   "reversed": false,
-  "folder": "Middle Back",
+  "folder": "Speaker Note",
   "previewStartingState": null,
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

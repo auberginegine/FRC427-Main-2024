@@ -113,7 +113,7 @@
               "_title": "Robot Odometry Field",
               "_glyph": 148,
               "_showGlyph": false,
-              "Game/Game": "A2023_Charged_Up",
+              "Game/Game": "k2024Crescendo",
               "Visuals/Robot Icon Size": 50.0,
               "Visuals/Show Outside Circles": false
             }
@@ -129,7 +129,7 @@
               "_title": "Robot Vision Field",
               "_glyph": 148,
               "_showGlyph": false,
-              "Game/Game": "A2023_Charged_Up",
+              "Game/Game": "k2024Crescendo",
               "Visuals/Robot Icon Size": 50.0,
               "Visuals/Show Outside Circles": false
             }
@@ -1023,7 +1023,7 @@
               "_title": "SmartDashboard/Robot Vision Field",
               "_glyph": 148,
               "_showGlyph": false,
-              "Game/Game": "A2023_Charged_Up",
+              "Game/Game": "k2024Crescendo",
               "Visuals/Robot Icon Size": 50.0,
               "Visuals/Show Outside Circles": false
             }
@@ -1291,7 +1291,7 @@
               "_title": "SmartDashboard/Robot Odometry Field",
               "_glyph": 148,
               "_showGlyph": false,
-              "Game/Game": "A2023_Charged_Up",
+              "Game/Game": "k2024Crescendo",
               "Visuals/Robot Icon Size": 50.0,
               "Visuals/Show Outside Circles": false
             }
@@ -1459,7 +1459,7 @@
               "_title": "SmartDashboard/Robot Odometry Field",
               "_glyph": 148,
               "_showGlyph": false,
-              "Game/Game": "A2023_Charged_Up",
+              "Game/Game": "k2024Crescendo",
               "Visuals/Robot Icon Size": 50.0,
               "Visuals/Show Outside Circles": false
             }
@@ -1719,7 +1719,7 @@
   "windowGeometry": {
     "x": -7.199999809265137,
     "y": -7.199999809265137,
-    "width": 1295.199951171875,
-    "height": 687.2000122070312
+    "width": 1550.4000244140625,
+    "height": 830.4000244140625
   }
 }

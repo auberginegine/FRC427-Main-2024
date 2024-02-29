@@ -64,7 +64,7 @@ public class AutoPicker {
     public void registerCommands() {
         // eg. NamedCommands.registerCommand("intake_cube", new IntakeForTime(intake, 1, 2)); 
         NamedCommands.registerCommand("GoToSpeaker", new GoToSpeaker(Arm.getInstance()));
-        NamedCommands.registerCommand("IntakeGround", AutomationCommands.autoIntakeCommand(0.7).withTimeout(3));
+        NamedCommands.registerCommand("IntakeGround", AutomationCommands.autoIntakeCommand(0.5).withTimeout(3));
         NamedCommands.registerCommand("ShootSpeaker", OuttakeToSpeaker.outtakeToSpeaker(Intake.getInstance()));
         // NamedCommands.registerCommand("ShootOut", new OuttakeToSpeaker(Intake.getInstance(),0.5,1));
         NamedCommands.registerCommand("ShootAnywhere", AutomationCommands.shootFromAnywhere());

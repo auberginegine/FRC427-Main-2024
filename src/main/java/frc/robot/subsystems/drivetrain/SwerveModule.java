@@ -156,6 +156,7 @@ public class SwerveModule {
     }
 
     public void commandState() {
+        if (this.targetState == null) return; 
         SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " desired speed", this.targetState.speedMetersPerSecond); 
         SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " actual speed", this.driveEncoder.getVelocity()); 
         SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " diff speed", this.targetState.speedMetersPerSecond - this.driveEncoder.getVelocity()); 

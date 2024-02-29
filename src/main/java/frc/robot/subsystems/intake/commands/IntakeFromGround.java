@@ -34,7 +34,7 @@ public class IntakeFromGround extends Command {
     public void execute() {
         // runs repeatedly until the command is finished
         this.m_intake.intakeRing(speed);
-        this.m_intake.outtakeRing(-500);
+        this.m_intake.outtakeRing(-750);
     }
 
     // checks to stops sucking
