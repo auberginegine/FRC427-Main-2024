@@ -12,15 +12,21 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "Speaker 2 moves out"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "ShootSpeaker"
+            "name": "ShootAnywhere"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Speaker to Note 2"
+            "pathName": "Speaker 2 move out to note"
           }
         },
         {

@@ -55,47 +55,47 @@ public class TeleOpCommand extends Command {
         // Constants.DrivetrainConstants.kMaxSpeedMetersPerSecond = SmartDashboard.getNumber("Linear Speed", 1.0);
         // ensure driving does not break if gyro disconnects, will hopefully transition to robot oriented drive
        
-        if (SmartDashboard.getBoolean("snap", true)) {
-        //     // align forward, align sideways, etc. 
-            ChassisState speeds = m_controller.getDesiredChassisState(); 
-            boolean isTurning = speeds.turn; 
+        // if (SmartDashboard.getBoolean("snap", true)) {
+        // //     // align forward, align sideways, etc. 
+        //     ChassisState speeds = m_controller.getDesiredChassisState(); 
+        //     boolean isTurning = speeds.turn; 
 
-            // System.out.println("Speeds turn");
-            // System.out.println(speeds.turn);
+        //     // System.out.println("Speeds turn");
+        //     // System.out.println(speeds.turn);
 
-            if (oldState == FieldState.FIELD && this.fieldState == FieldState.SOURCE) {
-                autoSnap = true; 
-                autoSnapAngle = optAlliance.get() == Alliance.Red ? 60 : -60; 
-                autoSnapStop = () -> Math.abs(m_drivetrain.getRotation().getDegrees() - autoSnapAngle) <= 5 || isTurning || this.fieldState != FieldState.SOURCE; 
-            }
+        //     if (oldState == FieldState.FIELD && this.fieldState == FieldState.SOURCE) {
+        //         autoSnap = true; 
+        //         autoSnapAngle = optAlliance.get() == Alliance.Red ? 60 : -60; 
+        //         autoSnapStop = () -> Math.abs(m_drivetrain.getRotation().getDegrees() - autoSnapAngle) <= 5 || isTurning || this.fieldState != FieldState.SOURCE; 
+        //     }
 
-            // auto snap
-            if (autoSnap && SmartDashboard.getBoolean("Auto Snap At Source", true)) {
-                boolean b = autoSnapStop.get(); 
-                if (b) {
-                    autoSnap = false;
-                } else {
-                    speeds.turn = true; 
-                    speeds.omegaRadians = Math.toRadians(autoSnapAngle); 
-                }
-            }
+        //     // auto snap
+        //     if (autoSnap && SmartDashboard.getBoolean("Auto Snap At Source", true)) {
+        //         boolean b = autoSnapStop.get(); 
+        //         if (b) {
+        //             autoSnap = false;
+        //         } else {
+        //             speeds.turn = true; 
+        //             speeds.omegaRadians = Math.toRadians(autoSnapAngle); 
+        //         }
+        //     }
 
             // System.out.println(speeds.omegaRadians);
 
-            SmartDashboard.putNumber("x", speeds.vxMetersPerSecond); 
-            SmartDashboard.putNumber("y", speeds.vyMetersPerSecond); 
-            SmartDashboard.putNumber("rotation", speeds.omegaRadians); 
-            SmartDashboard.putBoolean("Turn", speeds.turn);
-            SmartDashboard.putString("Field State", fieldState.name()); 
-            m_drivetrain.swerveDriveFieldRel(speeds, true, true);
-        } else {
+        //     SmartDashboard.putNumber("x", speeds.vxMetersPerSecond); 
+        //     SmartDashboard.putNumber("y", speeds.vyMetersPerSecond); 
+        //     SmartDashboard.putNumber("rotation", speeds.omegaRadians); 
+        //     SmartDashboard.putBoolean("Turn", speeds.turn);
+        //     SmartDashboard.putString("Field State", fieldState.name()); 
+        //     m_drivetrain.swerveDriveFieldRel(speeds, true, true);
+        // } else {
             // go left go right smoothly
             ChassisSpeeds speeds = m_controller.getDesiredChassisSpeeds(); 
             SmartDashboard.putNumber("x", speeds.vxMetersPerSecond); 
             SmartDashboard.putNumber("y", speeds.vyMetersPerSecond); 
             SmartDashboard.putNumber("rotation", speeds.omegaRadiansPerSecond); 
             m_drivetrain.swerveDrive(speeds, true);
-        }
+        // }
     }
 
     private void updateFieldState(Alliance alliance) {

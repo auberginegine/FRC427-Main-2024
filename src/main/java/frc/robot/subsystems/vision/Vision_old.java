@@ -159,7 +159,7 @@ public class Vision_old extends SubsystemBase {
         boolean isInUpperYLimit = limelightY <= Constants.Vision.kAprilTagFieldLayout.getFieldWidth() + 2.5;
         boolean isInLowerZLimit = 0 <= limelightZ;
         boolean isInUpperZLimit = limelightZ <= Constants.Vision.limelightZHeight + 0.5;
-        return isInLowerXLimit && isInUpperXLimit && isInLowerYLimit && isInUpperYLimit && isInLowerZLimit && isInUpperZLimit && isEstimateClose();
+        return isInLowerXLimit && isInUpperXLimit && isInLowerYLimit && isInUpperYLimit && isInLowerZLimit && isInUpperZLimit;
     }
 
     public double getYaw() {

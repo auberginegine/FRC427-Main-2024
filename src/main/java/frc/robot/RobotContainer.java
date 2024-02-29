@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.commands.AutomationCommands;
 import frc.robot.commands.DriverCommands;
 import frc.robot.subsystems.arm.Arm;
@@ -30,7 +31,9 @@ import frc.robot.subsystems.vision.Vision_old;
 
 import java.util.Optional;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -189,7 +192,7 @@ public class RobotContainer {
   // send any data as needed to the dashboard
   public void doSendables() {
     SmartDashboard.putData("Autonomous", autoPicker.getChooser());
-    // SmartDashboard.putBoolean("gyro connected", drivetrain.gyro.isConnected()); 
+    SmartDashboard.putBoolean("gyro connected", drivetrain.gyro.isConnected()); 
   }
 
   // gives the currently picked auto as the chosen auto for the match

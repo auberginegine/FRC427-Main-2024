@@ -80,10 +80,13 @@ public class GeneralizedReleaseRoutine extends Command {
 
         if (!isInRange || !interrupted) {
             intake.stopShoot();
+            intake.stopSuck();
             arm.goToAngle(Constants.ArmConstants.kTravelPosition);
             CommandScheduler.getInstance().schedule(DriverCommands.vibrateController(driverController.getHID(), 1));
         } else {
             Command command = OuttakeToSpeaker.shoot(intake).finallyDo(() -> {
+                intake.stopShoot();
+                intake.stopSuck();
                 arm.goToAngle(Constants.ArmConstants.kTravelPosition);
             }); 
             CommandScheduler.getInstance().schedule(command);

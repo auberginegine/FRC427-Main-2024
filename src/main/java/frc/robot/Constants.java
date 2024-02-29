@@ -87,12 +87,12 @@ public final class Constants {
     public static final double kMaxAttainableRotationRadPerSecond = kMaxAttainableModuleSpeedMetersPerSecond /
     Math.hypot(kTrackWidthMeters / 2.0, kWheelBaseMeters / 2.0); // max rotation of robot
     
-    public static double kMaxSpeedMetersPerSecond = 3.5; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
+    public static double kMaxSpeedMetersPerSecond = 4; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
     public static double kMaxSlowSpeedMetersPerSecond = 1.0; 
-    public static final double kMaxAccelerationMetersPerSecondSquared = kMaxSpeedMetersPerSecond / 0.2; // max acceleration of robot (accelerate to max speed in 1 second)
+    public static final double kMaxAccelerationMetersPerSecondSquared = kMaxSpeedMetersPerSecond / 0.1; // max acceleration of robot (accelerate to max speed in 1 second)
     public static double kMaxRotationRadPerSecond = 4.50; // 3.00; // max rotation speed of the robot
     public static final double kMaxSlowRotationRadPerSecond = Math.PI / 2; 
-    public static final double kMaxRotationAccelerationRadPerSecondSquared = kMaxRotationRadPerSecond / 0.2; // max angular acceleration of robot
+    public static final double kMaxRotationAccelerationRadPerSecondSquared = kMaxRotationRadPerSecond / 0.001; // max angular acceleration of robot
 
     // feedforward values (NO NEED to tune these)
     public static final double ksVolts = 0; 
@@ -121,10 +121,10 @@ public final class Constants {
 
     // current limits for each motor
     public static final int kDriveCurrentLimit = 40; 
-    public static final double kDriveRampRate = 0.25; 
+    public static final double kDriveRampRate = 0.01; 
      
     public static final int kTurnCurrentLimit = 20; 
-    public static final double kTurnRampRate = 0.25;
+    public static final double kTurnRampRate = 0.01;
 
     // max acceleration/deceleration of each motor (used for high CG robots)
     public static final double kForwardSlewRate = kMaxAccelerationMetersPerSecondSquared; 

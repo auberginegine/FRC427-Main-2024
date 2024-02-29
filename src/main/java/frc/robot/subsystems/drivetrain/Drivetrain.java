@@ -1,5 +1,6 @@
 package frc.robot.subsystems.drivetrain;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -39,13 +40,15 @@ public class Drivetrain extends SubsystemBase {
     }
 
   // set up the four swerve modules  
-  private SwerveModule frontLeft = new SwerveModule(Constants.DrivetrainConstants.frontLeft); 
+  public SwerveModule frontLeft = new SwerveModule(Constants.DrivetrainConstants.frontLeft); 
   private SwerveModule frontRight = new SwerveModule(Constants.DrivetrainConstants.frontRight); 
   private SwerveModule backLeft = new SwerveModule(Constants.DrivetrainConstants.backLeft); 
   private SwerveModule backRight = new SwerveModule(Constants.DrivetrainConstants.backRight); 
 
   // initialize swerve position estimator
   private SwerveDrivePoseEstimator odometry; 
+
+  private Pose2d lastPose = new Pose2d(); 
 
   // initialize the gyro on the robot
   public AHRS gyro = new AHRS(SPI.Port.kMXP);
@@ -82,14 +85,24 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("drive x", odometry.getEstimatedPosition().getX());
     SmartDashboard.putNumber("drive y", odometry.getEstimatedPosition().getY());
     SmartDashboard.putNumber("drive omega", odometry.getEstimatedPosition().getRotation().getDegrees());
-    
+
     this.odometry.update(gyro.getRotation2d(), getPositions());
+
+SmartDashboard.putBoolean("Robot Pose Valid", SwerveUtils.isPoseValid(this.getPose())); 
+
+    if (!SwerveUtils.isPoseValid(this.getPose())) {
+      this.odometry.resetPosition(gyro.getRotation2d(), getPositions(), lastPose);
+    }
 
     m_odometryField.setRobotPose(getPose());
     SmartDashboard.putData("Robot Odometry Field", m_odometryField);
     SmartDashboard.putData("Robot Vision Field", m_visionField);
-
+// System.out.println(m_odometryField.getRobotPose().toString());
+    
     updateModules();
+
+    
+    lastPose = this.getPose();
 
     doSendables();
   }

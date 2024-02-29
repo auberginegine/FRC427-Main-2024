@@ -14,7 +14,7 @@ public class AutomaticallyMoveToPiece {
     public static Command waitForVision(FrontVision frontVision) {
         return Commands.waitUntil(() -> {
             var result = frontVision.getLatestVisionResult();
-            return result.hasTargets(); 
+            return result == null ? false : result.hasTargets(); 
         }); 
     }
 

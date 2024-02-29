@@ -37,7 +37,7 @@ public class SwerveModule {
     private CANcoder absoluteTurnEncoder;
 
     // encoder for the drive wheel
-    private RelativeEncoder driveEncoder; 
+    public RelativeEncoder driveEncoder; 
 
     // feedforward values of the drive, not necessarily needed
     private SimpleMotorFeedforward driveFeedforward = new SimpleMotorFeedforward(
@@ -156,7 +156,9 @@ public class SwerveModule {
     }
 
     public void commandState() {
+
         if (this.targetState == null) return; 
+        SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " position", this.driveEncoder.getPosition()); 
         SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " desired speed", this.targetState.speedMetersPerSecond); 
         SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " actual speed", this.driveEncoder.getVelocity()); 
         SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " diff speed", this.targetState.speedMetersPerSecond - this.driveEncoder.getVelocity()); 
