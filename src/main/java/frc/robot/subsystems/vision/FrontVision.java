@@ -29,6 +29,8 @@ public class FrontVision extends SubsystemBase {
             return;
         }
 
+        if (this.latestResult == null) return; 
+
         if (this.latestResult.hasTargets()) lastSuccessfulResult = latestResult; 
 
         
