@@ -70,10 +70,28 @@
           "data": {
             "name": "ShootAnywhere"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1st back to 2nd middle note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2nd middle note back"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootAnywhere"
+          }
         }
       ]
     }
   },
-  "folder": "4 note auto",
+  "folder": "4 piece auto",
   "choreoAuto": false
 }

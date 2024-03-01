@@ -5,27 +5,29 @@
   "pathFolders": [
     "Amp Note",
     "Middle Back",
-    "Special",
+    "Speaker Misc",
     "Note Middle",
     "Speaker Amp",
     "Speaker Middle",
     "Speaker Note",
+    "Special",
     "Testing"
   ],
   "autoFolders": [
     "3 piece auto",
-    "4 note auto",
+    "4 piece auto",
     "Archive",
     "Leave Autos",
+    "2 piece auto",
     "Score Preload",
     "Shoot anywhere",
     "Testing",
     "Two Piece Middle Fling",
     "TwoPieceReturn"
   ],
-  "defaultMaxVel": 1.0,
-  "defaultMaxAccel": 1.0,
-  "defaultMaxAngVel": 120.0,
-  "defaultMaxAngAccel": 120.0,
+  "defaultMaxVel": 3.0,
+  "defaultMaxAccel": 2.5,
+  "defaultMaxAngVel": 360.0,
+  "defaultMaxAngAccel": 300.0,
   "maxModuleSpeed": 4.5
 }

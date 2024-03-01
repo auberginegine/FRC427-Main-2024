@@ -8,47 +8,29 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.460038208296968,
-        "y": 4.886485963448118
+        "x": 1.3633965729469937,
+        "y": 5.46628631718802
       },
       "isLocked": false,
       "linkedName": "Speaker 2"
     },
     {
       "anchor": {
-        "x": 2.281268050080585,
-        "y": 3.6323458649289786
+        "x": 1.748207342568533,
+        "y": 5.4761064972366915
       },
       "prevControl": {
-        "x": 1.5179797914099251,
-        "y": 3.3267341217386277
+        "x": 1.4916668294875066,
+        "y": 5.436685488755594
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Note 3"
+      "linkedName": "speaker 2 move out"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "IntakeGround"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 2.5,
@@ -61,7 +43,10 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Speaker Note",
-  "previewStartingState": null,
+  "folder": "Speaker Misc",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
   "useDefaultConstraints": true
 }
