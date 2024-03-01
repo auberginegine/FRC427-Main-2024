@@ -3,29 +3,38 @@ package frc.robot.subsystems.vision;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
 
-import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.drivetrain.Drivetrain;
 
 // Figures out which game pieces are near
-public class FrontVision extends SubsystemBase{
-     public static FrontVision instance; 
-     //  = new FrontVision(Drivetrain.getInstance());
+public class FrontVision extends SubsystemBase {
+     public static FrontVision instance  = new FrontVision();
 
-    private Drivetrain drivetrain;
     private PhotonCamera camera;
     private PhotonPipelineResult latestResult;
-    private Transform3d latestPoseResult;
+    private PhotonPipelineResult lastSuccessfulResult; 
 
-    private FrontVision(Drivetrain drivetrain) {
-        this.drivetrain = drivetrain;
+    private FrontVision() {
         this.camera = new PhotonCamera("frontPhotonCamera");
     }
 
     public void periodic() {
-        this.latestResult = this.camera.getLatestResult();
-        this.latestPoseResult = this.latestResult.getMultiTagResult().estimatedPose.best;
-        // SmartDashboard.putNumber("RobotPositionX", networkTable.);
+        SmartDashboard.putBoolean("Front Camera is Connected", this.camera.isConnected()); 
+
+        if (!this.camera.isConnected()) return; 
+
+        try {
+            this.latestResult = this.camera.getLatestResult();
+        } catch (Exception err) {
+            return;
+        }
+
+        if (this.latestResult == null) return; 
+
+        if (this.latestResult.hasTargets()) lastSuccessfulResult = latestResult; 
+
+        
+        SmartDashboard.putNumber("Target Yaw",getNoteRotation());
     }
 
     public static FrontVision getInstance() {
@@ -36,7 +45,12 @@ public class FrontVision extends SubsystemBase{
         return latestResult;
     }
 
+    public PhotonPipelineResult getLastSuccessfulResult() {
+        return this.lastSuccessfulResult;
+    }
+
     public double getNoteRotation() {
+        if (this.latestResult == null || !this.latestResult.hasTargets()) return 0; 
         return latestResult.getBestTarget().getYaw();
     }
 

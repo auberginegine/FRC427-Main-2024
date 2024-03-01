@@ -37,7 +37,7 @@ public class SwerveModule {
     private CANcoder absoluteTurnEncoder;
 
     // encoder for the drive wheel
-    private RelativeEncoder driveEncoder; 
+    public RelativeEncoder driveEncoder; 
 
     // feedforward values of the drive, not necessarily needed
     private SimpleMotorFeedforward driveFeedforward = new SimpleMotorFeedforward(
@@ -47,6 +47,8 @@ public class SwerveModule {
     ); 
 
     private String name; 
+
+    private DriveState driveType = DriveState.CLOSED_LOOP; 
 
     /**
      * 
@@ -148,14 +150,21 @@ public class SwerveModule {
      * @param driveType the type of drive to operate with
      */
     public void updateState(SwerveModuleState state, DriveState driveType) {
-        SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " desired speed", state.speedMetersPerSecond); 
-        SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " actual speed", this.driveEncoder.getVelocity()); 
-        SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " diff speed", state.speedMetersPerSecond - this.driveEncoder.getVelocity()); 
-
         this.targetState = state; 
+        this.driveType = driveType;
+
+    }
+
+    public void commandState() {
+
+        if (this.targetState == null) return; 
+        SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " position", this.driveEncoder.getPosition()); 
+        SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " desired speed", this.targetState.speedMetersPerSecond); 
+        SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " actual speed", this.driveEncoder.getVelocity()); 
+        SmartDashboard.putNumber("module " + absoluteTurnEncoder.getDeviceID() + " diff speed", this.targetState.speedMetersPerSecond - this.driveEncoder.getVelocity()); 
 
         // optimize angles so the wheels only have to turn 90 degrees to reach their setpoint at any given time
-        SwerveModuleState optimizedState = SwerveModuleState.optimize(state, getAngle()); 
+        SwerveModuleState optimizedState = SwerveModuleState.optimize(this.targetState, getAngle()); 
 
         if (driveType == DriveState.OPEN_LOOP) updateOpenLoopDriveState(optimizedState.speedMetersPerSecond); 
          else updateClosedLoopDriveState(optimizedState.speedMetersPerSecond);
