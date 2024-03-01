@@ -32,7 +32,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "speaker 1 moves out to note"
+            "pathName": "Speaker 1 move out to note"
           }
         },
         {
@@ -104,6 +104,6 @@
       ]
     }
   },
-  "folder": "4 note auto",
+  "folder": "4 piece auto",
   "choreoAuto": false
 }

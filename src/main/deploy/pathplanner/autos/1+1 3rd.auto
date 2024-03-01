@@ -28,40 +28,10 @@
           "data": {
             "pathName": "Speaker 3 move out to note"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootAnywhere"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Note 3 to Note 2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootAnywhere"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Note 2 to Note 1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootAnywhere"
-          }
         }
       ]
     }
   },
-  "folder": "4 piece auto",
+  "folder": "2 piece auto",
   "choreoAuto": false
 }

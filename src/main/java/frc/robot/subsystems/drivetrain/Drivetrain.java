@@ -88,8 +88,6 @@ public class Drivetrain extends SubsystemBase {
 
     this.odometry.update(gyro.getRotation2d(), getPositions());
 
-SmartDashboard.putBoolean("Robot Pose Valid", SwerveUtils.isPoseValid(this.getPose())); 
-
     if (!SwerveUtils.isPoseValid(this.getPose())) {
       this.odometry.resetPosition(gyro.getRotation2d(), getPositions(), lastPose);
     }
@@ -97,10 +95,8 @@ SmartDashboard.putBoolean("Robot Pose Valid", SwerveUtils.isPoseValid(this.getPo
     m_odometryField.setRobotPose(getPose());
     SmartDashboard.putData("Robot Odometry Field", m_odometryField);
     SmartDashboard.putData("Robot Vision Field", m_visionField);
-// System.out.println(m_odometryField.getRobotPose().toString());
     
     updateModules();
-
     
     lastPose = this.getPose();
 
@@ -221,9 +217,6 @@ SmartDashboard.putBoolean("Robot Pose Valid", SwerveUtils.isPoseValid(this.getPo
     Optional<Alliance> optAlliance = DriverStation.getAlliance(); 
 
     if (optAlliance.isEmpty()) return; 
-
-
-    SmartDashboard.putBoolean("flip field", flipRotationField);
 
     if (flipRotationField && optAlliance.get() == Alliance.Red) thetaDegrees += 180; 
      if (turn || gyro.getRate() > 0.25) lastTurnedTheta = this.getRotation().getDegrees(); 
