@@ -76,7 +76,7 @@ public class AutoPicker {
         // NamedCommands.registerCommand("GoToSpeaker", new PrintCommand("Going to Speaker"));
         // NamedCommands.registerCommand("IntakeGround", new PrintCommand("Intaking from ground!"));
         // NamedCommands.registerCommand("ShootSpeaker", new PrintCommand("shooting to speaker!!"));
-        // NamedCommands.registerCommand("ShootOut", new PrintCommand("Shooting out to nowhere!!!"));
+        NamedCommands.registerCommand("ShootOut", new PrintCommand("Shooting out to nowhere!!!"));
         // NamedCommands.registerCommand("ShootAnywhere", new PrintCommand("Shooting from anywhere!!!!"));
     }
 
