@@ -28,7 +28,7 @@ public class TuneIntakeShooter extends Command {
     }
 
     public void end(boolean interrupted) {
-
+        this.m_intake.intakeRing(0);
     }
 
 }

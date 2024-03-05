@@ -23,12 +23,10 @@ public class Hang extends SubsystemBase {
     public double m_targetPosition;
     
     //Initialize Motors
-    private CANSparkMax m_HangMotorRight = new CANSparkMax(Constants.HangConstants.kHangRightMotorID, MotorType.kBrushless);
-    private CANSparkMax m_HangMotorLeft = new CANSparkMax(Constants.HangConstants.kHangLeftMotorID, MotorType.kBrushless);
+    private CANSparkMax m_HangMotor = new CANSparkMax(Constants.HangConstants.kHangMotorID, MotorType.kBrushless);
 
     //Encoder Initialize
-    private RelativeEncoder m_HangEncoderRight = m_HangMotorRight.getEncoder();
-    private RelativeEncoder m_HangEncoderLeft = m_HangMotorLeft.getEncoder();
+    private RelativeEncoder m_HangEncoder = m_HangMotor.getEncoder();
 
     private PIDController m_HangPidController = new PIDController(Constants.HangConstants.kP, Constants.HangConstants.kI, Constants.HangConstants.kD);
 
@@ -39,58 +37,41 @@ public class Hang extends SubsystemBase {
 
     public void setupMotors() {
         //Sets motors inverted
-        m_HangMotorRight.setInverted(Constants.HangConstants.kRightMotorInverted);
+        m_HangMotor.setInverted(Constants.HangConstants.kMotorInverted);
         // m_HangMotorLeft.setInverted(Constants.HangConstants.kLeftMotorInverted);
         
         //Sets Smart Limits
-        m_HangMotorRight.setSmartCurrentLimit(Constants.HangConstants.kHangMotorLimit);
-        m_HangMotorLeft.setSmartCurrentLimit(Constants.HangConstants.kHangMotorLimit);
-
-        //Conversion Factors for left Encoders
-        m_HangEncoderLeft.setPositionConversionFactor(Constants.HangConstants.kPositionConversionFactor);
-        m_HangEncoderLeft.setVelocityConversionFactor(Constants.HangConstants.kVelocityConversionFactor);
+        m_HangMotor.setSmartCurrentLimit(Constants.HangConstants.kHangMotorLimit);
 
         //Conversion Factors for right Encoders
-        m_HangEncoderRight.setPositionConversionFactor(Constants.HangConstants.kPositionConversionFactor);
-        m_HangEncoderRight.setVelocityConversionFactor(Constants.HangConstants.kVelocityConversionFactor);
+        m_HangEncoder.setPositionConversionFactor(Constants.HangConstants.kPositionConversionFactor);
+        m_HangEncoder.setVelocityConversionFactor(Constants.HangConstants.kVelocityConversionFactor);
 
-        m_HangMotorLeft.setIdleMode(IdleMode.kBrake);
-        m_HangMotorRight.setIdleMode(IdleMode.kBrake);
+        m_HangMotor.setIdleMode(IdleMode.kBrake);
 
         m_HangPidController.setTolerance(Constants.HangConstants.kHangTolerance);
         //Sets  limits for Right and Left Motors
         //Right Motors
-        m_HangMotorRight.setSoftLimit(SoftLimitDirection.kForward, Constants.HangConstants.kFowardHangSoftLimit);
-        m_HangMotorRight.setSoftLimit(SoftLimitDirection.kReverse, Constants.HangConstants.kReverseHangSoftLimit);
-        m_HangMotorRight.enableSoftLimit(SoftLimitDirection.kForward, true);
-        m_HangMotorRight.enableSoftLimit(SoftLimitDirection.kReverse, true);
-        //Left Motors
-        m_HangMotorLeft.setSoftLimit(SoftLimitDirection.kForward, Constants.HangConstants.kFowardHangSoftLimit);
-        m_HangMotorLeft.setSoftLimit(SoftLimitDirection.kReverse, Constants.HangConstants.kReverseHangSoftLimit);
-        m_HangMotorLeft.enableSoftLimit(SoftLimitDirection.kForward, true);
-        m_HangMotorLeft.enableSoftLimit(SoftLimitDirection.kReverse, true);
+        m_HangMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.HangConstants.kFowardHangSoftLimit);
+        m_HangMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.HangConstants.kReverseHangSoftLimit);
+        m_HangMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+        m_HangMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
         m_HangPidController.setP(Constants.HangConstants.kP);
         m_HangPidController.setI(Constants.HangConstants.kI);
         m_HangPidController.setD(Constants.HangConstants.kD);
         
-
-        // Tells Left Motor to do whatever right motor is doing
-        m_HangMotorLeft.follow(m_HangMotorRight, Constants.HangConstants.kLeftMotorInverted);
-
-        m_HangMotorRight.burnFlash();
-        m_HangMotorLeft.burnFlash();
+        m_HangMotor.burnFlash();
     }
 
     @Override
     public void periodic() {
         m_velocity = m_HangPidController.calculate(getHangPosition(), m_targetPosition);
-        m_HangMotorRight.set(m_velocity);
-       
-
-        //Check for LEDs on Hang
+        if (m_HangMotor.getOutputCurrent()>100 && velocityWithinTolerance(0)) {
+           m_velocity = 0;
+        }
+        m_HangMotor.set(m_velocity);
         
-
         //Constantly sends logs to Smart Dashboard
         doSendables();
     }
@@ -98,10 +79,8 @@ public class Hang extends SubsystemBase {
     public void doSendables() {
         // Add logging for hang (eg. encoder positions, velocity, etc. )
         IOUtils.set("Hang Target Velocity (m/s)", m_velocity);
-        IOUtils.set("Right Hang Current Velocity (m/s)", m_HangEncoderRight.getVelocity());
-        IOUtils.set("Left Hang Current Velocity (m/s)", m_HangEncoderLeft.getVelocity());
-        IOUtils.set("Right Hang Current Position", m_HangEncoderRight.getPosition());
-        IOUtils.set("Left Hang Current Position", m_HangEncoderLeft.getPosition());
+        IOUtils.set("Right Hang Current Velocity (m/s)", m_HangEncoder.getVelocity());
+        IOUtils.set("Right Hang Current Position", m_HangEncoder.getPosition());
 
         // SmartDashboard.putBoolean("Hang RM Inverted", m_HangMotorRight.getInverted());
         // SmartDashboard.putBoolean("Hang LM Inverted", m_HangMotorLeft.getInverted());
@@ -118,7 +97,7 @@ public class Hang extends SubsystemBase {
     }
 
     public double getHangPosition() {
-        return m_HangEncoderRight.getPosition();
+        return m_HangEncoder.getPosition();
     }
 
     public void setPosition(double targetposition) {
@@ -129,5 +108,8 @@ public class Hang extends SubsystemBase {
         return m_HangPidController.atSetpoint();
     }
 
-  
+    public boolean velocityWithinTolerance(double TargetSpeed) {
+        return Math.abs(m_HangEncoder.getVelocity()-TargetSpeed) <= Constants.HangConstants.kHangTolerance;
+    }
+
 }
