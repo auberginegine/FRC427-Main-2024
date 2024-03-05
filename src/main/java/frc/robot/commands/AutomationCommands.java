@@ -16,46 +16,109 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.IntakeFromGround;
 import frc.robot.subsystems.intake.commands.OuttakeToAmp;
 import frc.robot.subsystems.intake.commands.OuttakeToSpeaker;
+import frc.robot.subsystems.leds.Led;
+import frc.robot.subsystems.vision.FrontVision;
+import frc.robot.util.DriverController;
 
 public class AutomationCommands {
-    
-  public static Command autoIntakeCommand() {
-    return Commands.sequence(
-        new GoToGround(Arm.getInstance()), 
-        new IntakeFromGround(Intake.getInstance())
-    ).finallyDo(() -> {
-      Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
+  
+  //Create autoIntakeCOmmand Command
+  public static Command autoIntakeCommand(double intakeSpeed) {
+    // Set Leds to Intake
+    return Commands.runOnce(() -> Led.getInstance().isIntaking = true).andThen(Commands.parallel(
+        new IntakeFromGround(Intake.getInstance(), intakeSpeed),
+        new GoToGround(Arm.getInstance())
+      )).finallyDo(() -> {
+        // Reset arm to travel and reset Leds
+        Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
+        Led.getInstance().isIntaking = false;
     });
   }
 
+  public static Command autoIntakeCommand() {
+    return autoIntakeCommand(Constants.IntakeConstants.kShootSuckerSpeed); 
+  }
+
+  //Create pathFindToSpeaker Command
   public static Command pathFindToSpeaker() {
-    return Commands.defer(() -> MoveToSpeaker.goToSpeaker(), Set.of(Drivetrain.getInstance())); 
+    //Sets leds
+    return Commands.runOnce(() -> Led.getInstance().isMovingToSpeaker = true).andThen(
+      Commands.defer(() -> MoveToSpeaker.goToSpeaker(), Set.of(Drivetrain.getInstance()))).finallyDo(() -> {
+        //Set leds off 
+        Led.getInstance().isMovingToSpeaker = false;
+      }); 
   }
 
+  //Create pathFindToSpeakerAndScore Command
   public static Command pathFindToAmp() {
-    return Commands.defer(() -> MoveToAmp.goToAmp(), Set.of(Drivetrain.getInstance())); 
+    //Set Leds
+    return Commands.runOnce(() -> Led.getInstance().isMovingToAmp = true).andThen(
+      //Go To Amp
+      Commands.defer(() -> MoveToAmp.goToAmp(), Set.of(Drivetrain.getInstance()))).finallyDo(() -> {
+        //Turn specific Leds off
+        Led.getInstance().isMovingToAmp = false;
+      }); 
   }
 
-  public static Command pathFindToSpeakerAndScore(Arm arm, Intake intake) {
-    return pathFindToSpeaker().alongWith(new GoToSpeaker(arm)).andThen(new OuttakeToSpeaker(intake)).finallyDo(() -> {
+  //Create pathFindToSpeakerAndScore Command
+  public static Command pathFindToSpeakerAndScore() {
+    return pathFindToSpeaker().alongWith(new GoToSpeaker(Arm.getInstance())).andThen(OuttakeToSpeaker.outtakeToSpeaker(Intake.getInstance())).finallyDo(() -> {
       Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
     }); 
   }
-
-  public static Command pathFindToAmpAndScore(Arm arm, Intake intake) {
-    return pathFindToAmp().alongWith(new GoToAmp(arm)).andThen(new OuttakeToAmp(intake)).finallyDo(() -> {
+  //Create pathFindToAmpAnndScore Command
+  public static Command pathFindToAmpAndScore() {
+    //Run pathFindToAmp
+    return pathFindToAmp().alongWith(new GoToAmp(Arm.getInstance())).andThen(new OuttakeToAmp(Intake.getInstance())).finallyDo(() -> {
+      //When done, arm goes to travel position
+      Intake.getInstance().stopShoot();
+      Intake.getInstance().stopSuck();
       Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
     });
   }
 
-  public static Command pathFindToGamePiece() {
-    // TODO
-    return Commands.none(); 
+  public static Command pathFindToGamePiece(DriverController controller) {
+    return Commands.runOnce(() -> {
+      Led.getInstance().isMovingToNote = true; 
+    })
+    .andThen(() -> {
+      Arm.getInstance().goToAngle(30);
+    })
+    .andThen(AutomaticallyMoveToPiece.waitForVision(FrontVision.getInstance())) // maybe??
+    .andThen(Commands.defer(
+        () -> AutomaticallyMoveToPiece.automaticallyMoveToPiece(controller, Drivetrain.getInstance(), FrontVision.getInstance()), 
+        Set.of(Drivetrain.getInstance())
+      ).asProxy()
+    ).finallyDo(() -> {
+      Led.getInstance().isMovingToNote = false; 
+    }); 
   }
 
+
+  //Create ShootFromAnywhere Commands
   public static Command shootFromAnywhere() {
-    return Commands.defer(
+    //When command runs set Leds to true, and then run Shoot Anywhere with Drivetrain/Arm/Intake
+    return Commands.runOnce(() -> Led.getInstance().isShooting = true).andThen(Commands.defer(
       () -> ShootAnywhere.shootAnywhere(Drivetrain.getInstance(), Arm.getInstance(), Intake.getInstance()), 
-    Set.of(Drivetrain.getInstance(), Arm.getInstance(), Intake.getInstance()));  
+    Set.of(Drivetrain.getInstance(), Arm.getInstance(), Intake.getInstance()))).finallyDo(() -> {
+      //Set Is Shooting to False
+      Led.getInstance().isShooting = false;
+    }); 
+  }
+
+  public static Command generalizedReleaseCommand(DriverController controller) {
+    return Commands.runOnce(() -> Led.getInstance().isShooting = true).andThen(
+      new GeneralizedReleaseRoutine(controller, Drivetrain.getInstance(), Arm.getInstance(), Intake.getInstance())
+    ).finallyDo(() -> {
+      Led.getInstance().isShooting = false; 
+    }); 
+  }
+
+  public static Command generalizedHangCommand(DriverController controller) {
+    return Commands.runOnce(() -> Led.getInstance().isHanging = true)
+    .andThen(new GeneralizedHangRoutine(controller, Drivetrain.getInstance(), Arm.getInstance()))
+    .finallyDo(() -> {
+      Led.getInstance().isHanging = false; 
+    });
   }
 }

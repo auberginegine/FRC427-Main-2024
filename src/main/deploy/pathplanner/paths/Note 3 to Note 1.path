@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.416760723245758,
-        "y": 4.0943608704260015
+        "x": 2.271529857413215,
+        "y": 3.8563242962784865
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4064733843753405,
-        "y": 4.505854425242685
+        "x": 2.2612425185427973,
+        "y": 4.2678178510951685
       },
       "isLocked": false,
       "linkedName": "Note 3"
     },
     {
       "anchor": {
-        "x": 2.5577104734808596,
-        "y": 6.992770607832326
+        "x": 2.2812680500854543,
+        "y": 6.8167348671638095
       },
       "prevControl": {
-        "x": 1.8612444242432349,
-        "y": 7.231999225903214
+        "x": 1.6399167673828887,
+        "y": 6.826601809974617
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,10 +32,10 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.5,
-    "maxAcceleration": 1.5,
-    "maxAngularVelocity": 120.0,
-    "maxAngularAcceleration": 120.0
+    "maxVelocity": 3.0,
+    "maxAcceleration": 2.25,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 300.0
   },
   "goalEndState": {
     "velocity": 0,
@@ -45,5 +45,5 @@
   "reversed": false,
   "folder": "Speaker Note",
   "previewStartingState": null,
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

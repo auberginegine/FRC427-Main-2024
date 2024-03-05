@@ -18,12 +18,12 @@ import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj.Timer;
 
-public class Vision extends SubsystemBase {
+public class Vision_old extends SubsystemBase {
 
     
-    private static Vision instance = new Vision(Drivetrain.getInstance());
+    private static Vision_old instance = new Vision_old(Drivetrain.getInstance());
 
-    public static Vision getInstance() {
+    public static Vision_old getInstance() {
         return instance; 
     }
 
@@ -42,7 +42,7 @@ public class Vision extends SubsystemBase {
     private double[] botPoseValues;
 
     // Creates a new limelight object
-    private Vision(Drivetrain drivetrain) {
+    private Vision_old(Drivetrain drivetrain) {
         limelightNT = NetworkTableInstance.getDefault().getTable("limelight");
         this.drivetrain = drivetrain;
     }
@@ -80,9 +80,9 @@ public class Vision extends SubsystemBase {
         SmartDashboard.putNumber("LimelightTargetY", limelightTargetY);
         // SmartDashboard.putNumber("LimelightDistanceToTarget", getDistanceToAprilTag());
         SmartDashboard.putNumber("LimelightNearestAprilTag", getClosestAprilTagID());
-        if (getAprilTagPos(getClosestAprilTagID()) != null) SmartDashboard.putNumber("LimelightNearestAprilTagPositionX", getAprilTagPos(getClosestAprilTagID()).getX());
-        if (getAprilTagPos(getClosestAprilTagID()) != null) SmartDashboard.putNumber("LimelightNearestAprilTagPositionY", getAprilTagPos(getClosestAprilTagID()).getY());
-        if (getAprilTagPos(getClosestAprilTagID()) != null) SmartDashboard.putNumber("LimelightNearestAprilTagPositionZ", getAprilTagPos(getClosestAprilTagID()).getZ());
+        // if (getAprilTagPos(getClosestAprilTagID()) != null) SmartDashboard.putNumber("LimelightNearestAprilTagPositionX", getAprilTagPos(getClosestAprilTagID()).getX());
+        // if (getAprilTagPos(getClosestAprilTagID()) != null) SmartDashboard.putNumber("LimelightNearestAprilTagPositionY", getAprilTagPos(getClosestAprilTagID()).getY());
+        // if (getAprilTagPos(getClosestAprilTagID()) != null) SmartDashboard.putNumber("LimelightNearestAprilTagPositionZ", getAprilTagPos(getClosestAprilTagID()).getZ());
 
         if (getAprilTagPos(getClosestAprilTagID()) != null) addVisionFromDrivetrain();
     }
@@ -159,7 +159,7 @@ public class Vision extends SubsystemBase {
         boolean isInUpperYLimit = limelightY <= Constants.Vision.kAprilTagFieldLayout.getFieldWidth() + 2.5;
         boolean isInLowerZLimit = 0 <= limelightZ;
         boolean isInUpperZLimit = limelightZ <= Constants.Vision.limelightZHeight + 0.5;
-        return isInLowerXLimit && isInUpperXLimit && isInLowerYLimit && isInUpperYLimit && isInLowerZLimit && isInUpperZLimit && isEstimateClose();
+        return isInLowerXLimit && isInUpperXLimit && isInLowerYLimit && isInUpperYLimit && isInLowerZLimit && isInUpperZLimit;
     }
 
     public double getYaw() {
