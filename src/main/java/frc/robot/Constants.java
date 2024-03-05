@@ -87,12 +87,12 @@ public final class Constants {
     public static final double kMaxAttainableRotationRadPerSecond = kMaxAttainableModuleSpeedMetersPerSecond /
     Math.hypot(kTrackWidthMeters / 2.0, kWheelBaseMeters / 2.0); // max rotation of robot
     
-    public static double kMaxSpeedMetersPerSecond = 1; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
+    public static double kMaxSpeedMetersPerSecond = 4; // max velocity (no turning) of robot; may tune to be a fraction of the attainable module speed
     public static double kMaxSlowSpeedMetersPerSecond = 1.0; 
-    public static final double kMaxAccelerationMetersPerSecondSquared = kMaxSpeedMetersPerSecond / 0.2; // max acceleration of robot (accelerate to max speed in 1 second)
-    public static double kMaxRotationRadPerSecond = 3.00; // 3.00; // max rotation speed of the robot
+    public static final double kMaxAccelerationMetersPerSecondSquared = kMaxSpeedMetersPerSecond / 0.1; // max acceleration of robot (accelerate to max speed in 1 second)
+    public static double kMaxRotationRadPerSecond = 4.50; // 3.00; // max rotation speed of the robot
     public static final double kMaxSlowRotationRadPerSecond = Math.PI / 2; 
-    public static final double kMaxRotationAccelerationRadPerSecondSquared = kMaxRotationRadPerSecond / 0.2; // max angular acceleration of robot
+    public static final double kMaxRotationAccelerationRadPerSecondSquared = kMaxRotationRadPerSecond / 0.001; // max angular acceleration of robot
 
     // feedforward values (NO NEED to tune these)
     public static final double ksVolts = 0; 
@@ -121,10 +121,10 @@ public final class Constants {
 
     // current limits for each motor
     public static final int kDriveCurrentLimit = 40; 
-    public static final double kDriveRampRate = 0.25; 
+    public static final double kDriveRampRate = 0.01; 
      
     public static final int kTurnCurrentLimit = 20; 
-    public static final double kTurnRampRate = 0.25;
+    public static final double kTurnRampRate = 0.01;
 
     // max acceleration/deceleration of each motor (used for high CG robots)
     public static final double kForwardSlewRate = kMaxAccelerationMetersPerSecondSquared; 
@@ -139,7 +139,7 @@ public final class Constants {
     public static final double kDrive_D = 0.0001;
 
     // angular PID (same as turn pid)
-    public static final double kOmega_P = 4; 
+    public static final double kOmega_P = 3.25; 
     public static final double kOmega_I = 0; 
     public static final double kOmega_D = 0.0001; 
 
@@ -171,10 +171,10 @@ public final class Constants {
 
     public static final int kBeamBreakId = 3;
 
-    public static final double kSuckerIntakeSpeed = 1;
+    public static final double kSuckerIntakeSpeed = 0.75;
 
     public static final double kShootSpeed = 5600; 
-    public static final double kShootSuckerSpeed = 0.75; 
+    public static final double kShootSuckerSpeed = 0.55; 
     public static final double kShootRevTime = 1; 
     public static final double kShootWaitTime = 0.5; 
 
@@ -329,11 +329,11 @@ public final class Constants {
     public static final int kLed1Start = 0; 
     public static final int kLed1End = 10; 
     public static final int kLed2Start = 10; 
-    public static final int kLed2End = 18;
-    public static final int kLed3Start = 18;
+    public static final int kLed2End = 17;
+    public static final int kLed3Start = 17;
     public static final int kLed3End = 20;
     public static final int kLed4Start = 20;
-    public static final int kLed4End = 40;
+    public static final int kLed4End = 39;
 
     public static final class Patterns {
       public static final LEDPattern kDefault = new SolidLEDPattern(LEDs.kDefaultColor);
@@ -353,7 +353,7 @@ public final class Constants {
       // public static final LEDPattern kShootSpeaker = new SolidLEDPattern(Color.kBlue);
       public static final LEDPattern kArmCustom = new SolidLEDPattern(Color.kSeaGreen);
       public static final LEDPattern kHangActive = new SineLEDPattern(2, Color.kPurple, Color.kBlack, 5);
-      public static final LEDPattern kBeamHit = new StrobePattern(Color.kWhite, 0.5);
+      public static final LEDPattern kBeamHit = new StrobePattern(Color.kWhite, 0.125);
       public static final LEDPattern kAuto = new FadeLEDPattern(1, Color.kPurple, Color.kBlack);
       public static final LEDPattern kTestColor = new TestColorPattern();
     }
