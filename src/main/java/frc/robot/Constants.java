@@ -307,6 +307,8 @@ public final class Constants {
     // 5.82663 * Math.atan(3.94527 * dist - 7.66052) + 24.8349; 
     public static final BooleanSupplier readyToShoot = () -> Intake.getInstance().atDesiredShootSpeed() && Drivetrain.getInstance().atTargetAngle() && Arm.getInstance().isAtAngle(); 
 
+    public static final BooleanSupplier readyToShootAuto = () -> Intake.getInstance().atDesiredShootSpeed() && Arm.getInstance().isAtAngle(); 
+
     static {
       // interpolationMap.put(0, 0); 
       // interpolationMap.put(dist, angle);
