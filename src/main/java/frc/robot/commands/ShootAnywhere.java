@@ -74,16 +74,22 @@ public class ShootAnywhere {
         SmartDashboard.putNumber("Shoot Anywhere Arm Angle", angleToTurnArm); 
         SmartDashboard.putNumber("Shoot Anywhere Distance", distance); 
 
-        return new ShootAnywhereResult(Math.toDegrees(finalAngle), angleToTurnArm); 
+        return new ShootAnywhereResult(Math.toDegrees(finalAngle), angleToTurnArm, Constants.IntakeConstants.kShootSpeed); 
     }
 
     public static class ShootAnywhereResult {
         private double drivetrainAngle; 
         private double armAngle; 
+        private double outtakeSpeed;
 
-        public ShootAnywhereResult(double drivetrainAngleDeg, double armAngleDeg) {
+        public ShootAnywhereResult(double drivetrainAngleDeg, double armAngleDeg, double outtakeSpeed) {
             this.drivetrainAngle = drivetrainAngleDeg; 
             this.armAngle = armAngleDeg; 
+            this.outtakeSpeed = outtakeSpeed;
+        }
+
+        public double getOuttakeSpeed() {
+            return this.outtakeSpeed;
         }
 
         public double getDriveAngleDeg() {

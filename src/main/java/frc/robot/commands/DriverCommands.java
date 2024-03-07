@@ -61,4 +61,54 @@ public class DriverCommands {
         });
     }, Set.of(drivetrain, arm, intake)); 
   }
+  public static Command tuneOptimizedShooting(Drivetrain drivetrain, Arm arm, Intake intake) {
+    return Commands.defer(() -> {
+        double angle = IOUtils.get("arm angle"); 
+        double speed = IOUtils.get("intake speed");
+
+        ShootAnywhereResult res = ShootAnywhere.getShootValues(drivetrain.getPose()); 
+        if (res == null) return Commands.none();
+        TurnToAngle turnToAngle = new TurnToAngle(drivetrain, res.getDriveAngleDeg());
+
+        return Commands.sequence(
+            turnToAngle, 
+            new GoToAngle(arm, angle),
+            Commands.runOnce(() -> {
+              drivetrain.swerveDrive(new ChassisSpeeds(), false);
+            }),
+            OuttakeToSpeaker.revAndIndex(intake, speed).withTimeout(5),
+            OuttakeToSpeaker.shoot(intake)
+        ).finallyDo(() -> {
+          intake.stopShoot();
+          intake.stopSuck(); 
+        });
+    }, Set.of(drivetrain, arm, intake)); 
+  }
+
+    public static Command tuneOptimizedShootingSetpoint(Drivetrain drivetrain, Arm arm, Intake intake) {
+    return Commands.defer(() -> {
+
+        ShootAnywhereResult res = ShootAnywhere.getShootValues(drivetrain.getPose());
+        if (res == null) return Commands.none();
+
+        double speed = IOUtils.get("intake speed");
+        double angle = res.getArmAngleDeg();
+
+        TurnToAngle turnToAngle = new TurnToAngle(drivetrain, angle);
+
+        return Commands.sequence(
+            turnToAngle, 
+            new GoToAngle(arm, angle),
+            Commands.runOnce(() -> {
+              drivetrain.swerveDrive(new ChassisSpeeds(), false);
+            }),
+            OuttakeToSpeaker.revAndIndex(intake, speed).withTimeout(5),
+            OuttakeToSpeaker.shoot(intake)
+        ).finallyDo(() -> {
+          intake.stopShoot();
+          intake.stopSuck(); 
+        });
+    }, Set.of(drivetrain, arm, intake)); 
+  }
+
 }

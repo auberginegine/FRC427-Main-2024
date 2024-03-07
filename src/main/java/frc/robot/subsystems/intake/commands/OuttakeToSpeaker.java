@@ -1,10 +1,18 @@
 package frc.robot.subsystems.intake.commands;
 
+import java.util.Optional;
+import java.util.Set;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.arm.commands.GoToAngle;
+import frc.robot.subsystems.arm.Arm;
 
 public class OuttakeToSpeaker extends SequentialCommandGroup {
      // declare how long to intake for and speed
