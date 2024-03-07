@@ -13,6 +13,7 @@ import frc.robot.subsystems.arm.commands.GoToSpeaker;
 import frc.robot.subsystems.arm.commands.GoToTravel;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.TeleOpCommand;
+import frc.robot.subsystems.hang.Hang;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.IntakeFromGround;
 import frc.robot.subsystems.intake.commands.OuttakeToAmp;
@@ -55,7 +56,7 @@ public class RobotContainer {
   private final FrontVision frontVision = FrontVision.getInstance(); 
 
   // hang mechanism of robot
-  // private final Hang hang = Hang.getInstance();
+  private final Hang hang = Hang.getInstance();
   
   // arm of the robot
   private final Arm arm = Arm.getInstance();
@@ -171,7 +172,10 @@ public class RobotContainer {
 
 
     // TESTING
-    // driverController.y().onTrue(new SetVelocity(arm, 0.4)).onFalse(new SetVelocity(arm, 0)); 
+    driverController.y().onTrue(Commands.runOnce(() -> hang.setSpeed(0.6))).onFalse(Commands.runOnce(() -> hang.setSpeed(0)));
+    // driverController.b().onTrue(Commands.runOnce(() -> arm.setSpeed(0.4))).onFalse(Commands.runOnce(() -> arm.setSpeed(0)));  
+    driverController.b().onTrue(Commands.runOnce(() -> hang.setSpeed(-0.6))).onFalse(Commands.runOnce(() -> hang.setSpeed(0)));
+    // driverController.y().onTrue(Commands.runOnce(() -> hang.setSpeed(0.))).onFalse(Commands.runOnce(() -> hang.setSpeed(0))); 
     // driverController.x().onTrue(new SetVelocity(arm, -0.4)).onFalse(new SetVelocity(arm, 0));
     // manipulatorController.x().onTrue(new SetSuckerIntakeSpeed(intake, -0.5)).onFalse(new SetSuckerIntakeSpeed(intake, 0)); 
     // manipulatorController.y().onTrue(SetShooterSpeed.revAndIndex(intake, 1)).onFalse(new SetShooterSpeed(intake, 0));  
