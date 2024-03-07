@@ -1,12 +1,14 @@
 package frc.robot.commands;
 
 import java.util.Optional;
+import java.util.Set; 
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.commands.ShootAnywhere.ShootAnywhereResult;
 import frc.robot.subsystems.arm.Arm;
@@ -43,6 +45,9 @@ public class RevAndAngleWithPose extends Command {
 
     public void execute() {
         ShootAnywhereResult res = ShootAnywhere.getShootValues(targetPose); 
+
+        if (res == null) return; 
+
         arm.goToAngle(res.getArmAngleDeg());
         intake.outtakeRing(res.getOuttakeSpeed());
     }
@@ -50,4 +55,8 @@ public class RevAndAngleWithPose extends Command {
     public boolean isFinished() {
         return optAlliance.isEmpty() || Constants.GeneralizedReleaseConstants.readyToShootAuto.getAsBoolean();
     }
-}
+
+    public static Command createCommand(Arm arm, Intake intake, Drivetrain drivetrain, Pose2d targetPose) {
+        return Commands.defer(() -> new RevAndAngleWithPose(arm, intake, drivetrain, targetPose), Set.of(arm, intake, drivetrain)); 
+    }
+} 

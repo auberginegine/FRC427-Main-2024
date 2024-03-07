@@ -1,6 +1,5 @@
 package frc.robot.subsystems.drivetrain;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 import com.kauailabs.navx.frc.AHRS;

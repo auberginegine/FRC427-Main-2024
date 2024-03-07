@@ -299,23 +299,28 @@ public final class Constants {
     public static final double waitAfterShot = 0.5;
 
     
-    public static final InterpolatingDoubleTreeMap interpolationMap = new InterpolatingDoubleTreeMap(); 
+    public static final InterpolatingDoubleTreeMap armInterpolationMap = new InterpolatingDoubleTreeMap(); 
+
+    public static final InterpolatingDoubleTreeMap flywheelInterpolationMap = new InterpolatingDoubleTreeMap(); 
     
-    public static final Function<Double, Double> distanceToArmAngle = (dist) -> interpolationMap.get(dist); 
+    public static final Function<Double, Double> distanceToArmAngle = (dist) -> armInterpolationMap.get(dist); 
+
+    public static final Function<Double, Double> distanceToFlywheelSpeed = (dist) -> flywheelInterpolationMap.get(dist); 
+
     // 5.82663 * Math.atan(3.94527 * dist - 7.66052) + 24.8349; 
     public static final BooleanSupplier readyToShoot = () -> Intake.getInstance().atDesiredShootSpeed() && Drivetrain.getInstance().atTargetAngle() && Arm.getInstance().isAtAngle(); 
 
     public static final BooleanSupplier readyToShootAuto = () -> Intake.getInstance().atDesiredShootSpeed() && Arm.getInstance().isAtAngle(); 
 
     static {
-      // interpolationMap.put(0, 0); 
-      // interpolationMap.put(dist, angle);
-      interpolationMap.put(1.37154,20.0);
-      interpolationMap.put(2.0046,28.0);
-      interpolationMap.put(2.37813, 34.0);
-      interpolationMap.put(2.9402, 36.0);
-      interpolationMap.put(3.5022, 39.0);
-      interpolationMap.put(3.8638, 40.0);
+      // armInterpolationMap.put(0, 0); 
+      // armInterpolationMap.put(dist, angle);
+      armInterpolationMap.put(1.37154,20.0);
+      armInterpolationMap.put(2.0046,28.0);
+      armInterpolationMap.put(2.37813, 34.0);
+      armInterpolationMap.put(2.9402, 36.0);
+      armInterpolationMap.put(3.5022, 39.0);
+      armInterpolationMap.put(3.8638, 40.0);
     }
   }
 

@@ -24,8 +24,8 @@ public class TuneSetHangPosition extends Command{
 
     public void execute() {
         //Gets speed from IOUtils
-        m_Hang.setPID(IOUtils.get("Hang kP"), IOUtils.get("Hang kI"), IOUtils.get("Hang kD"));
-        m_Hang.setPosition(IOUtils.get("Hang Target Position"));
+        m_Hang.setPID(IOUtils.getNumber("Hang kP"), IOUtils.getNumber("Hang kI"), IOUtils.getNumber("Hang kD"));
+        m_Hang.setPosition(IOUtils.getNumber("Hang Target Position"));
         // runs repeatedly until the command is finished
     }
 

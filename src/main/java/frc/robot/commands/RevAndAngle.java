@@ -35,6 +35,8 @@ public class RevAndAngle extends Command {
         Pose2d currentPose = drivetrain.getPose();
         ShootAnywhereResult res = ShootAnywhere.getShootValues(currentPose); 
 
+        if (res == null) return; 
+
         arm.goToAngle(res.getArmAngleDeg());
         intake.outtakeRing(res.getOuttakeSpeed());
     }

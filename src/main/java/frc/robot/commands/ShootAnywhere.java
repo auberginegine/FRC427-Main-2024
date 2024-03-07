@@ -71,10 +71,12 @@ public class ShootAnywhere {
 
         double angleToTurnArm = Constants.GeneralizedReleaseConstants.distanceToArmAngle.apply(distance);
 
+        double speedToRevFlywheel = Constants.GeneralizedReleaseConstants.distanceToFlywheelSpeed.apply(distance); 
+
         SmartDashboard.putNumber("Shoot Anywhere Arm Angle", angleToTurnArm); 
         SmartDashboard.putNumber("Shoot Anywhere Distance", distance); 
 
-        return new ShootAnywhereResult(Math.toDegrees(finalAngle), angleToTurnArm, Constants.IntakeConstants.kShootSpeed); 
+        return new ShootAnywhereResult(Math.toDegrees(finalAngle), angleToTurnArm, speedToRevFlywheel); 
     }
 
     public static class ShootAnywhereResult {

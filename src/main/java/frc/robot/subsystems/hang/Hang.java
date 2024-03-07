@@ -1,9 +1,7 @@
 package frc.robot.subsystems.hang;
 
-import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators.UUIDGenerator;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;

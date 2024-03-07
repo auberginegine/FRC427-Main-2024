@@ -76,8 +76,8 @@ public class AutoPicker {
         NamedCommands.registerCommand("ShootAnywhere", AutomationCommands.shootFromAnywhere());
         NamedCommands.registerCommand("MoveToNext", new PrintCommand("Moving to next"));
         
-        NamedCommands.registerCommand("Shoot", OuttakeToSpeaker.shoot(Intake.getInstance()).andThen(() -> Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition)));
-        NamedCommands.registerCommand("RevAndAngle", new RevAndAngle(Arm.getInstance(), Intake.getInstance(), Drivetrain.getInstance()));
+        NamedCommands.registerCommand("Shoot", OuttakeToSpeaker.shoot(Intake.getInstance()).finallyDo(() -> Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition)));
+        NamedCommands.registerCommand("RevAndAngleAnywhere", new RevAndAngle(Arm.getInstance(), Intake.getInstance(), Drivetrain.getInstance()));
 
         // NamedCommands.registerCommand("GoToSpeaker", new PrintCommand("Going to Speaker"));
         // NamedCommands.registerCommand("IntakeGround", new PrintCommand("Intaking from ground!"));
