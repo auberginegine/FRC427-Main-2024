@@ -241,11 +241,9 @@ public final class Constants {
   }
 
   public static class HangConstants {
-    public static final int kHangRightMotorID = 19;
-    public static final int kHangLeftMotorID = 18;
+    public static final int kHangMotorID = 18;
 
-    public static final boolean kRightMotorInverted = false;
-    public static final boolean kLeftMotorInverted = false;
+    public static final boolean kMotorInverted = false;
 
     public static final int kHangMotorLimit = 40;
 
