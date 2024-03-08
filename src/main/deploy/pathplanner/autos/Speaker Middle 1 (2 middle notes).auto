@@ -24,15 +24,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Middle Note 1st going back"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Middle Note 1st going back"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RevBlueFirst"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ShootOut"
+            "name": "Shoot"
           }
         },
         {
@@ -42,15 +55,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "2nd middle note back score"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "2nd middle note back score"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RevBlueSecond"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ShootOut"
+            "name": "Shoot"
           }
         }
       ]

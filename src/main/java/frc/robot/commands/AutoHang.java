@@ -6,6 +6,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Constants;
+import frc.robot.util.GeometryUtils;
 
 public class AutoHang {
 
@@ -71,7 +72,7 @@ public class AutoHang {
             )) {
                 return -180;
             }
-            else if (isPoseInRectangle(robotPose, 
+            else if (GeometryUtils.isPoseInRectangle(robotPose, 
                 Constants.AutoHang.redBottomLeft3,
                 Constants.AutoHang.redBottomRight3,
                 Constants.AutoHang.redTopRight3,

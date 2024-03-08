@@ -422,4 +422,10 @@ public final class Constants {
     public static final OrderedPair blueSourceBR = new OrderedPair(16.5, 0); 
   }
   
+  public static class SetPoints {
+    public static final Pose2d blueThirdMiddle = new Pose2d(2.55, 3.15,null);
+    public static final Pose2d blueSecondMiddle = new Pose2d(3.59, 5.80, null);
+    public static final Pose2d blueFirstMiddle = new Pose2d(3.38, 7.02, null);
+
+  }
 }
