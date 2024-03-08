@@ -63,7 +63,7 @@ public class AutoPicker {
 
         chooser = AutoBuilder.buildAutoChooser(); 
 
-        registerExtraAutos();
+        // registerExtraAutos();
 
     }
 

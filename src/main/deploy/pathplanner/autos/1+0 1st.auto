@@ -12,20 +12,20 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "GoToSpeaker"
+            "pathName": "Speaker 1 moves out"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ShootSpeaker"
+            "name": "ShootAnywhere"
           }
         }
       ]
     }
   },
-  "folder": "Score Preload",
+  "folder": "1 piece auto",
   "choreoAuto": false
 }

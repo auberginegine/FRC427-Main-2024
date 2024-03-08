@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import java.util.Optional;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.Constants;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.commands.GoToAngle;
@@ -44,30 +45,49 @@ public class ShootAnywhere {
 
     public static ShootAnywhereResult getShootValues(Pose2d currentPose) {
         Pose2d targetPose = null;
+        Pose2d targetArmPose = null; 
 
         Optional<Alliance> optAlliance = DriverStation.getAlliance(); 
 
         if (optAlliance.isEmpty()) return null;
 
         Alliance alliance = optAlliance.get();
+
+        /*
+         * Option 1: 
+         *  - target drive & arm with bisector
+         * Option 2: 
+         *  - target drive & arm speaker w/o offset
+         * Option 3: 
+         *  - target drive speaker w/ offset
+         *  - target arm speaker w/o offset
+         * Option 4: 
+         *  - target drive & arm speaker w/ offset
+         */
+
         if (alliance == DriverStation.Alliance.Blue) {
             // targetPose = Constants.GeneralizedReleaseConstants.kBlueAllianceSpeaker;
+            // targetPose = Constants.GeneralizedReleaseConstants.kBlueAllianceSpeakerTarget;
             targetPose = GeometryUtils.getBisector(
             OrderedPair.fromPose2d(currentPose), 
             OrderedPair.fromPose2d(Constants.GeneralizedReleaseConstants.kBlueAllianceSpeaker1), 
             OrderedPair.fromPose2d(Constants.GeneralizedReleaseConstants.kBlueAllianceSpeaker2)).toPose2d(); 
-        }
-        else if (alliance == DriverStation.Alliance.Red) {
+            targetArmPose = targetPose; 
+            // targetArmPose = Constants.GeneralizedReleaseConstants.kRedAllianceSpeaker;
+        } else if (alliance == DriverStation.Alliance.Red) {
             // targetPose = Constants.GeneralizedReleaseConstants.kRedAllianceSpeaker;
+            // targetPose = Constants.GeneralizedReleaseConstants.kRedAllianceSpeakerTarget;
             targetPose = GeometryUtils.getBisector(
             OrderedPair.fromPose2d(currentPose), 
             OrderedPair.fromPose2d(Constants.GeneralizedReleaseConstants.kRedAllianceSpeaker1), 
             OrderedPair.fromPose2d(Constants.GeneralizedReleaseConstants.kRedAllianceSpeaker2)).toPose2d(); 
+            targetArmPose = targetPose;
+            // targetArmPose = Constants.GeneralizedReleaseConstants.kRedAllianceSpeaker;
         }
         if (targetPose == null) return null;
 
         double finalAngle = Math.atan2(currentPose.getY() - targetPose.getY(),  currentPose.getX() - targetPose.getX());
-        double distance = Math.hypot(currentPose.getY() - targetPose.getY(), currentPose.getX() - targetPose.getX()); 
+        double distance = Math.hypot(currentPose.getY() - targetArmPose.getY(), currentPose.getX() - targetArmPose.getX()); 
 
         double angleToTurnArm = Constants.GeneralizedReleaseConstants.distanceToArmAngle.apply(distance);
 

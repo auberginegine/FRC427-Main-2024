@@ -112,20 +112,20 @@ public final class Constants {
     public static final double kModuleTurn_D = 0.00032; 
 
     // turn in place PID for the whole robot
-    public static final double kTurn_P = 0.064; 
+    public static final double kTurn_P = 0.09; 
     public static final double kTurn_I = 0; 
-    public static final double kTurn_D = 0.001; 
+    public static final double kTurn_D = 0.0015; 
     public static final double kTurn_FF = 0; 
-    public static final double kTurnErrorThreshold = 5.0; 
+    public static final double kTurnErrorThreshold = 3.0; 
     public static final double kTurnVelocityThreshold = 0; 
 
     // current limits for each motor
-    public static final int kDriveCurrentLimit = 35; 
+    public static final int kDriveCurrentLimit = 30; 
     public static final int kDriveSecondaryLimit = 50; 
-    public static final double kDriveRampRate = 0.01; 
+    public static final double kDriveRampRate = 0.05; 
      
     public static final int kTurnCurrentLimit = 20; 
-    public static final double kTurnRampRate = 0.01;
+    public static final double kTurnRampRate = 0.05;
 
     // max acceleration/deceleration of each motor (used for high CG robots)
     public static final double kForwardSlewRate = kMaxAccelerationMetersPerSecondSquared; 
@@ -218,7 +218,7 @@ public final class Constants {
     public static final double kGroundPosition = 0;
     public static final double kTravelPosition = 20;
     public static final double kAmpPosition = 90;
-    public static final double kSpeakerPosition = 10;
+    public static final double kSpeakerPosition = 20;
 
     public static final double kTravelSpeed = 0.5;
 
@@ -293,6 +293,9 @@ public final class Constants {
     public static final Pose2d kRedAllianceSpeaker = new Pose2d(16.5, 5.54, new Rotation2d());
     public static final Pose2d kBlueAllianceSpeaker = new Pose2d(0, 5.54, new Rotation2d());
 
+    public static final Pose2d kRedAllianceSpeakerTarget = new Pose2d(16.5 - 0.5, 5.54, new Rotation2d()); 
+    public static final Pose2d kBlueAllianceSpeakerTarget = new Pose2d(0.5, 5.54, new Rotation2d()); 
+
     public static final double blueShootRange = 5.87;
     public static final double redShootRange = 10.71;
     public static final double shootAnywhereTimeout = 7;
@@ -315,12 +318,14 @@ public final class Constants {
     static {
       // armInterpolationMap.put(0, 0); 
       // armInterpolationMap.put(dist, angle);
-      armInterpolationMap.put(1.37154,20.0);
-      armInterpolationMap.put(2.0046,28.0);
-      armInterpolationMap.put(2.37813, 34.0);
-      armInterpolationMap.put(2.9402, 36.0);
-      armInterpolationMap.put(3.5022, 39.0);
-      armInterpolationMap.put(3.8638, 40.0);
+      armInterpolationMap.put(1.37154,19.0);
+      armInterpolationMap.put(2.0046,27.0);
+      armInterpolationMap.put(2.37813, 33.0);
+      armInterpolationMap.put(2.9402, 35.0);
+      armInterpolationMap.put(3.5022, 38.0);
+      armInterpolationMap.put(3.8638, 39.0);
+
+      flywheelInterpolationMap.put(0.0, 5600.0);
     }
   }
 
