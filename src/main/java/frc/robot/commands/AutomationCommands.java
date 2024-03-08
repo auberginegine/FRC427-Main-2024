@@ -84,13 +84,14 @@ public class AutomationCommands {
     .andThen(() -> {
       Arm.getInstance().goToAngle(30);
     })
-    .andThen(AutomaticallyMoveToPiece.waitForVision(FrontVision.getInstance())) // maybe??
+    .andThen(AutomaticallyMoveToPiece.waitForVision(FrontVision.getInstance())) 
     .andThen(Commands.defer(
         () -> AutomaticallyMoveToPiece.automaticallyMoveToPiece(controller, Drivetrain.getInstance(), FrontVision.getInstance()), 
         Set.of(Drivetrain.getInstance())
       ).asProxy()
     ).finallyDo(() -> {
       Led.getInstance().isMovingToNote = false; 
+      Arm.getInstance().goToAngle(Constants.ArmConstants.kTravelPosition);
     }); 
   }
 

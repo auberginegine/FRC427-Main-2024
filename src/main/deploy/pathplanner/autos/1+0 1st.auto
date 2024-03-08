@@ -2,30 +2,30 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6481009581004845,
-      "y": 4.483620930830938
+      "x": 0.6634748038091614,
+      "y": 6.600687689894831
     },
-    "rotation": -60.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "GoToSpeaker"
+            "pathName": "Speaker 1 moves out"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ShootSpeaker"
+            "name": "ShootAnywhere"
           }
         }
       ]
     }
   },
-  "folder": "Score Preload",
+  "folder": "1 piece auto",
   "choreoAuto": false
 }
