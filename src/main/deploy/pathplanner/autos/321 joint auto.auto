@@ -52,6 +52,49 @@
           "data": {
             "name": "ShootAnywhere"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MN3 goingto MN2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MN2 going back"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "MN2 going back"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RevBlueFirst"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
         }
       ]
     }
