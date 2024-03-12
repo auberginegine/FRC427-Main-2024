@@ -82,7 +82,8 @@ public class AutoPicker {
         NamedCommands.registerCommand("RevAndAngleAnywhere", new RevAndAngle(Arm.getInstance(), Intake.getInstance(), Drivetrain.getInstance()));
         NamedCommands.registerCommand("RevBlueFirst", new RevAndAngleWithPose(Arm.getInstance(), Intake.getInstance(), Drivetrain.getInstance(), Constants.SetPoints.blueFirstMiddle));
         NamedCommands.registerCommand("RevBlueSecond", new RevAndAngleWithPose(Arm.getInstance(), Intake.getInstance(), Drivetrain.getInstance(), Constants.SetPoints.blueSecondMiddle));
-        NamedCommands.registerCommand("RevBlueThird", new RevAndAngleWithPose(Arm.getInstance(), Intake.getInstance(), Drivetrain.getInstance(), Constants.SetPoints.blueThirdMiddle));
+        NamedCommands.registerCommand("RevBlueCenter", new RevAndAngleWithPose(Arm.getInstance(), Intake.getInstance(), Drivetrain.getInstance(), Constants.SetPoints.blueCenter));
+
 
         // NamedCommands.registerCommand("GoToSpeaker", new PrintCommand("Going to Speaker"));
         // NamedCommands.registerCommand("IntakeGround", new PrintCommand("Intaking from ground!"));

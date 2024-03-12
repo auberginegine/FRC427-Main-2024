@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.4370791327585035,
-        "y": 5.531293435066112
+        "x": 7.622154191676804,
+        "y": 4.0429241760739165
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.068721580253925,
-        "y": 6.823235800504728
+        "x": 7.4987061252317995,
+        "y": 4.0634988538147505
       },
       "isLocked": false,
-      "linkedName": "Note 2"
+      "linkedName": "Middle Note 3"
     },
     {
       "anchor": {
-        "x": 8.056270140976302,
-        "y": 5.797086096541862
+        "x": 7.035775876063031,
+        "y": 4.0429241760739165
       },
       "prevControl": {
-        "x": 7.550142819583885,
-        "y": 5.668323717599817
+        "x": 7.076925231544699,
+        "y": 4.0429241760739165
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Middle Note 2"
+      "linkedName": "MN3 going back"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.75,
+      "waypointRelativePos": 0.3,
       "command": {
         "type": "parallel",
         "data": {
@@ -61,7 +61,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Note Middle",
+  "folder": "Middle Back",
   "previewStartingState": null,
   "useDefaultConstraints": true
 }
