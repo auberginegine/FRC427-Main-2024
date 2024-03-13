@@ -24,15 +24,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "MN4 going back"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "RevBlueThird"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "MN4 going back"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ShootAnywhere"
+            "name": "Shoot"
           }
         },
         {
@@ -42,33 +55,34 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "MN3 going back"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootAnywhere"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "MN3 goingto MN2"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "MN2 going back"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "RevOut"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "MN3 going back"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MN3 going to MN2"
           }
         },
         {
@@ -84,7 +98,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RevBlueFirst"
+                  "name": "RevOut"
                 }
               }
             ]

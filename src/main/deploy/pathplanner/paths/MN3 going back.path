@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.4987061252317995,
-        "y": 4.0634988538147505
+        "x": 7.313534025564292,
+        "y": 4.31039498670476
       },
       "isLocked": false,
       "linkedName": "Middle Note 3"
     },
     {
       "anchor": {
-        "x": 7.035775876063031,
-        "y": 4.0429241760739165
+        "x": 6.346524171745086,
+        "y": 5.874070495008159
       },
       "prevControl": {
-        "x": 7.076925231544699,
-        "y": 4.0429241760739165
+        "x": 6.387673527226754,
+        "y": 5.874070495008159
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,25 +30,7 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.3,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "IntakeGround"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 2.25,
