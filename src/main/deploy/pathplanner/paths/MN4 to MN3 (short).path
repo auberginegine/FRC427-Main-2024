@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.786751613603477,
+        "y": 2.4072372956775996
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.725027580380975,
+        "y": 2.4689613289001016
+      },
+      "isLocked": false,
+      "linkedName": "Middle Note 4"
+    },
+    {
+      "anchor": {
+        "x": 7.622154191676804,
+        "y": 4.0429241760739165
+      },
+      "prevControl": {
+        "x": 7.056350553803865,
+        "y": 3.7857407043134885
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Middle Note 3"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 2.25,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 300.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Middle Back",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
